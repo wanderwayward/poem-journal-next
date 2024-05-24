@@ -39,19 +39,24 @@ const CustomEditor = {
     }
   },
   toggleAlignment: (editor: Editor, alignment: Alignment) => {
-    const isActive = CustomEditor.isAlignmentActive(editor, alignment);
-    // Remove all existing alignment marks
-    Editor.removeMark(editor, "left");
-    Editor.removeMark(editor, "center");
-    Editor.removeMark(editor, "right");
-    // Add new alignment mark if not already active
-    if (!isActive) {
-      Editor.addMark(editor, alignment, true);
+    const marks = Editor.marks(editor) as Record<string, any> | undefined;
+    if (marks) {
+      const currentAlignment = marks.alignment;
+      if (currentAlignment === alignment) {
+        // If the current alignment is the same as the new alignment, remove it
+        Editor.removeMark(editor, "alignment");
+      } else {
+        // Otherwise, set the new alignment
+        Editor.addMark(editor, "alignment", alignment);
+      }
+    } else {
+      // If there are no alignment marks, add the new alignment
+      Editor.addMark(editor, "alignment", alignment);
     }
   },
   isAlignmentActive: (editor: Editor, alignment: Alignment) => {
-    const marks = Editor.marks(editor) as Record<Alignment, boolean> | undefined;
-    return marks ? (marks[alignment] === true) : false;
+    const marks = Editor.marks(editor) as Record<string, any> | undefined;
+    return marks ? marks.alignment === alignment : false;
   },
 };
 
