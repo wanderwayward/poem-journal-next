@@ -39,20 +39,20 @@ const CustomEditor = {
     }
   },
   toggleAlignment: (editor: Editor, alignment: Alignment) => {
-    const marks = Editor.marks(editor) as Record<string, any> | undefined;
-    if (marks) {
-      const currentAlignment = marks.alignment;
-      if (currentAlignment === alignment) {
-        // If the current alignment is the same as the new alignment, remove it
-        Editor.removeMark(editor, "alignment");
-      } else {
-        // Otherwise, set the new alignment
-        Editor.addMark(editor, "alignment", alignment);
+    const { selection } = editor;
+    if (!selection) return;
+
+    const isActive = CustomEditor.isAlignmentActive(editor, alignment);
+    Transforms.setNodes(
+      editor,
+      { alignment: isActive ? null : alignment },
+      {
+        match: (n) =>
+          !Editor.isEditor(n) &&
+          SlateElement.isElement(n) &&
+          (n.type === "stanza" || n.type === "line" || n.type === "paragraph"),
       }
-    } else {
-      // If there are no alignment marks, add the new alignment
-      Editor.addMark(editor, "alignment", alignment);
-    }
+    );
   },
   isAlignmentActive: (editor: Editor, alignment: Alignment) => {
     const marks = Editor.marks(editor) as Record<string, any> | undefined;

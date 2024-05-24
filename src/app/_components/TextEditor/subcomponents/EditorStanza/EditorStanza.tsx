@@ -1,7 +1,11 @@
 import { Typography } from "@mui/material";
 import { RenderElementProps } from "slate-react";
 
-const EditorStanza = ({ attributes, children, element }: RenderElementProps) => (
+const EditorStanza = ({
+  attributes,
+  children,
+  element,
+}: RenderElementProps) => (
   <Typography
     component="div"
     p={1}

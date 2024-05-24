@@ -1,11 +1,11 @@
-'use client';
+"use client";
 import { Sheet, Button } from "@mui/joy";
 import { Slate, Editable } from "slate-react";
 import CustomEditor from "../../_utils/CustomEditor";
 import useEditor from "../../_hooks/useEditor";
-import FormattingButton from "./subcomponents/FormattingButton/FormattingButton"
-import {useEditorContext} from "../../_contexts/Editor.context";
-import parseContentToStanzas from "../../_utils/parseContentToStanzas"
+import FormattingButton from "./subcomponents/FormattingButton/FormattingButton";
+import { useEditorContext } from "../../_contexts/Editor.context";
+import parseContentToStanzas from "../../_utils/parseContentToStanzas";
 
 const TextEditor = () => {
   const { editor, renderElement, renderLeaf, onChange, onKeyDown } =

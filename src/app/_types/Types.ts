@@ -13,7 +13,7 @@ export type CustomText = {
   bold?: boolean;
   italic?: boolean;
   underline?: boolean;
-  alignment?: "left" | "center" | "right";
+  alignment?: "left" | "center" | "right" | null;
 };
 
 export type Descendant = CustomElement | CustomText;

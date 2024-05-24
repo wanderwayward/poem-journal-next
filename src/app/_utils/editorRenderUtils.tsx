@@ -6,11 +6,11 @@ import EditorParagraph from "../_components/TextEditor/subcomponents/EditorParag
 
 export const DefaultElement = (props: RenderElementProps) => {
   switch (props.element.type) {
-    case 'stanza':
+    case "stanza":
       return <EditorStanza {...props} />;
-    case 'line':
+    case "line":
       return <EditorLine {...props} />;
-    case 'paragraph':
+    case "paragraph":
       return <EditorParagraph {...props} />;
     default:
       return <EditorStanza {...props} />; // Default to stanza if type is unknown
@@ -25,7 +25,8 @@ export const Leaf = ({ attributes, children, leaf }: RenderLeafProps) => {
         fontWeight: leaf.bold ? "bold" : "normal",
         fontStyle: leaf.italic ? "italic" : "normal",
         textDecoration: leaf.underline ? "underline" : "none",
-        display: 'inline', // Display inline to avoid line breaks
+        textAlign: leaf.alignment || "left",
+        display: "inline", // Display inline to avoid line breaks
       }}
       component="span" // Ensure inline display
     >
