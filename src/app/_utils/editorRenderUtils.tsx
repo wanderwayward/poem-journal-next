@@ -25,6 +25,7 @@ export const Leaf = ({ attributes, children, leaf }: RenderLeafProps) => {
         fontWeight: leaf.bold ? "bold" : "normal",
         fontStyle: leaf.italic ? "italic" : "normal",
         textDecoration: leaf.underline ? "underline" : "none",
+        textAlign: leaf.alignment || "left",
         display: 'block'
       }}
     >

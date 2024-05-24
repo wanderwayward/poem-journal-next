@@ -13,6 +13,7 @@ export type CustomText = {
   bold?: boolean;
   italic?: boolean;
   underline?: boolean;
+  alignment?: "left" | "center" | "right";
 };
 
 export type Descendant = CustomElement | CustomText;
@@ -24,3 +25,5 @@ declare module "slate" {
     Text: CustomText;
   }
 }
+
+export type Alignment = "left" | "center" | "right";

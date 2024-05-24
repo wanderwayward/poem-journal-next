@@ -1,4 +1,5 @@
-import { Editor, Element as SlateElement } from "slate";
+import { Editor, Element as SlateElement, Transforms } from "slate";
+import { Alignment } from "../_types/Types"; // Adjust the import path as necessary
 
 const CustomEditor = {
   isBoldMarkActive: (editor: Editor) => {
@@ -37,25 +38,21 @@ const CustomEditor = {
       Editor.addMark(editor, "underline", true);
     }
   },
-  toggleAlignment: (editor: Editor, alignment: "left" | "center" | "right") => {
+  toggleAlignment: (editor: Editor, alignment: Alignment) => {
     const isActive = CustomEditor.isAlignmentActive(editor, alignment);
+    // Remove all existing alignment marks
+    Editor.removeMark(editor, "left");
+    Editor.removeMark(editor, "center");
+    Editor.removeMark(editor, "right");
+    // Add new alignment mark if not already active
     if (!isActive) {
-      Editor.addMark(editor, "alignment", alignment);
+      Editor.addMark(editor, alignment, true);
     }
   },
-  
-  isAlignmentActive: (editor: Editor, alignment: "left" | "center" | "right") => {
-    const [match] = Editor.nodes(editor, {
-      // This function looks through the nodes in the selection
-      match: n => {
-        return !Editor.isEditor(n) && SlateElement.isElement(n) && n.alignment === alignment;
-      },
-      mode: 'all',  // This ensures we check all nodes in the selection
-    });
-    return !!match;
+  isAlignmentActive: (editor: Editor, alignment: Alignment) => {
+    const marks = Editor.marks(editor) as Record<Alignment, boolean> | undefined;
+    return marks ? (marks[alignment] === true) : false;
   },
-  
-  
 };
 
 export default CustomEditor;
