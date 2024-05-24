@@ -1,95 +1,44 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import { Box, Typography } from "@mui/joy";
+import { FC } from "react";
 
-export default function Home() {
+const Home: FC = () => {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <Box
+      sx={{
+        width: "100%",
+        height: "calc(100vh - 60px)", // Full viewport height minus 60px for the navbar
+        display: "flex", // Establishes a flex container for flexible box layout
+        flexDirection: "column", // Ensures the boxes are stacked vertically
+        textAlign: "center",
+        alignItems: "center",
+      }}
+    >
+      <Typography level="title-lg"> The Facts of Life</Typography>
+      <Typography
+        color="warning"
+        level="body-lg"
+        variant="soft"
+        sx={{ width: "80%" }}
+      >
+        That you were born and you will die. That you will sometimes love enough
+        and sometimes not. That you will lie if only to yourself. That you will
+        get tired. That you will learn most from the situations you did not
+        choose. That there will be some things that move you more than you can
+        say. That you will live that you must be loved. That you will avoid
+        questions most urgently in need of your attention. That you began as the
+        fusion of a sperm and an egg of two people who once were strangers and
+        may well still be. That life isn’t fair. That life is sometimes good and
+        sometimes even better than good. That life is often not so good. That
+        life is real and if you can survive it, well, survive it well with love
+        and art and meaning given where meaning’s scarce. That you will learn to
+        live with regret. That you will learn to live with respect. That the
+        structures that constrict you may not be permanently constricting. That
+        you will probably be okay. That you must accept change before you die
+        but you will die anyway. So you might as well live and you might as well
+        love. You might as well love. You might as well love.
+      </Typography>
+    </Box>
   );
-}
+};
+
+export default Home;
