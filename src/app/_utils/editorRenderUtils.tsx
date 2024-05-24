@@ -1,8 +1,8 @@
 import { RenderElementProps, RenderLeafProps } from "slate-react";
 import { Typography } from "@mui/joy";
-import EditorStanza from "../components/textEditor/subcomponents/EditorStanza/EditorStanza.component";
-import EditorLine from "../components/textEditor/subcomponents/EditorLine/EditorLine.component";
-import EditorParagraph from "../components/textEditor/subcomponents/EditorParagraph/EditorParagraph.component";
+import EditorStanza from "../_components/TextEditor/subcomponents/EditorStanza/EditorStanza";
+import EditorLine from "../_components/TextEditor/subcomponents/EditorLine/EditorLine";
+import EditorParagraph from  "../_components/TextEditor/subcomponents/EditorParagraph/EditorParagraph";
 
 export const DefaultElement = (props: RenderElementProps) => {
   switch (props.element.type) {

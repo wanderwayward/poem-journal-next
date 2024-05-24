@@ -1,6 +1,6 @@
 import { Sheet } from "@mui/joy";
-import TextEditor from "../_components/TextEditor/TextEditor.Component";
-import { EditorProvider } from "../_contexts/Editor.Context";
+import TextEditor from "../_components/TextEditor/TextEditor"
+import { EditorProvider } from "../_contexts/Editor.context";
 
 function Upload() {
   return (

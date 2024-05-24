@@ -18,14 +18,14 @@ const Navbar = () => {
     >
       <Grid>
         <Link href="/upload" passHref>
-          <Typography component="a" sx={{ textDecoration: "none !important", color: "inherit" }}>
+          <Typography component="span" sx={{ textDecoration: "none !important", color: "inherit" }}>
             Upload
           </Typography>
         </Link>
       </Grid>
       <Grid>
         <Link href="/" passHref>
-          <Typography color="warning" level="title-lg" variant="plain" component="a" sx={{ textDecoration: "none !important", color: "inherit" }}>
+          <Typography component="span" color="warning" level="title-lg" variant="plain" sx={{ textDecoration: "none !important", color: "inherit" }}>
             Poem Journal
           </Typography>
         </Link>
