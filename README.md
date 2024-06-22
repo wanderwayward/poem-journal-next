@@ -19,6 +19,8 @@ poem-journal-next
 │     │  └─ mongodb
 │     │     └─ route.ts
 │     ├─ auth
+│     │  ├─ error
+│     │  │  └─ page.tsx
 │     │  └─ page.tsx
 │     ├─ edit
 │     ├─ favicon.ico

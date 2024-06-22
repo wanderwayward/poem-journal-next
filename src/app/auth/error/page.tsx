@@ -1,25 +1,19 @@
-"use client";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
+// /src/app/auth/error/page.tsx
 
-export default function AuthErrorPage() {
-  const router = useRouter();
-  const { error } = router.query;
+import dynamic from "next/dynamic";
 
-  useEffect(() => {
-    if (error) {
-      console.error("Authentication error:", error);
-    }
-  }, [error]);
+// Use dynamic import to load the component on the client side only
+const AuthErrorComponent = dynamic(
+  () => import("@/app/_components/Auth/Error"),
+  {
+    ssr: false, // Disable server-side rendering for this component
+  }
+);
 
+export default function ErrorPage() {
   return (
     <div>
-      <h1>Authentication Error</h1>
-      {error && <p>{error}</p>}
-      <p>
-        Something went wrong during authentication. Please try again or contact
-        support.
-      </p>
+      <AuthErrorComponent />
     </div>
   );
 }
