@@ -1,5 +1,5 @@
 // /src/app/api/auth/route.ts
-import NextAuth from "next-auth";
+import NextAuth, { SessionStrategy } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "@/app/_utils/mongodb";
@@ -14,7 +14,7 @@ const authOptions = {
   adapter: MongoDBAdapter(clientPromise),
   secret: process.env.NEXTAUTH_SECRET as string,
   session: {
-    strategy: "jwt",
+    strategy: "jwt" as SessionStrategy,
   },
   pages: {
     signIn: "/auth",
@@ -22,13 +22,13 @@ const authOptions = {
   },
   debug: true, // Enable debug mode for more detailed logs
   logger: {
-    debug: (code, metadata) => {
+    debug: (code: any, metadata: any) => {
       console.log("[DEBUG]", code, metadata);
     },
-    error: (code, metadata) => {
+    error: (code: any, metadata: any) => {
       console.error("[ERROR]", code, metadata);
     },
-    warn: (code) => {
+    warn: (code: any) => {
       console.warn("[WARN]", code);
     },
   },
