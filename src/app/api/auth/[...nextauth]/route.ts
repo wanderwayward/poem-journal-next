@@ -23,6 +23,8 @@
 
 // // Export the NextAuth handler with the configuration
 // export default NextAuth(authOptions);
-export default function handler(req: any, res: any) {
+import { NextApiRequest, NextApiResponse } from "next";
+
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
   res.status(200).send("Authentication route");
 }
