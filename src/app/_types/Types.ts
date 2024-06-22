@@ -1,5 +1,6 @@
 import { BaseEditor } from "slate";
 import { ReactEditor } from "slate-react";
+import { MongoClient } from "mongodb";
 
 export type CustomElement = {
   type: "stanza" | "line" | "paragraph";
