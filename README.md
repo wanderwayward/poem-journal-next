@@ -15,10 +15,11 @@ poem-journal-next
 │  └─ app
 │     ├─ api
 │     │  ├─ auth
-│     │  │  └─ [...nextauth]
-│     │  │     └─ route.ts
+│     │  │  └─ route.ts
 │     │  └─ mongodb
 │     │     └─ route.ts
+│     ├─ auth
+│     │  └─ page.tsx
 │     ├─ edit
 │     ├─ favicon.ico
 │     ├─ globals.css
@@ -32,6 +33,9 @@ poem-journal-next
 │     │  └─ page.tsx
 │     ├─ user
 │     ├─ _components
+│     │  ├─ Auth
+│     │  │  ├─ SignIn.tsx
+│     │  │  └─ SignUp.tsx
 │     │  ├─ Poem
 │     │  └─ TextEditor
 │     │     ├─ subcomponents

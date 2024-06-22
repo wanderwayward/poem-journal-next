@@ -1,10 +1,10 @@
-import NextAuth, { AuthOptions, SessionStrategy } from "next-auth";
+// /src/app/api/auth/route.ts
+import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "@/app/_utils/mongodb";
-import { NextResponse } from "next/server";
 
-const authOptions: AuthOptions = {
+const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -14,22 +14,39 @@ const authOptions: AuthOptions = {
   adapter: MongoDBAdapter(clientPromise),
   secret: process.env.NEXTAUTH_SECRET as string,
   session: {
-    strategy: "jwt" as SessionStrategy, // Explicitly type the strategy
+    strategy: "jwt",
   },
   pages: {
     signIn: "/auth",
+    error: "/auth/error", // Custom error page
+  },
+  debug: true, // Enable debug mode for more detailed logs
+  logger: {
+    debug: (code, metadata) => {
+      console.log("[DEBUG]", code, metadata);
+    },
+    error: (code, metadata) => {
+      console.error("[ERROR]", code, metadata);
+    },
+    warn: (code) => {
+      console.warn("[WARN]", code);
+    },
   },
 };
 
 const handler = NextAuth(authOptions);
 
-// Add basic logging for GET and POST requests
 export async function GET(request: Request) {
   console.log("GET request received");
-  return NextResponse.json({ message: "GET request received" });
+  return handler(request as any, {} as any);
 }
 
 export async function POST(request: Request) {
   console.log("POST request received");
-  return handler(request as any, {} as any);
+  try {
+    return handler(request as any, {} as any);
+  } catch (error) {
+    console.error("Error during POST request:", error);
+    throw error;
+  }
 }
