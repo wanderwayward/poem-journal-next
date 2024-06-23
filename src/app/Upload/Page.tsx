@@ -23,3 +23,10 @@ function Upload() {
 }
 
 export default Upload;
+
+// This forces the page to be server-side rendered
+export async function getServerSideProps() {
+  return {
+    props: {}, // props will be passed to the page component
+  };
+}
