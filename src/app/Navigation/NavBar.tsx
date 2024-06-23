@@ -17,7 +17,7 @@ const Navbar = () => {
       }}
     >
       <Grid>
-        <Link href="/poem-upload" passHref>
+        <Link href="/upload" passHref>
           <Typography
             component="span"
             sx={{ textDecoration: "none !important", color: "inherit" }}
