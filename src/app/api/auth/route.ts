@@ -5,6 +5,7 @@ import { NextAuthOptions } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import { Account, Profile, Session, User } from "next-auth";
 
+// Define the options for NextAuth with proper types
 const options: NextAuthOptions = {
   providers: [
     GoogleProvider({
@@ -69,6 +70,30 @@ const options: NextAuthOptions = {
   debug: true,
 };
 
-// Export the NextAuth handler directly with the configured options
-const authHandler = NextAuth(options);
-export { authHandler as GET, authHandler as POST };
+// Error handling for the /api/auth/error route
+export async function GET(req: NextApiRequest, res: NextApiResponse) {
+  if (req.url?.includes("/api/auth/error")) {
+    const error = req.query.error;
+    console.error("NextAuth error:", error);
+    res.status(400).json({ message: `Authentication error: ${error}` });
+    return;
+  }
+
+  try {
+    // Call NextAuth with the provided options
+    return await NextAuth(req, res, options);
+  } catch (error) {
+    console.error("Error in NextAuth handler:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
+export async function POST(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    // Call NextAuth with the provided options
+    return await NextAuth(req, res, options);
+  } catch (error) {
+    console.error("Error in NextAuth handler:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
