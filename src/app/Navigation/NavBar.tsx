@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import { Grid, Typography } from '@mui/joy';
+import Link from "next/link";
+import { Grid, Typography } from "@mui/joy";
 
 const Navbar = () => {
   return (
@@ -17,15 +17,24 @@ const Navbar = () => {
       }}
     >
       <Grid>
-        <Link href="/upload" passHref>
-          <Typography component="span" sx={{ textDecoration: "none !important", color: "inherit" }}>
+        <Link href="/poem-upload" passHref>
+          <Typography
+            component="span"
+            sx={{ textDecoration: "none !important", color: "inherit" }}
+          >
             Upload
           </Typography>
         </Link>
       </Grid>
       <Grid>
         <Link href="/" passHref>
-          <Typography component="span" color="warning" level="title-lg" variant="plain" sx={{ textDecoration: "none !important", color: "inherit" }}>
+          <Typography
+            component="span"
+            color="warning"
+            level="title-lg"
+            variant="plain"
+            sx={{ textDecoration: "none !important", color: "inherit" }}
+          >
             Poem Journal
           </Typography>
         </Link>
