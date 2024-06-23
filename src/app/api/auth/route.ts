@@ -70,7 +70,7 @@ const options: NextAuthOptions = {
   debug: true,
 };
 
-// Error handling for the /api/auth/error route
+// Handle errors explicitly at /api/auth/error
 export async function GET(req: NextApiRequest, res: NextApiResponse) {
   if (req.url?.includes("/api/auth/error")) {
     const error = req.query.error;
@@ -79,21 +79,12 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
     return;
   }
 
-  try {
-    // Call NextAuth with the provided options
-    return await NextAuth(req, res, options);
-  } catch (error) {
-    console.error("Error in NextAuth handler:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
+  // Handle the GET request normally
+  return NextAuth(req, res, options);
 }
 
+// Export the NextAuth handler directly with the configured options for POST
 export async function POST(req: NextApiRequest, res: NextApiResponse) {
-  try {
-    // Call NextAuth with the provided options
-    return await NextAuth(req, res, options);
-  } catch (error) {
-    console.error("Error in NextAuth handler:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
+  // Handle the POST request normally
+  return NextAuth(req, res, options);
 }
