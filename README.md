@@ -7,6 +7,10 @@ poem-journal-next
 ├─ global.d.ts
 ├─ next.config.mjs
 ├─ package.json
+├─ pages
+│  └─ api
+│     └─ auth
+│        └─ [...nextauth].ts
 ├─ public
 │  ├─ next.svg
 │  └─ vercel.svg
@@ -14,13 +18,9 @@ poem-journal-next
 ├─ src
 │  └─ app
 │     ├─ api
-│     │  ├─ auth
-│     │  │  └─ route.ts
 │     │  └─ mongodb
 │     │     └─ route.ts
 │     ├─ auth
-│     │  ├─ error
-│     │  │  └─ page.tsx
 │     │  └─ page.tsx
 │     ├─ edit
 │     ├─ favicon.ico
@@ -36,6 +36,7 @@ poem-journal-next
 │     ├─ user
 │     ├─ _components
 │     │  ├─ Auth
+│     │  │  ├─ Error.tsx
 │     │  │  ├─ SignIn.tsx
 │     │  │  └─ SignUp.tsx
 │     │  ├─ Poem
