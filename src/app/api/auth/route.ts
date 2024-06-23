@@ -71,20 +71,25 @@ const options: NextAuthOptions = {
 };
 
 // Handle errors explicitly at /api/auth/error
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+const errorHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+  const error = req.query.error;
+  console.error("NextAuth error:", error);
+  res.status(400).json({ message: `Authentication error: ${error}` });
+};
+
+// Handle the NextAuth requests for GET
+const authHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+  return await NextAuth(req, res, options);
+};
+
+// Exporting based on the request method
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.url?.includes("/api/auth/error")) {
-    const error = req.query.error;
-    console.error("NextAuth error:", error);
-    res.status(400).json({ message: `Authentication error: ${error}` });
-    return;
+    return errorHandler(req, res);
   }
 
-  // Handle the GET request normally
-  return NextAuth(req, res, options);
-}
-
-// Export the NextAuth handler directly with the configured options for POST
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
-  // Handle the POST request normally
-  return NextAuth(req, res, options);
+  return authHandler(req, res);
 }
