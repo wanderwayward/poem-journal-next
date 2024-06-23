@@ -1,18 +1,28 @@
+// src/app/auth/page.tsx
 "use client";
+
 import { useState } from "react";
+import { Button, Box } from "@mui/joy";
 import SignIn from "@/app/_components/Auth/SignIn";
 import SignUp from "@/app/_components/Auth/SignUp";
 
-export default function Auth() {
-  const [isSignIn, setIsSignIn] = useState(true);
+const Auth = () => {
+  const [isSignUp, setIsSignUp] = useState(false);
 
   return (
-    <div>
-      <h1>{isSignIn ? "Sign In" : "Sign Up"}</h1>
-      {isSignIn ? <SignIn /> : <SignUp />}
-      <button onClick={() => setIsSignIn(!isSignIn)}>
-        {isSignIn ? "Switch to Sign Up" : "Switch to Sign In"}
-      </button>
-    </div>
+    <Box display="flex" flexDirection="column" alignItems="center">
+      {isSignUp ? <SignUp /> : <SignIn />}
+      <Button
+        variant="outlined"
+        onClick={() => setIsSignUp(!isSignUp)}
+        sx={{ marginTop: 2 }}
+      >
+        {isSignUp
+          ? "Already have an account? Sign In"
+          : "Don't have an account? Sign Up"}
+      </Button>
+    </Box>
   );
-}
+};
+
+export default Auth;
