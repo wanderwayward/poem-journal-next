@@ -34,42 +34,43 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <CssVarsProvider>
-          <CssBaseline />
-          <Sheet
-            variant="soft"
-            color="warning"
-            sx={{
-              width: "100%",
-              height: "100vh",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            {/* Ensure Navbar is client-side */}
-            <Navbar />
-            <Grid
-              container
-              justifyContent="center"
-              alignItems="center"
-              sx={{ width: "100%", height: "100%", paddingTop: "60px" }}
+        <ClientProviders>
+          <CssVarsProvider>
+            <CssBaseline />
+            <Sheet
+              variant="soft"
+              color="warning"
+              sx={{
+                width: "100%",
+                height: "100vh",
+                display: "flex",
+                flexDirection: "column",
+              }}
             >
+              <Navbar />
               <Grid
                 container
                 justifyContent="center"
                 alignItems="center"
-                sx={{ width: "100%" }}
+                sx={{ width: "100%", height: "100%", paddingTop: "60px" }}
               >
-                <Grid xs={12} style={{ width: "100%" }}>
-                  <Grid container justifyContent="center" alignItems="unset">
-                    {/* Wrap children with ClientProviders dynamically */}
-                    <ClientProviders>{children}</ClientProviders>
+                <Grid
+                  container
+                  justifyContent="center"
+                  alignItems="center"
+                  sx={{ width: "100%" }}
+                >
+                  <Grid xs={12} style={{ width: "100%" }}>
+                    <Grid container justifyContent="center" alignItems="unset">
+                      {/* Wrap children with ClientProviders dynamically */}
+                      {children}
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-          </Sheet>
-        </CssVarsProvider>
+            </Sheet>
+          </CssVarsProvider>
+        </ClientProviders>
       </body>
     </html>
   );
