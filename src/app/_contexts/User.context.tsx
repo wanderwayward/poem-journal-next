@@ -33,13 +33,13 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const { data: session } = useSession(); // Use NextAuth's useSession to get the current session
   const [user, setUser] = useState<User | null>(null);
-  console.log("UserProvider session:", session);
 
   // Update the user state whenever the session changes
   useEffect(() => {
     if (session) {
       const { id, name, email, image } = session.user as User;
       setUser({ id, name, email, image });
+      console.log("UserProvider session:", session);
     } else {
       setUser(null);
     }
