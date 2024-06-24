@@ -69,7 +69,10 @@ const PoemPage = () => {
         textAlign: "center",
       }}
     >
-      <Typography level="h4">{poemData.title}</Typography>
+      <Typography level="h2">{poemData.title}</Typography>
+      <Typography level="body-xs" color="danger">
+        {poemData.author} by {poemData.username}
+      </Typography>
       <Poem stanzas={poemData.stanzas} />
       <Box
         sx={{

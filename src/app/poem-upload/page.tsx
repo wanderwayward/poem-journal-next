@@ -5,9 +5,7 @@ import { EditorProvider } from "../_contexts/Editor.context";
 function Upload() {
   return (
     <EditorProvider>
-      <Sheet color="danger" variant="solid">
-        <PoemForm />
-      </Sheet>
+      <PoemForm />
     </EditorProvider>
   );
 }

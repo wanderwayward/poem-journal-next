@@ -1,10 +1,21 @@
 "use client";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { Box, Button, Input, FormControl, FormLabel, Sheet } from "@mui/joy";
+import {
+  Box,
+  Button,
+  Input,
+  FormControl,
+  FormLabel,
+  Sheet,
+  Textarea,
+  Grid,
+  Typography,
+} from "@mui/joy";
 import TextEditor from "../TextEditor/TextEditor";
 import { useEditorContext } from "../../_contexts/Editor.context";
 import parseContentToStanzas from "../../_utils/parseContentToStanzas";
+import { useUser } from "@/app/_contexts/User.context";
 
 const PoemForm = () => {
   const { content } = useEditorContext();
@@ -13,6 +24,8 @@ const PoemForm = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("Original");
   const [tags, setTags] = useState("");
+  const [comment, setComment] = useState("");
+  const { user } = useUser();
 
   const handleSave = async (event: FormEvent) => {
     event.preventDefault(); // Prevent default form submission
@@ -25,7 +38,9 @@ const PoemForm = () => {
       tags: tags.split(",").map((tag) => tag.trim()), // Assuming tags are comma-separated
       stanzas: parsedContent,
       status: "draft", // Assuming default status is draft
-      userId: "USER_ID", // Replace with actual user ID
+      userId: user?.id,
+      username: user?.name,
+      comment,
     };
 
     console.log("Saving poem:", poem);
@@ -53,42 +68,75 @@ const PoemForm = () => {
   };
 
   return (
-    <Sheet sx={{ display: "flex", flexDirection: "column", width: "800px" }}>
+    <Sheet sx={{ width: "100%", maxWidth: "1200px", p: 3 }}>
       <Box component="form" onSubmit={handleSave}>
-        <FormControl required>
-          <FormLabel>Title</FormLabel>
-          <Input
-            placeholder="Title"
-            value={title}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setTitle(e.target.value)
-            }
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Author</FormLabel>
-          <Input
-            placeholder="Author"
-            value={author}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setAuthor(e.target.value)
-            }
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Tags</FormLabel>
-          <Input
-            placeholder="Comma separated"
-            value={tags}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setTags(e.target.value)
-            }
-          />
-        </FormControl>
-        <TextEditor />
-        <Button type="submit" variant="solid">
-          Save
-        </Button>
+        <Grid container spacing={2}>
+          <Grid xs={12} md={6}>
+            <FormControl required>
+              <FormLabel>Title</FormLabel>
+              <Input
+                placeholder="Title"
+                value={title}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setTitle(e.target.value)
+                }
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Author</FormLabel>
+              <Input
+                placeholder="Author"
+                value={author}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setAuthor(e.target.value)
+                }
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Tags</FormLabel>
+              <Input
+                placeholder="Comma separated"
+                value={tags}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setTags(e.target.value)
+                }
+              />
+            </FormControl>
+            <TextEditor />
+          </Grid>
+          <Grid xs={12} md={6}>
+            <FormControl>
+              <FormLabel sx={{ fontSize: "1.25rem", fontWeight: "bold" }}>
+                Comment about the Poem
+              </FormLabel>
+              <Typography level="title-sm" sx={{ marginBottom: "0.5rem" }}>
+                What did this make you think/feel? What memory do you associate
+                with this?
+              </Typography>
+              <Textarea
+                placeholder="Share your thoughts or feelings about this poem..."
+                value={comment}
+                onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                  setComment(e.target.value)
+                }
+                minRows={10}
+                sx={{ width: "100%" }}
+              />
+            </FormControl>
+          </Grid>
+        </Grid>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            width: "100%",
+            mt: 2,
+          }}
+        >
+          <Button type="submit" variant="solid">
+            Save
+          </Button>
+        </Box>
       </Box>
     </Sheet>
   );

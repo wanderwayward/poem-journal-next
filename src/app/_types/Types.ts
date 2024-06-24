@@ -52,4 +52,6 @@ export interface PoemType {
   stanzas: PoemStanzaType[];
   status: string;
   userId: string;
+  username: string;
+  comment: string;
 }
