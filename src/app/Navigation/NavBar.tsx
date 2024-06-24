@@ -1,7 +1,11 @@
+"use client";
 import Link from "next/link";
 import { Grid, Typography } from "@mui/joy";
+import { useUser } from "../_contexts/User.context";
 
 const Navbar = () => {
+  const { user } = useUser();
+
   return (
     <Grid
       container
@@ -39,7 +43,19 @@ const Navbar = () => {
           </Typography>
         </Link>
       </Grid>
-      <Grid></Grid>
+      <Grid>
+        <Link href="/auth" passHref>
+          <Typography
+            component="span"
+            color="warning"
+            level="title-lg"
+            variant="plain"
+            sx={{ textDecoration: "none !important", color: "inherit" }}
+          >
+            {user ? user.name : "Sign In"}
+          </Typography>
+        </Link>
+      </Grid>
     </Grid>
   );
 };

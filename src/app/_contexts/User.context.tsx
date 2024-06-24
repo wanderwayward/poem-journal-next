@@ -39,7 +39,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     if (session) {
       const { id, name, email, image } = session.user as User;
       setUser({ id, name, email, image });
-      console.log("UserProvider session:", session);
     } else {
       setUser(null);
     }
