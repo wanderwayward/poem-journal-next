@@ -5,7 +5,8 @@ import { CssBaseline, Sheet, Grid } from "@mui/joy";
 import Navbar from "./Navigation/NavBar";
 import { SessionProvider } from "next-auth/react";
 import { UserProvider } from "@/app/_contexts/User.context";
-import ClientWrapper from "@/app/_components/ClientWrapper/ClientWrapper";
+import ClientProviders from "@/app/_components/ClientProviders/ClientProviders";
+
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -23,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ClientWrapper>
+        <ClientProviders>
           <SessionProvider>
             <UserProvider>
               <CssVarsProvider>
@@ -66,7 +67,7 @@ export default function RootLayout({
               </CssVarsProvider>
             </UserProvider>
           </SessionProvider>
-        </ClientWrapper>
+        </ClientProviders>
       </body>
     </html>
   );
