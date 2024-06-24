@@ -12,7 +12,7 @@ const Poem: React.FC<PoemProps> = ({ stanzas }) => {
   return (
     <Container maxWidth="sm" sx={{ padding: "20px" }}>
       {stanzas.map((stanza) => (
-        <Stanza key={stanza.id} children={stanza.children} />
+        <Stanza key={stanza.id}>{stanza.children}</Stanza>
       ))}
     </Container>
   );

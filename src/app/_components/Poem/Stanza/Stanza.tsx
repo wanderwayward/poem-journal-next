@@ -1,11 +1,10 @@
-// Stanza.tsx
 import React from "react";
 import { Box } from "@mui/material";
 import Line from "../Line/Line";
 import { PoemLineType } from "@/app/_types/Types";
 
 interface StanzaProps {
-  children: PoemLineType[];
+  children: PoemLineType[]; // The children will be PoemLineType[]
 }
 
 const Stanza: React.FC<StanzaProps> = ({ children }) => {
