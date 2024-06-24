@@ -1,4 +1,3 @@
-"use client";
 import { Inter } from "next/font/google";
 import { CssVarsProvider } from "@mui/joy/styles";
 import { CssBaseline, Sheet, Grid } from "@mui/joy";
