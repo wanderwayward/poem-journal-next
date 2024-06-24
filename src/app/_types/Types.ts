@@ -1,6 +1,5 @@
 import { BaseEditor } from "slate";
 import { ReactEditor } from "slate-react";
-import { MongoClient } from "mongodb";
 
 export type CustomElement = {
   type: "stanza" | "line" | "paragraph";
@@ -28,3 +27,19 @@ declare module "slate" {
 }
 
 export type Alignment = "left" | "center" | "right";
+
+export interface PoemCustomText {
+  text: string;
+}
+
+export interface PoemLineType {
+  id: string;
+  type: string;
+  children: PoemCustomText[];
+}
+
+export interface PoemStanzaType {
+  id: string;
+  type: string;
+  children: PoemLineType[];
+}
