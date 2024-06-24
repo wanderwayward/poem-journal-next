@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { CustomElement, Descendant, CustomText } from "../_types/Types" 
+import { CustomElement, Descendant, CustomText } from "../_types/Types";
 import { isCustomElement } from "./typeGuards";
 
 function parseContentToStanzas(elements: Descendant[]): CustomElement[] {
@@ -13,21 +13,12 @@ function parseContentToStanzas(elements: Descendant[]): CustomElement[] {
   };
 
   elements.forEach((element, index) => {
-    console.log(`Processing element ${index}:`, element);
-
     if (isCustomElement(element) && element.type === "stanza") {
       element.children.forEach((child, childIndex) => {
-        console.log(
-          `Processing child ${childIndex} of stanza ${index}:`,
-          child
-        );
-
         if (isCustomElement(child) && child.type === "line") {
           const text = (child.children[0] as CustomText).text;
-          console.log(`Text in child ${childIndex}:`, text);
 
           if (text.trim() === "") {
-            console.log(`Empty line found at child ${childIndex}`);
             // Empty line: push current stanza and start a new one
             if (currentStanza.children.length > 0) {
               stanzas.push(currentStanza);
@@ -45,7 +36,6 @@ function parseContentToStanzas(elements: Descendant[]): CustomElement[] {
             });
           }
         } else {
-          console.log(`Child ${childIndex} is not a line`);
         }
       });
 
@@ -68,7 +58,6 @@ function parseContentToStanzas(elements: Descendant[]): CustomElement[] {
     stanzas.push(currentStanza);
   }
 
-  console.log("Parsed stanzas:", stanzas);
   return stanzas;
 }
 
