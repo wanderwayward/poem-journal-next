@@ -1,7 +1,7 @@
 // src/app/Navigation/NavBar.tsx
 "use client";
 import Link from "next/link";
-import { Grid, Typography, Button } from "@mui/joy";
+import { Grid, Typography, Button, Box, Avatar } from "@mui/joy";
 import { useUser } from "../_contexts/User.context";
 import { signOut } from "next-auth/react"; // Import the signOut function
 
@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <Grid
       container
-      justifyContent="space-around"
+      justifyContent="space-between"
       alignItems="center"
       sx={{
         position: "fixed",
@@ -20,9 +20,11 @@ const Navbar = () => {
         right: 0,
         zIndex: 1100,
         width: "100%",
+        backgroundColor: "background.paper", // Ensures navbar is visible against content
+        padding: "8px 16px", // Padding to space content from edges
       }}
     >
-      <Grid>
+      <Box flex={1} display="flex" justifyContent="flex-start">
         <Link href="/poem-upload" passHref>
           <Typography
             component="span"
@@ -31,8 +33,9 @@ const Navbar = () => {
             Upload
           </Typography>
         </Link>
-      </Grid>
-      <Grid>
+      </Box>
+
+      <Box flex={2} display="flex" justifyContent="center">
         <Link href="/" passHref>
           <Typography
             component="span"
@@ -44,15 +47,35 @@ const Navbar = () => {
             Poem Journal
           </Typography>
         </Link>
-      </Grid>
-      <Grid>
+      </Box>
+
+      <Box
+        flex={1}
+        display="flex"
+        justifyContent="flex-end"
+        alignItems="center"
+      >
         {user ? (
-          <Typography component="span" color="warning" variant="plain">
-            {user.name}
-            <Button color="warning" variant="plain" onClick={() => signOut()}>
+          <>
+            {user.image && (
+              <Avatar
+                src={user.image}
+                alt={user.name}
+                sx={{ marginRight: 1 }}
+              />
+            )}
+            <Typography component="span" color="warning" variant="plain">
+              {user.name}
+            </Typography>
+            <Button
+              color="warning"
+              variant="plain"
+              onClick={() => signOut()}
+              sx={{ marginLeft: 1 }}
+            >
               Sign Out
             </Button>
-          </Typography>
+          </>
         ) : (
           <Link href="/auth" passHref>
             <Typography
@@ -66,7 +89,7 @@ const Navbar = () => {
             </Typography>
           </Link>
         )}
-      </Grid>
+      </Box>
     </Grid>
   );
 };

@@ -1,3 +1,4 @@
+// src/app/page.tsx
 import { Box, Typography } from "@mui/joy";
 import { FC } from "react";
 
@@ -9,11 +10,15 @@ const Home: FC = () => {
         height: "calc(100vh - 60px)", // Full viewport height minus 60px for the navbar
         display: "flex", // Establishes a flex container for flexible box layout
         flexDirection: "column", // Ensures the boxes are stacked vertically
+        justifyContent: "center", // Centers content vertically
+        alignItems: "center", // Centers content horizontally
         textAlign: "center",
-        alignItems: "center",
+        paddingTop: "16px", // Adjust to push content up slightly
       }}
     >
-      <Typography level="title-lg"> The Facts of Life</Typography>
+      <Typography level="title-lg" marginBottom="16px">
+        The Facts of Life
+      </Typography>
       <Typography
         color="warning"
         level="body-lg"
