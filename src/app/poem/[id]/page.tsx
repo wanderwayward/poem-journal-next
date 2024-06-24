@@ -62,10 +62,23 @@ const PoemPage = () => {
   }
 
   return poemData ? (
-    <Container maxWidth="md" sx={{ padding: "20px", textAlign: "center" }}>
+    <Container
+      maxWidth="md"
+      sx={{
+        padding: "20px",
+        textAlign: "center",
+      }}
+    >
       <Typography level="h4">{poemData.title}</Typography>
       <Poem stanzas={poemData.stanzas} />
-      <Box sx={{ marginTop: "20px", display: "flex", gap: "10px" }}>
+      <Box
+        sx={{
+          marginTop: "20px",
+          display: "flex",
+          justifyContent: "center",
+          gap: "5em",
+        }}
+      >
         <Button
           variant="plain"
           color="primary"
