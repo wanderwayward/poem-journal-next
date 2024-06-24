@@ -35,13 +35,27 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   const { data: session } = useSession(); // Use NextAuth's useSession to get the current session
   const [user, setUser] = useState<User | null>(null);
 
-  // Update the user state whenever the session changes
+  // Mock user data for development
+  const mockUser: User = {
+    id: "google-115338846542280213252",
+    name: "Ruben Aguirre",
+    email: "rubenaguirrelizcano@gmail.com",
+    image:
+      "https://lh3.googleusercontent.com/a/ACg8ocKY5IbX5G27DZsx1-DtZjDzQ-GuW6KWp-jB6nceRlOcRGdhbx7a=s96-c",
+  };
+
   useEffect(() => {
-    if (session) {
-      const { id, name, email, image } = session.user as User;
-      setUser({ id, name, email, image });
+    if (process.env.NODE_ENV === "development") {
+      // In development, use the mock user
+      setUser(mockUser);
     } else {
-      setUser(null);
+      // In production, use the actual session user
+      if (session) {
+        const { id, name, email, image } = session.user as User;
+        setUser({ id, name, email, image });
+      } else {
+        setUser(null);
+      }
     }
   }, [session]);
 
