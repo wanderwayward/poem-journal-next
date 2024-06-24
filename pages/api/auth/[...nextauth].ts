@@ -1,21 +1,11 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { MongoClient } from "mongodb"; // Import MongoDB client for database operations
-import clientPromise from "@/app/_utils/mongodb"; // Import clientPromise to connect to MongoDB
+import { MongoClient } from "mongodb";
+import clientPromise from "@/app/_utils/mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
-import { Account, Profile, Session, User } from "next-auth"; // Import necessary types from NextAuth.js
-import { JWT } from "next-auth/jwt"; // Import JWT type for the JWT callback
+import { Account, Profile, Session, User } from "next-auth";
+import { JWT } from "next-auth/jwt";
 
-const mockUser = {
-  id: "google-115338846542280213252",
-  name: "Ruben Aguirre",
-  email: "rubenaguirrelizcano@gmail.com",
-  image:
-    "https://lh3.googleusercontent.com/a/ACg8ocKY5IbX5G27DZsx1-DtZjDzQ-GuW6KWp-jB6nceRlOcRGdhbx7a=s96-c",
-  createdAt: "2024-06-24T00:06:34.248Z", // Use the exact date from your database
-};
-
-// Define the options for NextAuth with proper types
 const options: NextAuthOptions = {
   providers: [
     GoogleProvider({
@@ -25,6 +15,60 @@ const options: NextAuthOptions = {
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
+    async signIn({
+      user,
+      account,
+      profile,
+    }: {
+      user: User;
+      account: Account | null;
+      profile?: Profile;
+    }): Promise<boolean> {
+      try {
+        const client: MongoClient = await clientPromise;
+        const db = client.db("poetrystream");
+        const usersCollection = db.collection("users");
+
+        const existingUser = await usersCollection.findOne({
+          email: user.email,
+        });
+
+        if (!existingUser) {
+          const newUser = {
+            id: `${account?.provider}-${account?.providerAccountId}`,
+            name: user.name,
+            email: user.email,
+            image: user.image,
+            createdAt: new Date(),
+          };
+
+          await usersCollection.insertOne(newUser);
+          console.log("New user created:", newUser);
+        } else {
+          console.log("User already exists:", existingUser);
+        }
+
+        return true;
+      } catch (error) {
+        console.error("Error during sign-in:", error);
+        return false;
+      }
+    },
+    async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
+      console.log("Redirecting to:", url);
+
+      // Normalize URL to avoid trailing slash issues
+      const cleanUrl = url.endsWith("/") ? url.slice(0, -1) : url;
+
+      // Check if the user is on the /auth page
+      if (cleanUrl === `${baseUrl}/auth`) {
+        // Redirect to the homepage instead of staying on the /auth page
+        return baseUrl;
+      }
+
+      // Allow redirection to proceed if within the base URL, otherwise default to base URL
+      return cleanUrl.startsWith(baseUrl) ? cleanUrl : baseUrl;
+    },
     async session({
       session,
       user,
@@ -34,13 +78,6 @@ const options: NextAuthOptions = {
       user: User;
       token: JWT;
     }): Promise<Session> {
-      if (process.env.NODE_ENV === "development") {
-        // Return the mock user session in development
-        return {
-          user: mockUser,
-          expires: new Date().toISOString(), // or some future date
-        };
-      }
       console.log("Session callback:", session);
       return session;
     },
@@ -57,16 +94,6 @@ const options: NextAuthOptions = {
       profile?: Profile;
       isNewUser?: boolean;
     }): Promise<JWT> {
-      if (process.env.NODE_ENV === "development") {
-        // Set the token with mock user data in development
-        return {
-          ...token,
-          name: mockUser.name,
-          email: mockUser.email,
-          picture: mockUser.image,
-          sub: mockUser.id,
-        };
-      }
       console.log("JWT callback:", token);
       return token;
     },
@@ -74,7 +101,6 @@ const options: NextAuthOptions = {
   debug: true,
 };
 
-// Default export for NextAuth.js API route
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
