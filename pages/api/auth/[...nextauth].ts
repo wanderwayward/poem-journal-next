@@ -61,11 +61,17 @@ const options: NextAuthOptions = {
     async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
       console.log("Redirecting to:", url);
 
-      if (url === `${baseUrl}/auth/`) {
+      // Normalize URL to avoid trailing slash issues
+      const cleanUrl = url.endsWith("/") ? url.slice(0, -1) : url;
+
+      // Check if the user is on the /auth page
+      if (cleanUrl === `${baseUrl}/auth`) {
+        // Redirect to the homepage instead of staying on the /auth page
         return baseUrl;
       }
 
-      return url.startsWith(baseUrl) ? url : baseUrl;
+      // Allow redirection to proceed if within the base URL, otherwise default to base URL
+      return cleanUrl.startsWith(baseUrl) ? cleanUrl : baseUrl;
     },
     async session({
       session,
