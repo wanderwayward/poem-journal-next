@@ -1,7 +1,9 @@
+// src/app/Navigation/NavBar.tsx
 "use client";
 import Link from "next/link";
-import { Grid, Typography } from "@mui/joy";
+import { Grid, Typography, Button } from "@mui/joy";
 import { useUser } from "../_contexts/User.context";
+import { signOut } from "next-auth/react"; // Import the signOut function
 
 const Navbar = () => {
   const { user } = useUser();
@@ -44,17 +46,23 @@ const Navbar = () => {
         </Link>
       </Grid>
       <Grid>
-        <Link href="/auth" passHref>
-          <Typography
-            component="span"
-            color="warning"
-            level="title-lg"
-            variant="plain"
-            sx={{ textDecoration: "none !important", color: "inherit" }}
-          >
-            {user ? user.name : "Sign In"}
-          </Typography>
-        </Link>
+        {user ? (
+          <Button color="warning" variant="plain" onClick={() => signOut()}>
+            {user.name}, Sign Out
+          </Button>
+        ) : (
+          <Link href="/auth" passHref>
+            <Typography
+              component="span"
+              color="warning"
+              level="title-lg"
+              variant="plain"
+              sx={{ textDecoration: "none !important", color: "inherit" }}
+            >
+              Sign In
+            </Typography>
+          </Link>
+        )}
       </Grid>
     </Grid>
   );
