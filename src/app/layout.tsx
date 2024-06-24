@@ -1,5 +1,4 @@
 "use client";
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { CssVarsProvider } from "@mui/joy/styles";
 import { CssBaseline, Sheet, Grid } from "@mui/joy";
@@ -7,13 +6,11 @@ import Navbar from "./Navigation/NavBar";
 import { SessionProvider } from "next-auth/react";
 import { UserProvider } from "@/app/_contexts/User.context";
 import "./globals.css";
+import { metadata } from "./layoutMetadata";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Poem Journal",
-  description: "A journal for poems and text editing",
-};
+export { metadata };
 
 export default function RootLayout({
   children,
