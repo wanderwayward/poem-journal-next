@@ -1,6 +1,6 @@
 // Line.tsx
 import React from "react";
-import { Typography } from "@mui/material";
+import { Typography } from "@mui/joy";
 import { PoemCustomText } from "../../../_types/Types";
 
 interface LineProps {
@@ -9,7 +9,7 @@ interface LineProps {
 
 const Line: React.FC<LineProps> = ({ text }) => {
   return (
-    <Typography variant="body1" component="div" style={{ marginLeft: "20px" }}>
+    <Typography component="div" style={{ marginLeft: "20px" }}>
       {text}
     </Typography>
   );

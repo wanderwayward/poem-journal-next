@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Typography } from "@mui/joy";
 import { RenderElementProps } from "slate-react";
 
 const EditorStanza = ({
