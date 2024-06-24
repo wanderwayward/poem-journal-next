@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { CssVarsProvider } from "@mui/joy/styles";
 import { CssBaseline, Sheet, Grid } from "@mui/joy";
-import Navbar from "./Navigation/NavBar";
 import dynamic from "next/dynamic";
 import "./globals.css";
 
@@ -21,6 +20,11 @@ const ClientProviders = dynamic(
     ssr: false,
   }
 );
+
+// Dynamically import Navbar with no SSR
+const Navbar = dynamic(() => import("./Navigation/NavBar"), {
+  ssr: false,
+});
 
 export default function RootLayout({
   children,
@@ -42,6 +46,7 @@ export default function RootLayout({
               flexDirection: "column",
             }}
           >
+            {/* Ensure Navbar is client-side */}
             <Navbar />
             <Grid
               container
