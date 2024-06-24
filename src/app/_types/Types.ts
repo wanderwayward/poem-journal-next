@@ -43,3 +43,13 @@ export interface PoemStanzaType {
   type: string;
   children: PoemLineType[];
 }
+
+export interface PoemType {
+  _id: string;
+  title: string;
+  author: string;
+  tags: string[];
+  stanzas: PoemStanzaType[];
+  status: string;
+  userId: string;
+}

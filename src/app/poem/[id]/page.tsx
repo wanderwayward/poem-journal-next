@@ -2,41 +2,39 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Poem from "@/app/_components/Poem/Poem";
-import { PoemStanzaType } from "@/app/_types/Types";
-import {
-  Container,
-  CircularProgress,
-  Button,
-  Box,
-  Typography,
-} from "@mui/material";
+import { PoemType } from "@/app/_types/Types";
+import { Container, CircularProgress, Button, Box, Typography } from "@mui/joy";
 
 const PoemPage = () => {
   const params = useParams();
   const id = params?.id as string | undefined;
 
-  const [poemData, setPoemData] = useState<PoemStanzaType[] | null>(null);
+  const [poemData, setPoemData] = useState<PoemType | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (id) {
-      // Fetch the poem data based on the ID
-      fetch(`/api/poems/${id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setPoemData(data.stanzas);
-          setLoading(false);
-        })
-        .catch((err) => {
-          setError("Failed to fetch the poem");
-          setLoading(false);
-        });
-    } else {
-      setError("No poem ID provided");
-      setLoading(false);
+      fetchPoem();
     }
   }, [id]);
+
+  const fetchPoem = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/poems/${id}`);
+      const result = await response.json();
+      if (result.status === "success") {
+        setPoemData(result.data);
+      } else {
+        setError(result.message);
+      }
+    } catch (error) {
+      setError("Failed to fetch poem");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -58,18 +56,18 @@ const PoemPage = () => {
   if (error) {
     return (
       <Container maxWidth="md" sx={{ padding: "20px" }}>
-        <Typography color="error">{error}</Typography>
+        <Typography color="danger">{error}</Typography>
       </Container>
     );
   }
 
   return poemData ? (
-    <Container maxWidth="md" sx={{ padding: "20px" }}>
-      <Poem stanzas={poemData} />
-      {/* Placeholder for future actions */}
+    <Container maxWidth="md" sx={{ padding: "20px", textAlign: "center" }}>
+      <Typography level="h4">{poemData.title}</Typography>
+      <Poem stanzas={poemData.stanzas} />
       <Box sx={{ marginTop: "20px", display: "flex", gap: "10px" }}>
         <Button
-          variant="contained"
+          variant="plain"
           color="primary"
           onClick={() => alert("Edit functionality coming soon!")}
         >
@@ -77,7 +75,7 @@ const PoemPage = () => {
         </Button>
         <Button
           variant="outlined"
-          color="secondary"
+          color="danger"
           onClick={() => alert("Delete functionality coming soon!")}
         >
           Delete
