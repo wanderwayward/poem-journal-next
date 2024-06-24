@@ -47,9 +47,12 @@ const Navbar = () => {
       </Grid>
       <Grid>
         {user ? (
-          <Button color="warning" variant="plain" onClick={() => signOut()}>
-            {user.name}, Sign Out
-          </Button>
+          <Typography component="span" color="warning" variant="plain">
+            {user.name}
+            <Button color="warning" variant="plain" onClick={() => signOut()}>
+              Sign Out
+            </Button>
+          </Typography>
         ) : (
           <Link href="/auth" passHref>
             <Typography
