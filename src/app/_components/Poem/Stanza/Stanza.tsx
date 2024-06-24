@@ -14,7 +14,6 @@ const Stanza: React.FC<StanzaProps> = ({ children }) => {
       sx={{
         marginBottom: "15px",
         paddingLeft: "10px",
-        borderLeft: "2px solid #ccc",
       }}
     >
       {children.map((line) => (

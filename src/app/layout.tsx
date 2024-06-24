@@ -42,7 +42,7 @@ export default function RootLayout({
               color="warning"
               sx={{
                 width: "100%",
-                height: "100vh",
+                minHeight: "100vh", // Ensures the sheet covers the full viewport at minimum
                 display: "flex",
                 flexDirection: "column",
               }}
@@ -52,7 +52,7 @@ export default function RootLayout({
                 container
                 justifyContent="center"
                 alignItems="center"
-                sx={{ width: "100%", height: "100%", paddingTop: "60px" }}
+                sx={{ width: "100%", flexGrow: 1, paddingTop: "60px" }} // Grow with content
               >
                 <Grid
                   container
@@ -62,7 +62,6 @@ export default function RootLayout({
                 >
                   <Grid xs={12} style={{ width: "100%" }}>
                     <Grid container justifyContent="center" alignItems="unset">
-                      {/* Wrap children with ClientProviders dynamically */}
                       {children}
                     </Grid>
                   </Grid>

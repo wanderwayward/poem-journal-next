@@ -18,10 +18,11 @@ const Navbar = () => {
         top: 0,
         left: 0,
         right: 0,
-        zIndex: 1100,
+        zIndex: 1100, // Keep this high to stay above other content
         width: "100%",
-        backgroundColor: "background.paper", // Ensures navbar is visible against content
-        padding: "8px 16px", // Padding to space content from edges
+        backgroundColor: "beige",
+        padding: "8px 16px",
+        boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
       }}
     >
       <Box flex={1} display="flex" justifyContent="flex-start">

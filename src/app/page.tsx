@@ -9,13 +9,12 @@ const Home: FC = () => {
     <Box
       sx={{
         width: "100%",
-        height: "calc(100vh - 60px)", // Full viewport height minus 60px for the navbar
-        display: "flex", // Establishes a flex container for flexible box layout
-        flexDirection: "column", // Ensures the boxes are stacked vertically
-        justifyContent: "center", // Centers content vertically
-        alignItems: "center", // Centers content horizontally
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
         textAlign: "left",
-        paddingTop: "16px", // Adjust to push content up slightly
+        marginTop: "60px", // Adjust margin for navbar height
       }}
     >
       <Typography level="title-lg" marginBottom="16px">
