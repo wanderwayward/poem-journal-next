@@ -60,6 +60,11 @@ const options: NextAuthOptions = {
     },
     async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
       console.log("Redirecting to:", url);
+
+      if (url === `${baseUrl}/auth/`) {
+        return baseUrl;
+      }
+
       return url.startsWith(baseUrl) ? url : baseUrl;
     },
     async session({
