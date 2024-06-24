@@ -6,6 +6,15 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Account, Profile, Session, User } from "next-auth"; // Import necessary types from NextAuth.js
 import { JWT } from "next-auth/jwt"; // Import JWT type for the JWT callback
 
+const mockUser = {
+  id: "google-115338846542280213252",
+  name: "Ruben Aguirre",
+  email: "rubenaguirrelizcano@gmail.com",
+  image:
+    "https://lh3.googleusercontent.com/a/ACg8ocKY5IbX5G27DZsx1-DtZjDzQ-GuW6KWp-jB6nceRlOcRGdhbx7a=s96-c",
+  createdAt: "2024-06-24T00:06:34.248Z", // Use the exact date from your database
+};
+
 // Define the options for NextAuth with proper types
 const options: NextAuthOptions = {
   providers: [
@@ -16,63 +25,6 @@ const options: NextAuthOptions = {
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async signIn({
-      user,
-      account,
-      profile,
-    }: {
-      user: User;
-      account: Account | null;
-      profile?: Profile;
-    }): Promise<boolean> {
-      try {
-        // Connect to the MongoDB client
-        const client: MongoClient = await clientPromise;
-        const db = client.db("poetrystream"); // Replace with your actual database name
-        const usersCollection = db.collection("users"); // Define the collection to store users
-
-        // Check if the user already exists
-        const existingUser = await usersCollection.findOne({
-          email: user.email,
-        });
-
-        if (!existingUser) {
-          // If user does not exist, create a new user
-          const newUser = {
-            id: `${account?.provider}-${account?.providerAccountId}`,
-            name: user.name,
-            email: user.email,
-            image: user.image,
-            createdAt: new Date(),
-          };
-
-          await usersCollection.insertOne(newUser); // Insert the new user document
-          console.log("New user created:", newUser);
-        } else {
-          console.log("User already exists:", existingUser);
-        }
-
-        return true; // Continue with the sign-in process
-      } catch (error) {
-        console.error("Error during sign-in:", error);
-        return false; // Reject the sign-in process
-      }
-    },
-    async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
-      console.log("Redirecting to:", url);
-
-      // Normalize URL to avoid trailing slash issues
-      const cleanUrl = url.endsWith("/") ? url.slice(0, -1) : url;
-
-      // Check if the user is on the /auth page
-      if (cleanUrl === `${baseUrl}/auth`) {
-        // Redirect to the homepage instead of staying on the /auth page
-        return baseUrl;
-      }
-
-      // Allow redirection to proceed if within the base URL, otherwise default to base URL
-      return cleanUrl.startsWith(baseUrl) ? cleanUrl : baseUrl;
-    },
     async session({
       session,
       user,
@@ -82,6 +34,13 @@ const options: NextAuthOptions = {
       user: User;
       token: JWT;
     }): Promise<Session> {
+      if (process.env.NODE_ENV === "development") {
+        // Return the mock user session in development
+        return {
+          user: mockUser,
+          expires: new Date().toISOString(), // or some future date
+        };
+      }
       console.log("Session callback:", session);
       return session;
     },
@@ -98,6 +57,16 @@ const options: NextAuthOptions = {
       profile?: Profile;
       isNewUser?: boolean;
     }): Promise<JWT> {
+      if (process.env.NODE_ENV === "development") {
+        // Set the token with mock user data in development
+        return {
+          ...token,
+          name: mockUser.name,
+          email: mockUser.email,
+          picture: mockUser.image,
+          sub: mockUser.id,
+        };
+      }
       console.log("JWT callback:", token);
       return token;
     },
