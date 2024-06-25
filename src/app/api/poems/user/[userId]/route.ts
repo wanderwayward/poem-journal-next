@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/app/_utils/mongodb";
-import { ObjectId } from "mongodb";
 
 export async function GET(req: Request) {
   try {
@@ -18,17 +17,19 @@ export async function GET(req: Request) {
     const db = client.db("poetrystream");
     const poemsCollection = db.collection("poems");
 
-    const poems = await poemsCollection
-      .find({ userId: new ObjectId(userId) })
-      .toArray();
+    // Ensure userId is used correctly (assuming userId is a string, which matches the "userId" field in your poem object)
+    const poems = await poemsCollection.find({ userId }).toArray();
 
     return NextResponse.json({ status: "success", data: poems });
   } catch (error) {
     console.error("Error fetching poems:", error);
-    return NextResponse.json({
-      status: "error",
-      message: "Failed to fetch poems",
-      error: error instanceof Error ? error.message : String(error),
-    });
+    return NextResponse.json(
+      {
+        status: "error",
+        message: "Failed to fetch poems",
+        error: error instanceof Error ? error.message : String(error),
+      },
+      { status: 500 }
+    );
   }
 }
