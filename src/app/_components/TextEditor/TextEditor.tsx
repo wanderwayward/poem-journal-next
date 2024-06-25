@@ -25,6 +25,7 @@ const TextEditor = () => {
           justifyContent: "space-around",
           alignItems: "center",
           height: "3em",
+          marginTop: "1em",
         }}
       >
         <FormattingButton

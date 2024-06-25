@@ -1,5 +1,5 @@
 "use client";
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, SyntheticEvent } from "react";
 import { useRouter } from "next/navigation";
 import {
   Box,
@@ -11,8 +11,12 @@ import {
   Textarea,
   Grid,
   Typography,
+  Select,
+  Option,
 } from "@mui/joy";
+
 import TextEditor from "../TextEditor/TextEditor";
+
 import { useEditorContext } from "../../_contexts/Editor.context";
 import parseContentToStanzas from "../../_utils/parseContentToStanzas";
 import { useUser } from "@/app/_contexts/User.context";
@@ -23,6 +27,7 @@ const PoemForm = () => {
 
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("Original");
+  const [status, setStatus] = useState("Draft");
   const [tags, setTags] = useState("");
   const [comment, setComment] = useState("");
   const { user } = useUser();
@@ -33,11 +38,11 @@ const PoemForm = () => {
     const parsedContent = parseContentToStanzas(content);
 
     const poem = {
-      title,
-      author,
-      tags: tags.split(",").map((tag) => tag.trim()), // Assuming tags are comma-separated
+      title: title.trim() || "Untitled",
+      author: author.trim() || "Original",
+      tags: tags.split(",").map((tag) => tag.trim()),
       stanzas: parsedContent,
-      status: "draft", // Assuming default status is draft
+      status,
       userId: user?.id,
       username: user?.name,
       comment,
@@ -75,26 +80,50 @@ const PoemForm = () => {
             <FormControl required>
               <FormLabel>Title</FormLabel>
               <Input
-                placeholder="Title"
+                variant="soft"
+                placeholder="Untitled"
                 value={title}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   setTitle(e.target.value)
                 }
               />
             </FormControl>
-            <FormControl>
-              <FormLabel>Author</FormLabel>
-              <Input
-                placeholder="Author"
-                value={author}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setAuthor(e.target.value)
-                }
-              />
-            </FormControl>
+
+            <Box
+              sx={{ display: "flex", justifyContent: "space-between", gap: 2 }}
+            >
+              <FormControl sx={{ flexGrow: 1 }}>
+                <FormLabel>Author</FormLabel>
+                <Input
+                  variant="soft"
+                  placeholder="Author"
+                  value={author}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setAuthor(e.target.value)
+                  }
+                />
+              </FormControl>
+              <FormControl sx={{ flexGrow: 1 }}>
+                <FormLabel>Status</FormLabel>
+                <Select
+                  variant="soft"
+                  placeholder="Draft"
+                  value={status}
+                  onChange={(
+                    event: SyntheticEvent | null,
+                    value: string | null
+                  ) => setStatus(value as string)}
+                >
+                  <Option value="draft">Draft</Option>
+                  <Option value="published">Published</Option>
+                </Select>
+              </FormControl>
+            </Box>
+
             <FormControl>
               <FormLabel>Tags</FormLabel>
               <Input
+                variant="soft"
                 placeholder="Comma separated"
                 value={tags}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -114,6 +143,7 @@ const PoemForm = () => {
                 with this?
               </Typography>
               <Textarea
+                variant="soft"
                 placeholder="Share your thoughts or feelings about this poem..."
                 value={comment}
                 onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
@@ -133,7 +163,7 @@ const PoemForm = () => {
             mt: 2,
           }}
         >
-          <Button type="submit" variant="solid">
+          <Button type="submit" variant="soft">
             Save
           </Button>
         </Box>
