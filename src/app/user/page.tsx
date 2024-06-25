@@ -2,7 +2,7 @@
 import { Box, Typography } from "@mui/joy";
 import { FC } from "react";
 
-const User: FC = () => {
+const UserView: FC = () => {
   return (
     <Box
       sx={{
@@ -22,4 +22,4 @@ const User: FC = () => {
   );
 };
 
-export default User;
+export default UserView;
