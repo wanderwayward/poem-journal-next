@@ -16,9 +16,19 @@ function parseContentToStanzas(elements: Descendant[]): CustomElement[] {
     if (isCustomElement(element) && element.type === "stanza") {
       element.children.forEach((child, childIndex) => {
         if (isCustomElement(child) && child.type === "line") {
-          const text = (child.children[0] as CustomText).text;
+          const textNodes = child.children as CustomText[];
 
-          if (text.trim() === "") {
+          const formattedTextNodes = textNodes.map((textNode) => ({
+            ...textNode,
+            bold: textNode.bold || false,
+            italic: textNode.italic || false,
+            underline: textNode.underline || false,
+            alignment: textNode.alignment || "left",
+          }));
+
+          if (
+            formattedTextNodes.every((textNode) => textNode.text.trim() === "")
+          ) {
             // Empty line: push current stanza and start a new one
             if (currentStanza.children.length > 0) {
               stanzas.push(currentStanza);
@@ -32,10 +42,10 @@ function parseContentToStanzas(elements: Descendant[]): CustomElement[] {
             // Non-empty line: add to current stanza with unique ID
             currentStanza.children.push({
               ...child,
+              children: formattedTextNodes,
               id: uuidv4(),
             });
           }
-        } else {
         }
       });
 

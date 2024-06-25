@@ -30,12 +30,16 @@ export type Alignment = "left" | "center" | "right";
 
 export interface PoemCustomText {
   text: string;
+  bold?: boolean;
+  italic?: boolean;
+  underline?: boolean;
 }
 
 export interface PoemLineType {
   id: string;
   type: string;
   children: PoemCustomText[];
+  alignment?: "left" | "center" | "right" | null;
 }
 
 export interface PoemStanzaType {

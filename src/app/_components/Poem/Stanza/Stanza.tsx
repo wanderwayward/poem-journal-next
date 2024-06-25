@@ -1,13 +1,13 @@
 import React from "react";
 import { Box } from "@mui/joy";
 import Line from "../Line/Line";
-import { PoemLineType } from "@/app/_types/Types";
+import { PoemStanzaType } from "@/app/_types/Types";
 
 interface StanzaProps {
-  children: PoemLineType[]; // The children will be PoemLineType[]
+  stanza: PoemStanzaType;
 }
 
-const Stanza: React.FC<StanzaProps> = ({ children }) => {
+const Stanza: React.FC<StanzaProps> = ({ stanza }) => {
   return (
     <Box
       sx={{
@@ -15,8 +15,8 @@ const Stanza: React.FC<StanzaProps> = ({ children }) => {
         paddingLeft: "10px",
       }}
     >
-      {children.map((line) => (
-        <Line key={line.id} text={line.children[0].text} />
+      {stanza.children.map((line) => (
+        <Line key={line.id} line={line} />
       ))}
     </Box>
   );
