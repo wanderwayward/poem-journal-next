@@ -29,6 +29,10 @@ const options: NextAuthOptions = {
         const db = client.db("poetrystream");
         const usersCollection = db.collection("users");
 
+        // Create index on the userId field in the poems collection if not exists
+        const poemsCollection = db.collection("poems");
+        await poemsCollection.createIndex({ userId: 1 });
+
         const existingUser = await usersCollection.findOne({
           email: user.email,
         });
