@@ -1,4 +1,3 @@
-// src/app/Navigation/NavBar.tsx
 "use client";
 import Link from "next/link";
 import { Grid, Typography, Button, Box, Avatar } from "@mui/joy";
@@ -58,39 +57,39 @@ const Navbar = () => {
       >
         {user ? (
           <>
-            {user.image && (
-              <Avatar
-                src={user.image}
-                alt={user.name}
-                sx={{ marginRight: 1 }}
-              />
-            )}
+            <Button
+              color="warning"
+              variant="plain"
+              onClick={() => signOut()}
+              sx={{ marginRight: 1 }}
+            >
+              Sign Out
+            </Button>
             <Link href="/user" passHref>
               <Typography component="span" color="warning" variant="plain">
                 {user.name}
               </Typography>
             </Link>
-            <Button
-              color="warning"
-              variant="plain"
-              onClick={() => signOut()}
-              sx={{ marginLeft: 1 }}
-            >
-              Sign Out
-            </Button>
+            {user.image && (
+              <Avatar src={user.image} alt={user.name} sx={{ marginLeft: 1 }} />
+            )}
           </>
         ) : (
-          <Link href="/auth" passHref>
-            <Typography
-              component="span"
+          <>
+            <Button
+              component={Link}
+              href="/auth"
               color="warning"
-              level="title-lg"
               variant="plain"
-              sx={{ textDecoration: "none !important", color: "inherit" }}
+              sx={{
+                marginRight: 1,
+                textDecoration: "none !important",
+                color: "inherit",
+              }}
             >
               Sign In
-            </Typography>
-          </Link>
+            </Button>
+          </>
         )}
       </Box>
     </Grid>

@@ -1,5 +1,5 @@
 import { Sheet } from "@mui/joy";
-import PoemForm from "../_components/Poem-Form/PoemForm";
+import PoemForm from "../_components/PoemForm/PoemForm";
 import { EditorProvider } from "../_contexts/Editor.context";
 
 function Upload() {
