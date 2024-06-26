@@ -94,23 +94,23 @@ const PoemPage = () => {
         {poemData.author} by {poemData.username}
       </Typography>
       <Poem stanzas={poemData.stanzas} />
-      <Box
-        sx={{
-          marginTop: "20px",
-          display: "flex",
-          justifyContent: "center",
-          gap: "5em",
-        }}
-      >
-        {user ? (
+      {user ? (
+        <Box
+          sx={{
+            marginTop: "20px",
+            display: "flex",
+            justifyContent: "center",
+            gap: "5em",
+          }}
+        >
           <Button variant="plain" color="primary" onClick={handleEditClick}>
             Edit
           </Button>
-        ) : null}
-        <Button variant="outlined" color="danger" onClick={handleDeleteClick}>
-          Delete
-        </Button>
-      </Box>
+          <Button variant="outlined" color="danger" onClick={handleDeleteClick}>
+            Delete
+          </Button>
+        </Box>
+      ) : null}
     </Container>
   ) : (
     <Container maxWidth="md" sx={{ padding: "20px" }}>
