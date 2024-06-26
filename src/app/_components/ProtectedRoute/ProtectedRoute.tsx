@@ -10,6 +10,10 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
   const router = useRouter();
 
   React.useEffect(() => {
+    if (process.env.NODE_ENV === "development") {
+      return; // Skip authentication in development
+    }
+
     if (status === "loading") {
       return; // Do nothing while loading
     }

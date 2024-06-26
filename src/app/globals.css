@@ -50,7 +50,7 @@ a {
 
 /* Arrows */
 ::-webkit-scrollbar-button:single-button {
-  background-color: #fff;
+  background-color: #ffffff00;
   display: block;
   border-style: solid;
   height: 10px;
