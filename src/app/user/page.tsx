@@ -1,12 +1,15 @@
 "use client";
 import { Box, Typography, CircularProgress } from "@mui/joy";
 import { FC, useState, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
 import { useUser } from "../_contexts/User.context";
 import { PoemType } from "../_types/Types";
 import PoemTitleCard from "../_components/User/Poem-Title-Card/Poem-Title-Card";
 
 const UserView: FC = () => {
   const { user } = useUser();
+  const router = useRouter();
+
   const [poems, setPoems] = useState<PoemType[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -32,6 +35,21 @@ const UserView: FC = () => {
 
     fetchPoems();
   }, [user]);
+
+  const handleEditClick = (id: string) => {
+    router.push(`/poem-edit/${id}`);
+  };
+
+  const handleDeleteClick = async (id: string) => {
+    try {
+      await fetch(`/api/poems/${id}`, {
+        method: "DELETE",
+      });
+      setPoems((prevPoems) => prevPoems.filter((poem) => poem._id !== id));
+    } catch (error) {
+      console.error("Failed to delete poem:", error);
+    }
+  };
 
   return (
     <Box
@@ -71,7 +89,11 @@ const UserView: FC = () => {
               width: "100%",
             }}
           >
-            <PoemTitleCard poem={poem} />
+            <PoemTitleCard
+              poem={poem}
+              handleDelete={() => handleDeleteClick(poem._id)}
+              handleEdit={() => handleEditClick(poem._id)}
+            />
           </Box>
         ))
       ) : (

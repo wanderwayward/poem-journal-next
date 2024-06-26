@@ -38,10 +38,12 @@ const PoemPage = () => {
   };
 
   const handleEditClick = () => {
+    console.log("Edit clicked");
     router.push(`/poem-edit/${id}`);
   };
 
   const handleDeleteClick = () => {
+    console.log("Delete clicked");
     try {
       fetch(`/api/poems/${id}`, {
         method: "DELETE",
