@@ -4,11 +4,13 @@ import { useParams, useRouter } from "next/navigation";
 import Poem from "@/app/_components/Poem/Poem";
 import { PoemType } from "@/app/_types/Types";
 import { Container, CircularProgress, Button, Box, Typography } from "@mui/joy";
+import { useUser } from "@/app/_contexts/User.context";
 
 const PoemPage = () => {
   const params = useParams();
   const router = useRouter();
   const id = params?.id as string | undefined;
+  const { user } = useUser();
 
   const [poemData, setPoemData] = useState<PoemType | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -100,9 +102,11 @@ const PoemPage = () => {
           gap: "5em",
         }}
       >
-        <Button variant="plain" color="primary" onClick={handleEditClick}>
-          Edit
-        </Button>
+        {user ? (
+          <Button variant="plain" color="primary" onClick={handleEditClick}>
+            Edit
+          </Button>
+        ) : null}
         <Button variant="outlined" color="danger" onClick={handleDeleteClick}>
           Delete
         </Button>

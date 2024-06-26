@@ -5,6 +5,8 @@ import { useRouter, useParams } from "next/navigation";
 import { useUser } from "../_contexts/User.context";
 import { PoemType } from "../_types/Types";
 import PoemTitleCard from "../_components/User/Poem-Title-Card/Poem-Title-Card";
+import ProtectedRoute from "../_components/ProtectedRoute/ProtectedRoute";
+ProtectedRoute;
 
 const UserView: FC = () => {
   const { user } = useUser();
@@ -52,54 +54,56 @@ const UserView: FC = () => {
   };
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        textAlign: "left",
-        marginTop: "60px",
-      }}
-    >
-      <Typography level="title-lg" marginBottom="16px">
-        hi
-      </Typography>
-      <Typography>This is a list of all your poems:</Typography>
-      {loading ? (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100px", // Adjust the height as needed
-            width: "100%",
-          }}
-        >
-          <CircularProgress />
-        </Box>
-      ) : poems.length > 0 ? (
-        poems.map((poem) => (
+    <ProtectedRoute>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          textAlign: "left",
+          marginTop: "60px",
+        }}
+      >
+        <Typography level="title-lg" marginBottom="16px">
+          hi
+        </Typography>
+        <Typography>This is a list of all your poems:</Typography>
+        {loading ? (
           <Box
-            key={poem._id}
             sx={{
-              marginBottom: "16px",
               display: "flex",
               justifyContent: "center",
+              alignItems: "center",
+              height: "100px", // Adjust the height as needed
               width: "100%",
             }}
           >
-            <PoemTitleCard
-              poem={poem}
-              handleDelete={() => handleDeleteClick(poem._id)}
-              handleEdit={() => handleEditClick(poem._id)}
-            />
+            <CircularProgress />
           </Box>
-        ))
-      ) : (
-        <Typography>No poems found.</Typography>
-      )}
-    </Box>
+        ) : poems.length > 0 ? (
+          poems.map((poem) => (
+            <Box
+              key={poem._id}
+              sx={{
+                marginBottom: "16px",
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              <PoemTitleCard
+                poem={poem}
+                handleDelete={() => handleDeleteClick(poem._id)}
+                handleEdit={() => handleEditClick(poem._id)}
+              />
+            </Box>
+          ))
+        ) : (
+          <Typography>No poems found.</Typography>
+        )}
+      </Box>
+    </ProtectedRoute>
   );
 };
 
