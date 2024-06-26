@@ -79,7 +79,7 @@ const PoemForm = () => {
       <Box component="form" onSubmit={handleSave}>
         <Grid container spacing={2}>
           <Grid xs={12} md={6} sx={{ maxHeight: "600px", overflowY: "auto" }}>
-            <FormControl required>
+            <FormControl>
               <FormLabel>Title</FormLabel>
               <Input
                 variant="soft"
