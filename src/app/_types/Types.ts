@@ -59,3 +59,13 @@ export interface PoemType {
   username: string;
   comment: string;
 }
+// types/next-auth.d.ts
+export interface Session {
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    image: string;
+  };
+  expires: string;
+}

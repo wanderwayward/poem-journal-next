@@ -1,7 +1,7 @@
 // components/ProtectedRoute.tsx
 import React from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
   children,
