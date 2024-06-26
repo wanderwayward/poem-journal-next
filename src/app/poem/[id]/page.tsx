@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Poem from "@/app/_components/Poem/Poem";
 import { PoemType } from "@/app/_types/Types";
 import { Container, CircularProgress, Button, Box, Typography } from "@mui/joy";
 
 const PoemPage = () => {
   const params = useParams();
+  const router = useRouter();
   const id = params?.id as string | undefined;
 
   const [poemData, setPoemData] = useState<PoemType | null>(null);
@@ -33,6 +34,21 @@ const PoemPage = () => {
       setError("Failed to fetch poem");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleEditClick = () => {
+    router.push(`/poem-edit/${id}`);
+  };
+
+  const handleDeleteClick = () => {
+    try {
+      fetch(`/api/poems/${id}`, {
+        method: "DELETE",
+      });
+      router.push("/user");
+    } catch (error) {
+      console.error("Failed to delete poem:", error);
     }
   };
 
@@ -82,18 +98,10 @@ const PoemPage = () => {
           gap: "5em",
         }}
       >
-        <Button
-          variant="plain"
-          color="primary"
-          onClick={() => alert("Edit functionality coming soon!")}
-        >
+        <Button variant="plain" color="primary" onClick={handleEditClick}>
           Edit
         </Button>
-        <Button
-          variant="outlined"
-          color="danger"
-          onClick={() => alert("Delete functionality coming soon!")}
-        >
+        <Button variant="outlined" color="danger" onClick={handleDeleteClick}>
           Delete
         </Button>
       </Box>
