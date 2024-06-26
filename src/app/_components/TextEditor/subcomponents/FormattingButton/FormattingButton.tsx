@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { Button } from "@mui/joy";
 
 interface FormattingButtonProps {
@@ -6,10 +6,14 @@ interface FormattingButtonProps {
   onFormat: () => void;
 }
 
-const FormattingButton: React.FC<FormattingButtonProps> = ({ label, onFormat }) => {
+const FormattingButton: React.FC<FormattingButtonProps> = ({
+  label,
+  onFormat,
+}) => {
   return (
     <Button
       variant="soft"
+      color="success"
       onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault(); // Prevent focus change
         onFormat();

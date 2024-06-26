@@ -14,9 +14,7 @@ import {
   Select,
   Option,
 } from "@mui/joy";
-
 import TextEditor from "../TextEditor/TextEditor";
-
 import { useEditorContext } from "../../_contexts/Editor.context";
 import parseContentToStanzas from "../../_utils/parseContentToStanzas";
 import { useUser } from "@/app/_contexts/User.context";
@@ -73,10 +71,14 @@ const PoemForm = () => {
   };
 
   return (
-    <Sheet sx={{ width: "100%", maxWidth: "1200px", p: 3 }}>
+    <Sheet
+      variant="soft"
+      color="primary"
+      sx={{ width: "100%", maxWidth: "1200px", p: 3 }}
+    >
       <Box component="form" onSubmit={handleSave}>
         <Grid container spacing={2}>
-          <Grid xs={12} md={6}>
+          <Grid xs={12} md={6} sx={{ maxHeight: "600px", overflowY: "auto" }}>
             <FormControl required>
               <FormLabel>Title</FormLabel>
               <Input
@@ -163,7 +165,7 @@ const PoemForm = () => {
             mt: 2,
           }}
         >
-          <Button type="submit" variant="soft">
+          <Button type="submit" variant="soft" color="danger" size="lg">
             Save
           </Button>
         </Box>

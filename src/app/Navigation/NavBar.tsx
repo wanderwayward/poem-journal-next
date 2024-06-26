@@ -65,9 +65,11 @@ const Navbar = () => {
                 sx={{ marginRight: 1 }}
               />
             )}
-            <Typography component="span" color="warning" variant="plain">
-              {user.name}
-            </Typography>
+            <Link href="/user" passHref>
+              <Typography component="span" color="warning" variant="plain">
+                {user.name}
+              </Typography>
+            </Link>
             <Button
               color="warning"
               variant="plain"

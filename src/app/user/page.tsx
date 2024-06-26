@@ -1,5 +1,5 @@
 "use client";
-import { Box, Typography } from "@mui/joy";
+import { Box, Typography, CircularProgress } from "@mui/joy";
 import { FC, useState, useEffect } from "react";
 import { useUser } from "../_contexts/User.context";
 import { PoemType } from "../_types/Types";
@@ -8,11 +8,13 @@ import PoemTitleCard from "../_components/User/Poem-Title-Card/Poem-Title-Card";
 const UserView: FC = () => {
   const { user } = useUser();
   const [poems, setPoems] = useState<PoemType[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchPoems = async () => {
       if (user && user.id) {
         try {
+          setLoading(true);
           const response = await fetch(`/api/poems/user/${user.id}`);
           const result = await response.json();
           if (response.ok) {
@@ -22,14 +24,14 @@ const UserView: FC = () => {
           }
         } catch (error) {
           console.error("Error fetching poems:", error);
+        } finally {
+          setLoading(false);
         }
       }
     };
 
     fetchPoems();
   }, [user]);
-
-  console.log(poems);
 
   return (
     <Box
@@ -46,7 +48,19 @@ const UserView: FC = () => {
         hi
       </Typography>
       <Typography>This is a list of all your poems:</Typography>
-      {poems.length > 0 ? (
+      {loading ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100px", // Adjust the height as needed
+            width: "100%",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      ) : poems.length > 0 ? (
         poems.map((poem) => (
           <Box
             key={poem._id}

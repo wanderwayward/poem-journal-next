@@ -18,14 +18,15 @@ const TextEditor = () => {
       onChange={(value) => setContent(value)}
     >
       <Sheet
-        color="danger"
-        variant="solid"
+        color="success"
+        variant="soft"
         sx={{
           display: "flex",
           justifyContent: "space-around",
           alignItems: "center",
           height: "3em",
           marginTop: "1em",
+          boxShadow: "1px 2px 1px rgba(0, 0, 0, 0.1)",
         }}
       >
         <FormattingButton
@@ -53,11 +54,20 @@ const TextEditor = () => {
           onFormat={() => CustomEditor.toggleAlignment(editor, "right")}
         />
       </Sheet>
-      <Editable
-        renderElement={renderElement}
-        renderLeaf={renderLeaf}
-        onKeyDown={onKeyDown}
-      />
+      <Sheet variant="soft" color="neutral" invertedColors>
+        <Editable
+          renderElement={renderElement}
+          renderLeaf={renderLeaf}
+          onKeyDown={onKeyDown}
+          style={{
+            height: "300px", // You can adjust this height as needed
+            overflowY: "auto",
+            padding: "1em",
+            borderRadius: "4px",
+            boxShadow: "1px 2px 1px rgba(0, 0, 0, 0.1)",
+          }}
+        />
+      </Sheet>
     </Slate>
   );
 };
