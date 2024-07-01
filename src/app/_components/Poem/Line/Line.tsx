@@ -11,7 +11,6 @@ const Line: React.FC<LineProps> = ({ line }) => {
     <Typography
       component="div"
       style={{
-        marginLeft: "20px",
         textAlign: line.alignment || "left",
       }}
     >

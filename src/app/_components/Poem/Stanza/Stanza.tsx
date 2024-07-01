@@ -12,7 +12,6 @@ const Stanza: React.FC<StanzaProps> = ({ stanza }) => {
     <Box
       sx={{
         marginBottom: "15px",
-        paddingLeft: "10px",
       }}
     >
       {stanza.children.map((line) => (
