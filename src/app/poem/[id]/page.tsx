@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Poem from "@/app/_components/Poem/Poem";
 import { PoemType } from "@/app/_types/Types";
@@ -24,13 +24,7 @@ const PoemPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (id) {
-      fetchPoem();
-    }
-  }, [id]);
-
-  const fetchPoem = async () => {
+  const fetchPoem = useCallback(async () => {
     setLoading(true);
     try {
       const response = await fetch(`/api/poems/${id}`);
@@ -45,17 +39,21 @@ const PoemPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    if (id) {
+      fetchPoem();
+    }
+  }, [id, fetchPoem]);
 
   const handleEditClick = () => {
-    console.log("Edit clicked");
     router.push(`/poem-edit/${id}`);
   };
 
-  const handleDeleteClick = () => {
-    console.log("Delete clicked");
+  const handleDeleteClick = async () => {
     try {
-      fetch(`/api/poems/${id}`, {
+      await fetch(`/api/poems/${id}`, {
         method: "DELETE",
       });
       router.push("/user");
