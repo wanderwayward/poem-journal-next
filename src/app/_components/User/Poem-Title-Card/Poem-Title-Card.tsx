@@ -18,13 +18,14 @@ export default function PoemTitleCard({
   return (
     <Card
       variant="soft"
+      color="success"
       sx={{
         width: "15em",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        paddingX: ".5em",
-        paddingY: "none",
+        paddingX: ".2em",
+        paddingY: ".5em",
       }}
     >
       <CardContent sx={{ width: "100%" }}>

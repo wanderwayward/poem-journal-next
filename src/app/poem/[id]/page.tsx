@@ -76,7 +76,12 @@ const PoemPage = () => {
           minHeight: "100vh",
         }}
       >
-        <CircularProgress />
+        <CircularProgress
+          variant="plain"
+          color="danger"
+          size="lg"
+          thickness={4}
+        />
       </Container>
     );
   }

@@ -1,5 +1,5 @@
 "use client";
-import { Box, Button, Typography, CircularProgress } from "@mui/joy";
+import { Box, Button, Typography, CircularProgress, Sheet } from "@mui/joy";
 import { FC, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUserPoems } from "../_contexts/UserPoems.context";
@@ -46,56 +46,66 @@ const UserView: FC = () => {
 
   return (
     <ProtectedRoute>
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          textAlign: "left",
-          marginTop: "60px",
-        }}
+      <Sheet
+        variant="solid"
+        color="neutral"
+        sx={{ width: "50%", borderRadius: "2em", padding: "2em" }}
       >
-        <Typography level="title-lg" marginBottom="16px">
-          {showDrafts ? "Drafts" : "Published Poems"}
-        </Typography>
-        <Button
-          onClick={handleToggleDrafts}
-          variant="soft"
-          sx={{ marginBottom: "16px" }}
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "left",
+          }}
         >
-          {showDrafts ? "Show Published" : "Show Drafts"}
-        </Button>
-        {loading ? (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "100px", // Adjust the height as needed
-              width: "100%",
-            }}
+          <Typography
+            level="h2"
+            marginBottom="16px"
+            variant="plain"
+            textColor="success.200"
           >
-            <CircularProgress />
-          </Box>
-        ) : (
-          <>
-            {showDrafts ? (
-              <PoemsDrafts
-                poems={filteredPoems}
-                handleEdit={handleEditClick}
-                handleDelete={handleDeleteClick}
-              />
-            ) : (
-              <PoemsPublished
-                poems={filteredPoems}
-                handleEdit={handleEditClick}
-                handleDelete={handleDeleteClick}
-              />
-            )}
-          </>
-        )}
-      </Box>
+            {showDrafts ? "Drafts" : "Published Poems"}
+          </Typography>
+          <Button
+            onClick={handleToggleDrafts}
+            variant="soft"
+            sx={{ marginBottom: "16px" }}
+          >
+            {showDrafts ? "Show Published" : "Show Drafts"}
+          </Button>
+          {loading ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100px", // Adjust the height as needed
+                width: "100%",
+              }}
+            >
+              <CircularProgress />
+            </Box>
+          ) : (
+            <>
+              {showDrafts ? (
+                <PoemsDrafts
+                  poems={filteredPoems}
+                  handleEdit={handleEditClick}
+                  handleDelete={handleDeleteClick}
+                />
+              ) : (
+                <PoemsPublished
+                  poems={filteredPoems}
+                  handleEdit={handleEditClick}
+                  handleDelete={handleDeleteClick}
+                />
+              )}
+            </>
+          )}
+        </Box>
+      </Sheet>
     </ProtectedRoute>
   );
 };
