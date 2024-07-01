@@ -1,9 +1,9 @@
-// _contexts/UserPoems.context.tsx
 import {
   createContext,
   useContext,
   useState,
   useEffect,
+  useCallback,
   ReactNode,
   Dispatch,
   SetStateAction,
@@ -29,7 +29,7 @@ export const UserPoemsProvider = ({ children }: UserPoemsProviderProps) => {
   const [poems, setPoems] = useState<PoemType[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchPoems = async () => {
+  const fetchPoems = useCallback(async () => {
     if (user && user.id) {
       try {
         setLoading(true);
@@ -46,11 +46,11 @@ export const UserPoemsProvider = ({ children }: UserPoemsProviderProps) => {
         setLoading(false);
       }
     }
-  };
+  }, [user]);
 
   useEffect(() => {
     fetchPoems();
-  }, [user]);
+  }, [user, fetchPoems]);
 
   return (
     <UserPoemsContext.Provider

@@ -5,6 +5,7 @@ import {
   ChangeEvent,
   FormEvent,
   KeyboardEvent,
+  useCallback,
 } from "react";
 import { useParams, useRouter } from "next/navigation";
 import {
@@ -48,13 +49,7 @@ const PoemEditForm = () => {
   const [currentTag, setCurrentTag] = useState("");
   const [comment, setComment] = useState("");
 
-  useEffect(() => {
-    if (id) {
-      fetchPoem();
-    }
-  }, [id]);
-
-  const fetchPoem = async () => {
+  const fetchPoem = useCallback(async () => {
     setLoading(true);
     try {
       const response = await fetch(`/api/poems/${id}`);
@@ -78,7 +73,13 @@ const PoemEditForm = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id, setContent]);
+
+  useEffect(() => {
+    if (id) {
+      fetchPoem();
+    }
+  }, [id, fetchPoem]);
 
   const handleSave = async (event: FormEvent, publish: boolean) => {
     event.preventDefault(); // Prevent default form submission
@@ -96,8 +97,6 @@ const PoemEditForm = () => {
       comment,
     };
 
-    console.log("Saving poem:", poem);
-
     try {
       const response = await fetch(id ? `/api/poems/${id}` : "/api/mongodb", {
         method: id ? "PUT" : "POST",
@@ -107,9 +106,7 @@ const PoemEditForm = () => {
         body: JSON.stringify(poem),
       });
 
-      console.log("Response status:", response.status);
       const result = await response.json();
-      console.log("Poem saved successfully:", result.data);
 
       // Update user poems
       updatePoems();

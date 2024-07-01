@@ -132,7 +132,7 @@ const PoemPage = () => {
               }}
             >
               {poemData.tags.map((tag) => (
-                <Chip key={tag} children={tag} />
+                <Chip key={tag}>{tag}</Chip>
               ))}
             </Box>
           </Box>

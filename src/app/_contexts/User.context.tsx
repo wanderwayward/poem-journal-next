@@ -57,7 +57,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         setUser(null);
       }
     }
-  }, [session]);
+  }, [session, mockUser]);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
