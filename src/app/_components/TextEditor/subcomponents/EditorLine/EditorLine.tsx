@@ -7,7 +7,7 @@ const EditorLine = ({ attributes, children, element }: RenderElementProps) => (
     {...attributes}
     sx={{
       textAlign: element.alignment || "left",
-      marginBottom: 1,
+      marginBottom: 0.1,
       display: "block",
     }}
   >

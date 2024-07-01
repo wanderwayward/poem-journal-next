@@ -94,8 +94,8 @@ const PoemEditForm = () => {
     console.log("Saving poem:", poem);
 
     try {
-      const response = await fetch("/api/mongodb", {
-        method: "POST",
+      const response = await fetch(id ? `/api/poems/${id}` : "/api/mongodb", {
+        method: id ? "PUT" : "POST",
         headers: {
           "Content-Type": "application/json",
         },

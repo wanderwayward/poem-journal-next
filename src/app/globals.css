@@ -33,19 +33,19 @@ a {
 
 /* Initial values for scrollbar colors, then changing in JS, is nice and easy */
 *::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 5px;
+  height: 5px;
 }
 
 *::-webkit-scrollbar-thumb {
-  background: rgb(166, 228, 12);
+  background: rgb(172, 172, 172);
   border-radius: 10px;
   border: 2px solid transparent; /* Space around the thumb */
   background-clip: border-box;
 }
 
 *::-webkit-scrollbar-track {
-  background: #00000000;
+  background: #fdf0e1;
 }
 
 /* Arrows */
