@@ -26,6 +26,7 @@ import { useEditorContext } from "../../_contexts/Editor.context";
 import parseContentToStanzas from "../../_utils/parseContentToStanzas";
 import parseStanzasToContent from "../../_utils/parseStanzasToContent";
 import { useUser } from "@/app/_contexts/User.context";
+import { useUserPoems } from "@/app/_contexts/UserPoems.context";
 import { PoemType } from "@/app/_types/Types";
 
 const PoemEditForm = () => {
@@ -39,6 +40,7 @@ const PoemEditForm = () => {
   const [error, setError] = useState<string | null>(null);
 
   const { user } = useUser();
+  const { updatePoems } = useUserPoems();
 
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("Original");
@@ -108,6 +110,9 @@ const PoemEditForm = () => {
       console.log("Response status:", response.status);
       const result = await response.json();
       console.log("Poem saved successfully:", result.data);
+
+      // Update user poems
+      updatePoems();
 
       // Redirect based on status
       if (result.data.id) {

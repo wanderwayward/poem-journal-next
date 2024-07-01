@@ -18,6 +18,7 @@ import TextEditor from "../TextEditor/TextEditor";
 import { useEditorContext } from "../../_contexts/Editor.context";
 import parseContentToStanzas from "../../_utils/parseContentToStanzas";
 import { useUser } from "@/app/_contexts/User.context";
+import { useUserPoems } from "@/app/_contexts/UserPoems.context";
 
 const PoemForm = () => {
   const { content } = useEditorContext();
@@ -29,6 +30,7 @@ const PoemForm = () => {
   const [currentTag, setCurrentTag] = useState("");
   const [comment, setComment] = useState("");
   const { user } = useUser();
+  const { updatePoems } = useUserPoems();
 
   const handleSave = async (event: FormEvent, publish: boolean) => {
     event.preventDefault(); // Prevent default form submission
@@ -60,6 +62,9 @@ const PoemForm = () => {
       console.log("Response status:", response.status);
       const result = await response.json();
       console.log("Poem saved successfully:", result.data);
+
+      // Update user poems
+      updatePoems();
 
       // Redirect based on status
       if (result.data.id) {

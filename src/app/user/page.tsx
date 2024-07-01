@@ -1,48 +1,21 @@
 "use client";
 import { Box, Button, Typography, CircularProgress } from "@mui/joy";
-import { FC, useState, useEffect } from "react";
+import { FC, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useUser } from "../_contexts/User.context";
-import { PoemType } from "../_types/Types";
+import { useUserPoems } from "../_contexts/UserPoems.context";
 import ProtectedRoute from "../_components/ProtectedRoute/ProtectedRoute";
 import PoemsPublished from "../_components/User/PoemsPublished";
 import PoemsDrafts from "../_components/User/PoemsDraft";
 
 const UserView: FC = () => {
-  const { user } = useUser();
+  const { poems, setPoems, loading } = useUserPoems();
   const router = useRouter();
-
-  const [poems, setPoems] = useState<PoemType[]>([]);
-  const [loading, setLoading] = useState(false);
 
   const searchParams = new URLSearchParams(
     typeof window !== "undefined" ? window.location.search : ""
   );
   const showDraftsParam = searchParams.get("showDrafts");
   const [showDrafts, setShowDrafts] = useState(showDraftsParam === "true");
-
-  useEffect(() => {
-    const fetchPoems = async () => {
-      if (user && user.id) {
-        try {
-          setLoading(true);
-          const response = await fetch(`/api/poems/user/${user.id}`);
-          const result = await response.json();
-          if (response.ok) {
-            setPoems(result.data);
-          } else {
-            console.error(result.message);
-          }
-        } catch (error) {
-          console.error("Error fetching poems:", error);
-        } finally {
-          setLoading(false);
-        }
-      }
-    };
-
-    fetchPoems();
-  }, [user]);
 
   const handleEditClick = (id: string) => {
     router.push(`/poem-edit/${id}`);
