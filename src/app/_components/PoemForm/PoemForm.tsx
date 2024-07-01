@@ -1,5 +1,5 @@
 "use client";
-import { useState, ChangeEvent, FormEvent, SyntheticEvent } from "react";
+import { useState, ChangeEvent, FormEvent, KeyboardEvent } from "react";
 import { useRouter } from "next/navigation";
 import {
   Box,
@@ -11,8 +11,8 @@ import {
   Textarea,
   Grid,
   Typography,
-  Select,
-  Option,
+  Chip,
+  ChipDelete,
 } from "@mui/joy";
 import TextEditor from "../TextEditor/TextEditor";
 import { useEditorContext } from "../../_contexts/Editor.context";
@@ -25,7 +25,8 @@ const PoemForm = () => {
 
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("Original");
-  const [tags, setTags] = useState("");
+  const [tags, setTags] = useState<string[]>([]);
+  const [currentTag, setCurrentTag] = useState("");
   const [comment, setComment] = useState("");
   const { user } = useUser();
 
@@ -37,7 +38,7 @@ const PoemForm = () => {
     const poem = {
       title: title.trim() || "Untitled",
       author: author.trim() || "Original",
-      tags: tags.split(",").map((tag) => tag.trim()),
+      tags: tags.filter((tag) => tag.trim() !== ""),
       stanzas: parsedContent,
       status: publish ? "Published" : "Draft",
       userId: user?.id,
@@ -70,6 +71,24 @@ const PoemForm = () => {
     } catch (error) {
       console.error("Error saving poem:", error);
     }
+  };
+
+  const handleTagChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCurrentTag(e.target.value);
+  };
+
+  const handleTagKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if ((e.key === "Enter" || e.key === ",") && currentTag.trim() !== "") {
+      e.preventDefault();
+      if (currentTag.trim() !== "") {
+        setTags([...tags, currentTag.trim()]);
+        setCurrentTag("");
+      }
+    }
+  };
+
+  const handleTagRemove = (tagToRemove: string) => {
+    setTags(tags.filter((tag) => tag !== tagToRemove));
   };
 
   return (
@@ -111,13 +130,24 @@ const PoemForm = () => {
 
             <FormControl>
               <FormLabel>Tags</FormLabel>
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 1 }}>
+                {tags.map((tag, index) => (
+                  <Chip
+                    key={index}
+                    endDecorator={
+                      <ChipDelete onDelete={() => handleTagRemove(tag)} />
+                    }
+                  >
+                    {tag}
+                  </Chip>
+                ))}
+              </Box>
               <Input
                 variant="soft"
                 placeholder="Comma separated"
-                value={tags}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setTags(e.target.value)
-                }
+                value={currentTag}
+                onChange={handleTagChange}
+                onKeyDown={handleTagKeyDown}
               />
             </FormControl>
             <TextEditor />

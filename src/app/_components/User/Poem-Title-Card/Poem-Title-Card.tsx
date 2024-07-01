@@ -1,11 +1,8 @@
 import * as React from "react";
-import Box from "@mui/joy/Box";
-import Card from "@mui/joy/Card";
-import CardContent from "@mui/joy/CardContent";
-import Typography from "@mui/joy/Typography";
-import IconButton from "@mui/joy/IconButton";
+import { Box, Card, CardContent, Typography, IconButton } from "@mui/joy";
 import { Edit, Delete } from "@mui/icons-material";
 import { PoemType } from "../../../_types/Types";
+import Link from "next/link";
 
 interface PoemTitleCardProps {
   poem: PoemType;
@@ -39,9 +36,11 @@ export default function PoemTitleCard({
             alignItems: "center",
           }}
         >
-          <Typography level="title-md" sx={{ textAlign: "center" }}>
-            {poem.title}
-          </Typography>
+          <Link href={`/poem/${poem._id}`}>
+            <Typography level="title-lg" sx={{ textAlign: "center" }}>
+              {poem.title}
+            </Typography>
+          </Link>
           <IconButton onClick={handleEdit}>
             <Edit />
           </IconButton>
@@ -54,12 +53,12 @@ export default function PoemTitleCard({
             alignItems: "center",
           }}
         >
-          <Typography level="body-sm" sx={{ textAlign: "center" }}>
+          <Typography level="body-xs" sx={{ textAlign: "center" }}>
             {poem.author === "Original"
               ? poem.username
               : poem.author || "Unknown"}
           </Typography>
-          <Typography level="body-sm" sx={{ textAlign: "center" }}>
+          <Typography level="body-xs" sx={{ textAlign: "center" }}>
             {poem.status}
           </Typography>
           <IconButton onClick={handleDelete}>

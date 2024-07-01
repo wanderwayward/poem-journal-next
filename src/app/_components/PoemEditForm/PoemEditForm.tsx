@@ -4,7 +4,7 @@ import {
   useEffect,
   ChangeEvent,
   FormEvent,
-  SyntheticEvent,
+  KeyboardEvent,
 } from "react";
 import { useParams, useRouter } from "next/navigation";
 import {
@@ -18,6 +18,8 @@ import {
   Grid,
   Typography,
   CircularProgress,
+  Chip,
+  ChipDelete,
 } from "@mui/joy";
 import TextEditor from "../TextEditor/TextEditor";
 import { useEditorContext } from "../../_contexts/Editor.context";
@@ -40,7 +42,8 @@ const PoemEditForm = () => {
 
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("Original");
-  const [tags, setTags] = useState("");
+  const [tags, setTags] = useState<string[]>([]);
+  const [currentTag, setCurrentTag] = useState("");
   const [comment, setComment] = useState("");
 
   useEffect(() => {
@@ -59,7 +62,7 @@ const PoemEditForm = () => {
         setPoemData(poem);
         setTitle(poem.title);
         setAuthor(poem.author);
-        setTags(poem.tags.join(", "));
+        setTags(poem.tags);
         setComment(poem.comment);
 
         // Convert stanzas to Slate format
@@ -83,7 +86,7 @@ const PoemEditForm = () => {
     const poem = {
       title: title.trim() || "Untitled",
       author: author.trim() || "Original",
-      tags: tags.split(",").map((tag) => tag.trim()),
+      tags: tags.filter((tag) => tag.trim() !== ""),
       stanzas: parsedContent,
       status: publish ? "Published" : "Draft",
       userId: user?.id,
@@ -116,6 +119,22 @@ const PoemEditForm = () => {
     } catch (error) {
       console.error("Error saving poem:", error);
     }
+  };
+
+  const handleTagChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCurrentTag(e.target.value);
+  };
+
+  const handleTagKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if ((e.key === "Enter" || e.key === ",") && currentTag.trim() !== "") {
+      e.preventDefault();
+      setTags([...tags, currentTag.trim()]);
+      setCurrentTag("");
+    }
+  };
+
+  const handleTagRemove = (tagToRemove: string) => {
+    setTags(tags.filter((tag) => tag !== tagToRemove));
   };
 
   if (loading) {
@@ -180,13 +199,24 @@ const PoemEditForm = () => {
 
             <FormControl>
               <FormLabel>Tags</FormLabel>
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 1 }}>
+                {tags.map((tag, index) => (
+                  <Chip
+                    key={index}
+                    endDecorator={
+                      <ChipDelete onDelete={() => handleTagRemove(tag)} />
+                    }
+                  >
+                    {tag}
+                  </Chip>
+                ))}
+              </Box>
               <Input
                 variant="soft"
                 placeholder="Comma separated"
-                value={tags}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setTags(e.target.value)
-                }
+                value={currentTag}
+                onChange={handleTagChange}
+                onKeyDown={handleTagKeyDown}
               />
             </FormControl>
             <TextEditor />

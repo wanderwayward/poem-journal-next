@@ -3,7 +3,14 @@ import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Poem from "@/app/_components/Poem/Poem";
 import { PoemType } from "@/app/_types/Types";
-import { Container, CircularProgress, Button, Box, Typography } from "@mui/joy";
+import {
+  Container,
+  CircularProgress,
+  Button,
+  Box,
+  Typography,
+  Chip,
+} from "@mui/joy";
 import { useUser } from "@/app/_contexts/User.context";
 
 const PoemPage = () => {
@@ -94,6 +101,38 @@ const PoemPage = () => {
         {poemData.author} by {poemData.username}
       </Typography>
       <Poem stanzas={poemData.stanzas} />
+      {poemData.tags && poemData.tags.length > 0 && (
+        <Box
+          sx={{
+            marginTop: "20px",
+            display: "flex",
+            justifyContent: "center",
+            width: "100%",
+          }}
+        >
+          <Box
+            sx={{
+              textAlign: "left",
+              width: "65%",
+            }}
+          >
+            <Typography>Tags:</Typography>
+            <Box
+              sx={{
+                marginTop: "5px",
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "5px",
+              }}
+            >
+              {poemData.tags.map((tag) => (
+                <Chip key={tag} children={tag} />
+              ))}
+            </Box>
+          </Box>
+        </Box>
+      )}
+
       {user ? (
         <Box
           sx={{
