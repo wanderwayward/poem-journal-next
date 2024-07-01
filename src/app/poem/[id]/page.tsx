@@ -111,7 +111,6 @@ const PoemPage = () => {
       {poemData.tags && poemData.tags.length > 0 && (
         <Box
           sx={{
-            marginTop: "20px",
             display: "flex",
             justifyContent: "center",
             width: "100%",
