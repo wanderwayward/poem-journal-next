@@ -17,8 +17,6 @@ import {
   Textarea,
   Grid,
   Typography,
-  Select,
-  Option,
   CircularProgress,
 } from "@mui/joy";
 import TextEditor from "../TextEditor/TextEditor";
@@ -42,7 +40,6 @@ const PoemEditForm = () => {
 
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("Original");
-  const [status, setStatus] = useState("Draft");
   const [tags, setTags] = useState("");
   const [comment, setComment] = useState("");
 
@@ -62,7 +59,6 @@ const PoemEditForm = () => {
         setPoemData(poem);
         setTitle(poem.title);
         setAuthor(poem.author);
-        setStatus(poem.status);
         setTags(poem.tags.join(", "));
         setComment(poem.comment);
 
@@ -79,7 +75,7 @@ const PoemEditForm = () => {
     }
   };
 
-  const handleSave = async (event: FormEvent) => {
+  const handleSave = async (event: FormEvent, publish: boolean) => {
     event.preventDefault(); // Prevent default form submission
 
     const parsedContent = parseContentToStanzas(content);
@@ -89,7 +85,7 @@ const PoemEditForm = () => {
       author: author.trim() || "Original",
       tags: tags.split(",").map((tag) => tag.trim()),
       stanzas: parsedContent,
-      status,
+      status: publish ? "Published" : "Draft",
       userId: user?.id,
       username: user?.name,
       comment,
@@ -98,8 +94,8 @@ const PoemEditForm = () => {
     console.log("Saving poem:", poem);
 
     try {
-      const response = await fetch(`/api/poems/${id}`, {
-        method: "PUT",
+      const response = await fetch("/api/mongodb", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -110,9 +106,12 @@ const PoemEditForm = () => {
       const result = await response.json();
       console.log("Poem saved successfully:", result.data);
 
-      // Redirect to the poem's page
+      // Redirect based on status
       if (result.data.id) {
-        router.push(`/poem/${result.data.id}`);
+        const redirectUrl = publish
+          ? `/poem/${result.data.id}`
+          : "/user?showDrafts=true";
+        router.push(redirectUrl);
       }
     } catch (error) {
       console.error("Error saving poem:", error);
@@ -148,7 +147,7 @@ const PoemEditForm = () => {
       color="primary"
       sx={{ width: "100%", maxWidth: "1200px", p: 3 }}
     >
-      <Box component="form" onSubmit={handleSave}>
+      <Box component="form">
         <Grid container spacing={2}>
           <Grid xs={12} md={6} sx={{ maxHeight: "600px", overflowY: "auto" }}>
             <FormControl>
@@ -176,21 +175,6 @@ const PoemEditForm = () => {
                     setAuthor(e.target.value)
                   }
                 />
-              </FormControl>
-              <FormControl sx={{ flexGrow: 1 }}>
-                <FormLabel>Status</FormLabel>
-                <Select
-                  variant="soft"
-                  placeholder="Draft"
-                  value={status}
-                  onChange={(
-                    event: SyntheticEvent | null,
-                    value: string | null
-                  ) => setStatus(value as string)}
-                >
-                  <Option value="draft">Draft</Option>
-                  <Option value="published">Published</Option>
-                </Select>
               </FormControl>
             </Box>
 
@@ -237,8 +221,22 @@ const PoemEditForm = () => {
             mt: 2,
           }}
         >
-          <Button type="submit" variant="soft" color="danger" size="lg">
-            Save
+          <Button
+            onClick={(e) => handleSave(e, false)}
+            variant="soft"
+            color="danger"
+            size="lg"
+          >
+            Save Draft
+          </Button>
+          <Button
+            onClick={(e) => handleSave(e, true)}
+            variant="soft"
+            color="success"
+            size="lg"
+            sx={{ ml: 2 }}
+          >
+            Publish
           </Button>
         </Box>
       </Box>

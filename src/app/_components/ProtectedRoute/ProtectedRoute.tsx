@@ -11,7 +11,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
 
   React.useEffect(() => {
     if (process.env.NODE_ENV === "development") {
-      return; // Skip authentication in development
+      return; // Skip authentication check in development
     }
 
     if (status === "loading") {
@@ -22,8 +22,12 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
     }
   }, [session, status, router]);
 
-  // Render children if session is available, otherwise null (to prevent flash of protected content)
-  return session ? <>{children}</> : null;
+  // Always render children in development mode, otherwise render if session is available
+  if (process.env.NODE_ENV === "development" || session) {
+    return <>{children}</>;
+  }
+
+  return null; // Do not render anything if session is not available and not in development mode
 };
 
 export default ProtectedRoute;

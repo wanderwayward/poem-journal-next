@@ -1,12 +1,12 @@
 "use client";
-import { Box, Typography, CircularProgress } from "@mui/joy";
+import { Box, Button, Typography, CircularProgress } from "@mui/joy";
 import { FC, useState, useEffect } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useUser } from "../_contexts/User.context";
 import { PoemType } from "../_types/Types";
-import PoemTitleCard from "../_components/User/Poem-Title-Card/Poem-Title-Card";
 import ProtectedRoute from "../_components/ProtectedRoute/ProtectedRoute";
-ProtectedRoute;
+import PoemsPublished from "../_components/User/PoemsPublished";
+import PoemsDrafts from "../_components/User/PoemsDraft";
 
 const UserView: FC = () => {
   const { user } = useUser();
@@ -14,6 +14,12 @@ const UserView: FC = () => {
 
   const [poems, setPoems] = useState<PoemType[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const searchParams = new URLSearchParams(
+    typeof window !== "undefined" ? window.location.search : ""
+  );
+  const showDraftsParam = searchParams.get("showDrafts");
+  const [showDrafts, setShowDrafts] = useState(showDraftsParam === "true");
 
   useEffect(() => {
     const fetchPoems = async () => {
@@ -53,6 +59,18 @@ const UserView: FC = () => {
     }
   };
 
+  const filteredPoems = poems.filter(
+    (poem) => poem.status === (showDrafts ? "Draft" : "Published")
+  );
+
+  const handleToggleDrafts = () => {
+    setShowDrafts(!showDrafts);
+    const newQuery = new URLSearchParams({
+      showDrafts: !showDrafts ? "true" : "false",
+    });
+    router.push(`/user?${newQuery.toString()}`);
+  };
+
   return (
     <ProtectedRoute>
       <Box
@@ -66,9 +84,15 @@ const UserView: FC = () => {
         }}
       >
         <Typography level="title-lg" marginBottom="16px">
-          hi
+          {showDrafts ? "Drafts" : "Published Poems"}
         </Typography>
-        <Typography>This is a list of all your poems:</Typography>
+        <Button
+          onClick={handleToggleDrafts}
+          variant="soft"
+          sx={{ marginBottom: "16px" }}
+        >
+          {showDrafts ? "Show Published" : "Show Drafts"}
+        </Button>
         {loading ? (
           <Box
             sx={{
@@ -81,26 +105,22 @@ const UserView: FC = () => {
           >
             <CircularProgress />
           </Box>
-        ) : poems.length > 0 ? (
-          poems.map((poem) => (
-            <Box
-              key={poem._id}
-              sx={{
-                marginBottom: "16px",
-                display: "flex",
-                justifyContent: "center",
-                width: "100%",
-              }}
-            >
-              <PoemTitleCard
-                poem={poem}
-                handleDelete={() => handleDeleteClick(poem._id)}
-                handleEdit={() => handleEditClick(poem._id)}
-              />
-            </Box>
-          ))
         ) : (
-          <Typography>No poems found.</Typography>
+          <>
+            {showDrafts ? (
+              <PoemsDrafts
+                poems={filteredPoems}
+                handleEdit={handleEditClick}
+                handleDelete={handleDeleteClick}
+              />
+            ) : (
+              <PoemsPublished
+                poems={filteredPoems}
+                handleEdit={handleEditClick}
+                handleDelete={handleDeleteClick}
+              />
+            )}
+          </>
         )}
       </Box>
     </ProtectedRoute>
