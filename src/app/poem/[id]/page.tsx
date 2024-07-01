@@ -10,6 +10,7 @@ import {
   Box,
   Typography,
   Chip,
+  Sheet,
 } from "@mui/joy";
 import { useUser } from "@/app/_contexts/User.context";
 
@@ -89,8 +90,9 @@ const PoemPage = () => {
   }
 
   return poemData ? (
-    <Container
-      maxWidth="md"
+    <Sheet
+      variant="soft"
+      color="success"
       sx={{
         padding: "20px",
         textAlign: "center",
@@ -113,7 +115,7 @@ const PoemPage = () => {
           <Box
             sx={{
               textAlign: "left",
-              width: "65%",
+              padding: "20px",
             }}
           >
             <Typography>Tags:</Typography>
@@ -150,7 +152,7 @@ const PoemPage = () => {
           </Button>
         </Box>
       ) : null}
-    </Container>
+    </Sheet>
   ) : (
     <Container maxWidth="md" sx={{ padding: "20px" }}>
       <Typography>No poem found</Typography>
