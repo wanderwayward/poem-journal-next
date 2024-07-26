@@ -3,8 +3,7 @@
 
 import { SessionProvider } from "next-auth/react";
 import { UserProvider } from "@/app/_contexts/User.context";
-import { UserPoemsProvider } from "@/app/_contexts/UserPoems.context"; // Import UserPoemProvider
-
+import { UserPoemsProvider } from "@/app/_contexts/UserPoems.context";
 interface ClientProvidersProps {
   children: React.ReactNode;
 }

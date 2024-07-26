@@ -1,11 +1,10 @@
 "use client";
-import { Box, Button, Typography, CircularProgress, Sheet } from "@mui/joy";
+import { Box, Button, CircularProgress, Sheet } from "@mui/joy";
 import { FC, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUserPoems } from "../_contexts/UserPoems.context";
 import ProtectedRoute from "../_components/ProtectedRoute/ProtectedRoute";
-import PoemsPublished from "../_components/User/PoemsPublished";
-import PoemsDrafts from "../_components/User/PoemsDraft";
+import PoemsList from "../_components/User/PoemsList";
 
 const UserView: FC = () => {
   const { poems, setPoems, loading } = useUserPoems();
@@ -49,25 +48,26 @@ const UserView: FC = () => {
       <Sheet
         variant="solid"
         color="neutral"
-        sx={{ width: "50%", borderRadius: "2em", padding: "2em" }}
+        sx={{
+          width: {
+            xs: "100%",
+            sm: "75%",
+            md: "80%",
+            lg: "50%",
+          },
+          borderRadius: ".1em",
+          padding: ".8em",
+          margin: { xs: ".5em", sm: "auto" },
+        }}
       >
         <Box
           sx={{
-            width: "100%",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             textAlign: "left",
           }}
         >
-          <Typography
-            level="h2"
-            marginBottom="16px"
-            variant="plain"
-            textColor="success.200"
-          >
-            {showDrafts ? "Drafts" : "Published Poems"}
-          </Typography>
           <Button
             onClick={handleToggleDrafts}
             variant="soft"
@@ -81,28 +81,19 @@ const UserView: FC = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                height: "100px", // Adjust the height as needed
+                height: "100px",
                 width: "100%",
               }}
             >
               <CircularProgress />
             </Box>
           ) : (
-            <>
-              {showDrafts ? (
-                <PoemsDrafts
-                  poems={filteredPoems}
-                  handleEdit={handleEditClick}
-                  handleDelete={handleDeleteClick}
-                />
-              ) : (
-                <PoemsPublished
-                  poems={filteredPoems}
-                  handleEdit={handleEditClick}
-                  handleDelete={handleDeleteClick}
-                />
-              )}
-            </>
+            <PoemsList
+              poems={filteredPoems}
+              handleEdit={handleEditClick}
+              handleDelete={handleDeleteClick}
+              listLabel={showDrafts ? "Drafts" : "Published Poems"}
+            />
           )}
         </Box>
       </Sheet>

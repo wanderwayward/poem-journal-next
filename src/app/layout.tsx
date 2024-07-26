@@ -5,6 +5,7 @@ import { CssVarsProvider } from "@mui/joy/styles";
 import { CssBaseline, Sheet, Grid } from "@mui/joy";
 import dynamic from "next/dynamic";
 import "./globals.css";
+import theme from "./_theme/theme";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,7 +36,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ClientProviders>
-          <CssVarsProvider>
+          <CssVarsProvider theme={theme}>
             <CssBaseline />
             <Sheet
               variant="soft"

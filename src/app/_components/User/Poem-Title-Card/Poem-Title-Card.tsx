@@ -20,7 +20,10 @@ export default function PoemTitleCard({
       variant="soft"
       color="success"
       sx={{
-        width: "15em",
+        width: {
+          xs: "100%",
+          xl: "15em",
+        },
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
