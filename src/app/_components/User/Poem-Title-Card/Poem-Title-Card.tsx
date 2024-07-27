@@ -24,7 +24,6 @@ export default function PoemTitleCard({
         },
         height: {
           xs: "auto",
-          sm: "8em",
         },
         display: "flex",
         flexDirection: "column",
