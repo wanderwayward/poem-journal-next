@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
-import { Grid, Typography, Button, Box, Avatar } from "@mui/joy";
+import { Grid, Typography, Button, Box, Avatar } from "@mui/material";
 import { useUser } from "../_contexts/User.context";
-import { signOut } from "next-auth/react"; // Import the signOut function
+import { signOut } from "next-auth/react";
 
 const Navbar = () => {
   const { user } = useUser();
@@ -17,7 +17,7 @@ const Navbar = () => {
         top: 0,
         left: 0,
         right: 0,
-        zIndex: 1100, // Keep this high to stay above other content
+        zIndex: 1100,
         width: "100%",
         backgroundColor: "beige",
         padding: "8px 16px",
@@ -28,7 +28,7 @@ const Navbar = () => {
         <Link href="/poem-upload" passHref>
           <Typography
             component="span"
-            sx={{ textDecoration: "none !important", color: "inherit" }}
+            sx={{ textDecoration: "none", color: "inherit" }}
           >
             Upload
           </Typography>
@@ -39,10 +39,9 @@ const Navbar = () => {
         <Link href="/" passHref>
           <Typography
             component="span"
-            color="warning"
-            level="title-lg"
-            variant="plain"
-            sx={{ textDecoration: "none !important", color: "inherit" }}
+            color="warning.main"
+            sx={{ textDecoration: "none", color: "inherit" }}
+            variant="h6"
           >
             Poem Journal
           </Typography>
@@ -59,14 +58,14 @@ const Navbar = () => {
           <>
             <Button
               color="warning"
-              variant="plain"
+              variant="text"
               onClick={() => signOut()}
               sx={{ marginRight: 1 }}
             >
               Sign Out
             </Button>
             <Link href="/user" passHref>
-              <Typography component="span" color="warning" variant="plain">
+              <Typography component="span" color="warning.main">
                 {user.name}
               </Typography>
             </Link>
@@ -75,21 +74,19 @@ const Navbar = () => {
             )}
           </>
         ) : (
-          <>
-            <Button
-              component={Link}
-              href="/auth"
-              color="warning"
-              variant="plain"
-              sx={{
-                marginRight: 1,
-                textDecoration: "none !important",
-                color: "inherit",
-              }}
-            >
-              Sign In
-            </Button>
-          </>
+          <Button
+            component={Link}
+            href="/auth"
+            color="warning"
+            variant="text"
+            sx={{
+              marginRight: 1,
+              textDecoration: "none",
+              color: "inherit",
+            }}
+          >
+            Sign In
+          </Button>
         )}
       </Box>
     </Grid>

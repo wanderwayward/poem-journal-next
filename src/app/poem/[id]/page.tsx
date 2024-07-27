@@ -10,8 +10,8 @@ import {
   Box,
   Typography,
   Chip,
-  Sheet,
-} from "@mui/joy";
+  Paper,
+} from "@mui/material";
 import { useUser } from "@/app/_contexts/User.context";
 
 const PoemPage = () => {
@@ -74,12 +74,7 @@ const PoemPage = () => {
           minHeight: "100vh",
         }}
       >
-        <CircularProgress
-          variant="plain"
-          color="danger"
-          size="lg"
-          thickness={4}
-        />
+        <CircularProgress color="error" size="lg" />
       </Container>
     );
   }
@@ -87,22 +82,20 @@ const PoemPage = () => {
   if (error) {
     return (
       <Container maxWidth="md" sx={{ padding: "20px" }}>
-        <Typography color="danger">{error}</Typography>
+        <Typography color="error">{error}</Typography>
       </Container>
     );
   }
 
   return poemData ? (
-    <Sheet
-      variant="soft"
-      color="success"
+    <Paper
       sx={{
         padding: "20px",
         textAlign: "center",
       }}
     >
-      <Typography level="h2">{poemData.title}</Typography>
-      <Typography level="body-xs" color="danger">
+      <Typography variant="h4">{poemData.title}</Typography>
+      <Typography variant="body2" color="textSecondary">
         {poemData.author} by {poemData.username}
       </Typography>
       <Poem stanzas={poemData.stanzas} />
@@ -120,7 +113,7 @@ const PoemPage = () => {
               padding: "20px",
             }}
           >
-            <Typography>Tags:</Typography>
+            <Typography variant="subtitle1">Tags:</Typography>
             <Box
               sx={{
                 marginTop: "5px",
@@ -130,14 +123,14 @@ const PoemPage = () => {
               }}
             >
               {poemData.tags.map((tag) => (
-                <Chip key={tag}>{tag}</Chip>
+                <Chip key={tag} label={tag} />
               ))}
             </Box>
           </Box>
         </Box>
       )}
 
-      {user ? (
+      {user && (
         <Box
           sx={{
             marginTop: "20px",
@@ -146,15 +139,15 @@ const PoemPage = () => {
             gap: "5em",
           }}
         >
-          <Button variant="plain" color="primary" onClick={handleEditClick}>
+          <Button variant="contained" color="primary" onClick={handleEditClick}>
             Edit
           </Button>
-          <Button variant="outlined" color="danger" onClick={handleDeleteClick}>
+          <Button variant="outlined" color="error" onClick={handleDeleteClick}>
             Delete
           </Button>
         </Box>
-      ) : null}
-    </Sheet>
+      )}
+    </Paper>
   ) : (
     <Container maxWidth="md" sx={{ padding: "20px" }}>
       <Typography>No poem found</Typography>

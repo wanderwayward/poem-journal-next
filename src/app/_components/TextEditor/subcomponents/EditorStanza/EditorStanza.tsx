@@ -1,4 +1,4 @@
-import { Typography } from "@mui/joy";
+import { Typography } from "@mui/material";
 import { RenderElementProps } from "slate-react";
 
 const EditorStanza = ({
@@ -8,9 +8,12 @@ const EditorStanza = ({
 }: RenderElementProps) => (
   <Typography
     component="div"
-    p={1}
     {...attributes}
-    sx={{ textAlign: element.alignment || "left", marginBottom: 1 }}
+    sx={{
+      textAlign: element.alignment || "left",
+      marginBottom: 1,
+      padding: 1,
+    }}
   >
     {children}
   </Typography>

@@ -1,8 +1,7 @@
-// src/app/auth/page.tsx
 "use client";
 
 import { useState } from "react";
-import { Button, Box } from "@mui/joy";
+import { Button, Box } from "@mui/material";
 import SignIn from "@/app/_components/Auth/SignIn";
 import SignUp from "@/app/_components/Auth/SignUp";
 

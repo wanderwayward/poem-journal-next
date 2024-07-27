@@ -1,5 +1,5 @@
 "use client";
-import { Box, Button, CircularProgress, Sheet } from "@mui/joy";
+import { Box, Button, CircularProgress, Paper } from "@mui/material";
 import { FC, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUserPoems } from "../_contexts/UserPoems.context";
@@ -45,9 +45,7 @@ const UserView: FC = () => {
 
   return (
     <ProtectedRoute>
-      <Sheet
-        variant="solid"
-        color="neutral"
+      <Paper
         sx={{
           width: {
             xs: "100%",
@@ -58,6 +56,7 @@ const UserView: FC = () => {
           borderRadius: ".1em",
           padding: ".8em",
           margin: { xs: ".5em", sm: "auto" },
+          backgroundColor: "neutral.main", // Adjust as needed for theme
         }}
       >
         <Box
@@ -70,7 +69,7 @@ const UserView: FC = () => {
         >
           <Button
             onClick={handleToggleDrafts}
-            variant="soft"
+            variant="contained"
             sx={{ marginBottom: "16px" }}
           >
             {showDrafts ? "Show Published" : "Show Drafts"}
@@ -96,7 +95,7 @@ const UserView: FC = () => {
             />
           )}
         </Box>
-      </Sheet>
+      </Paper>
     </ProtectedRoute>
   );
 };

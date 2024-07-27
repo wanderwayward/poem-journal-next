@@ -1,17 +1,22 @@
-// src/app/_theme/theme.ts
-import { extendTheme } from "@mui/joy/styles";
+"use client";
 
-// Extending the theme interface to include custom breakpoints
-declare module "@mui/joy/styles" {
-  interface Breakpoints {
-    values: {
-      xxl: number;
-      xxxl: number;
-    };
+// src/app/_theme/theme.ts
+import { createTheme } from "@mui/material/styles";
+
+// Extend Material-UI's default breakpoints to include custom values
+declare module "@mui/material/styles" {
+  interface BreakpointOverrides {
+    xs: true; // keeping existing breakpoints
+    sm: true; // keeping existing breakpoints
+    md: true; // keeping existing breakpoints
+    lg: true; // keeping existing breakpoints
+    xl: true; // keeping existing breakpoints
+    xxl: true; // custom breakpoint
+    xxxl: true; // custom breakpoint
   }
 }
 
-const theme = extendTheme({
+const theme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
@@ -23,7 +28,7 @@ const theme = extendTheme({
       xxxl: 2560, // Custom breakpoint
     },
   },
-  // Add other customizations here
+  // Add other customizations here, such as palette, typography, etc.
 });
 
 export default theme;

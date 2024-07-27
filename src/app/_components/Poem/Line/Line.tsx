@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography } from "@mui/joy";
+import { Typography } from "@mui/material";
 import { PoemLineType, PoemCustomText } from "../../../_types/Types";
 
 interface LineProps {
@@ -10,7 +10,7 @@ const Line: React.FC<LineProps> = ({ line }) => {
   return (
     <Typography
       component="div"
-      style={{
+      sx={{
         textAlign: line.alignment || "left",
       }}
     >

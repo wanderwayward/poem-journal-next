@@ -1,5 +1,5 @@
 import { RenderElementProps, RenderLeafProps } from "slate-react";
-import { Typography } from "@mui/joy";
+import { Typography } from "@mui/material";
 import EditorStanza from "../_components/TextEditor/subcomponents/EditorStanza/EditorStanza";
 import EditorLine from "../_components/TextEditor/subcomponents/EditorLine/EditorLine";
 import EditorParagraph from "../_components/TextEditor/subcomponents/EditorParagraph/EditorParagraph";

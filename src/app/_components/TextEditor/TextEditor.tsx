@@ -1,5 +1,5 @@
 "use client";
-import { Sheet } from "@mui/joy";
+import { Paper, Box } from "@mui/material";
 import { Slate, Editable } from "slate-react";
 import CustomEditor from "../../_utils/CustomEditor";
 import useEditor from "../../_hooks/useEditor";
@@ -17,9 +17,7 @@ const TextEditor = () => {
       initialValue={content}
       onChange={(value) => setContent(value)}
     >
-      <Sheet
-        color="success"
-        variant="soft"
+      <Paper
         sx={{
           display: "flex",
           justifyContent: "space-around",
@@ -27,6 +25,7 @@ const TextEditor = () => {
           height: "3em",
           marginTop: "1em",
           boxShadow: "1px 2px 1px rgba(0, 0, 0, 0.1)",
+          padding: "0.5em",
         }}
       >
         <FormattingButton
@@ -53,8 +52,8 @@ const TextEditor = () => {
           label="Align Right"
           onFormat={() => CustomEditor.toggleAlignment(editor, "right")}
         />
-      </Sheet>
-      <Sheet variant="soft" color="neutral" invertedColors>
+      </Paper>
+      <Paper variant="outlined" sx={{ mt: 2, p: 1 }}>
         <Editable
           renderElement={renderElement}
           renderLeaf={renderLeaf}
@@ -67,7 +66,7 @@ const TextEditor = () => {
             boxShadow: "1px 2px 1px rgba(0, 0, 0, 0.1)",
           }}
         />
-      </Sheet>
+      </Paper>
     </Slate>
   );
 };

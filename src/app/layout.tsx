@@ -1,8 +1,8 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { CssVarsProvider } from "@mui/joy/styles";
-import { CssBaseline, Sheet, Grid } from "@mui/joy";
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import { Box, Container, Grid } from "@mui/material";
 import dynamic from "next/dynamic";
 import "./globals.css";
 import theme from "./_theme/theme";
@@ -36,40 +36,37 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ClientProviders>
-          <CssVarsProvider theme={theme}>
+          <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Sheet
-              variant="soft"
-              color="warning"
+            <Box
               sx={{
                 width: "100%",
-                minHeight: "100vh", // Ensures the sheet covers the full viewport at minimum
+                minHeight: "100vh",
                 display: "flex",
                 flexDirection: "column",
+                bgcolor: "warning.main",
               }}
             >
               <Navbar />
-              <Grid
-                container
-                justifyContent="center"
-                alignItems="center"
-                sx={{ width: "100%", flexGrow: 1, paddingTop: "60px" }} // Grow with content
+              <Container
+                sx={{
+                  flexGrow: 1,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingTop: "60px",
+                }}
               >
-                <Grid
-                  container
-                  justifyContent="center"
-                  alignItems="center"
-                  sx={{ width: "100%" }}
-                >
-                  <Grid xs={12} style={{ width: "100%" }}>
+                <Grid container justifyContent="center" alignItems="center">
+                  <Grid item xs={12}>
                     <Grid container justifyContent="center" alignItems="unset">
                       {children}
                     </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-            </Sheet>
-          </CssVarsProvider>
+              </Container>
+            </Box>
+          </ThemeProvider>
         </ClientProviders>
       </body>
     </html>

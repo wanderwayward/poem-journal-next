@@ -11,17 +11,18 @@ import { useParams, useRouter } from "next/navigation";
 import {
   Box,
   Button,
-  Input,
+  TextField,
   FormControl,
   FormLabel,
-  Sheet,
-  Textarea,
+  Paper,
+  TextareaAutosize,
   Grid,
   Typography,
   CircularProgress,
   Chip,
-  ChipDelete,
-} from "@mui/joy";
+  IconButton,
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 import TextEditor from "../TextEditor/TextEditor";
 import { useEditorContext } from "../../_contexts/Editor.context";
 import parseContentToStanzas from "../../_utils/parseContentToStanzas";
@@ -157,24 +158,25 @@ const PoemEditForm = () => {
   if (error) {
     return (
       <Box sx={{ padding: "20px" }}>
-        <Typography color="danger">{error}</Typography>
+        <Typography color="error">{error}</Typography>
       </Box>
     );
   }
 
   return poemData ? (
-    <Sheet
-      variant="soft"
-      color="primary"
-      sx={{ width: "100%", maxWidth: "1200px", p: 3 }}
-    >
+    <Paper sx={{ width: "100%", maxWidth: "1200px", p: 3 }}>
       <Box component="form">
         <Grid container spacing={2}>
-          <Grid xs={12} md={6} sx={{ maxHeight: "600px", overflowY: "auto" }}>
-            <FormControl>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={{ maxHeight: "600px", overflowY: "auto" }}
+          >
+            <FormControl fullWidth>
               <FormLabel>Title</FormLabel>
-              <Input
-                variant="soft"
+              <TextField
+                variant="outlined"
                 placeholder="Untitled"
                 value={title}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -186,10 +188,10 @@ const PoemEditForm = () => {
             <Box
               sx={{ display: "flex", justifyContent: "space-between", gap: 2 }}
             >
-              <FormControl sx={{ flexGrow: 1 }}>
+              <FormControl fullWidth>
                 <FormLabel>Author</FormLabel>
-                <Input
-                  variant="soft"
+                <TextField
+                  variant="outlined"
                   placeholder="Author"
                   value={author}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -199,22 +201,20 @@ const PoemEditForm = () => {
               </FormControl>
             </Box>
 
-            <FormControl>
+            <FormControl fullWidth>
               <FormLabel>Tags</FormLabel>
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 1 }}>
                 {tags.map((tag, index) => (
                   <Chip
                     key={index}
-                    endDecorator={
-                      <ChipDelete onDelete={() => handleTagRemove(tag)} />
-                    }
-                  >
-                    {tag}
-                  </Chip>
+                    label={tag}
+                    onDelete={() => handleTagRemove(tag)}
+                    deleteIcon={<DeleteIcon />}
+                  />
                 ))}
               </Box>
-              <Input
-                variant="soft"
+              <TextField
+                variant="outlined"
                 placeholder="Comma separated"
                 value={currentTag}
                 onChange={handleTagChange}
@@ -223,24 +223,23 @@ const PoemEditForm = () => {
             </FormControl>
             <TextEditor />
           </Grid>
-          <Grid xs={12} md={6}>
-            <FormControl>
+          <Grid item xs={12} md={6}>
+            <FormControl fullWidth>
               <FormLabel sx={{ fontSize: "1.25rem", fontWeight: "bold" }}>
                 Comment about the Poem
               </FormLabel>
-              <Typography level="title-sm" sx={{ marginBottom: "0.5rem" }}>
+              <Typography variant="subtitle1" sx={{ marginBottom: "0.5rem" }}>
                 What did this make you think/feel? What memory do you associate
                 with this?
               </Typography>
-              <Textarea
-                variant="soft"
+              <TextareaAutosize
                 placeholder="Share your thoughts or feelings about this poem..."
                 value={comment}
                 onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                   setComment(e.target.value)
                 }
                 minRows={10}
-                sx={{ width: "100%" }}
+                style={{ width: "100%" }}
               />
             </FormControl>
           </Grid>
@@ -255,24 +254,24 @@ const PoemEditForm = () => {
         >
           <Button
             onClick={(e) => handleSave(e, false)}
-            variant="soft"
-            color="danger"
-            size="lg"
+            variant="outlined"
+            color="secondary"
+            size="large"
           >
             Save Draft
           </Button>
           <Button
             onClick={(e) => handleSave(e, true)}
-            variant="soft"
-            color="success"
-            size="lg"
+            variant="contained"
+            color="primary"
+            size="large"
             sx={{ ml: 2 }}
           >
             Publish
           </Button>
         </Box>
       </Box>
-    </Sheet>
+    </Paper>
   ) : (
     <Box sx={{ padding: "20px" }}>
       <Typography>No poem found</Typography>

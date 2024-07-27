@@ -1,13 +1,19 @@
-import { Sheet } from "@mui/joy";
+import { Paper } from "@mui/material";
 import TextEditor from "../_components/TextEditor/TextEditor";
 import { EditorProvider } from "../_contexts/Editor.context";
 
 function Upload() {
   return (
     <EditorProvider>
-      <Sheet color="danger" variant="solid">
+      <Paper
+        sx={{
+          padding: 2,
+          backgroundColor: "error.main", // Using the theme's error color
+          color: "white", // Ensure text is visible on the dark background
+        }}
+      >
         <TextEditor />
-      </Sheet>
+      </Paper>
     </EditorProvider>
   );
 }

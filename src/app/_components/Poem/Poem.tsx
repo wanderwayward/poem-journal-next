@@ -1,5 +1,5 @@
 import React from "react";
-import { Container } from "@mui/joy";
+import { Container } from "@mui/material";
 import Stanza from "./Stanza/Stanza";
 import { PoemStanzaType } from "@/app/_types/Types";
 

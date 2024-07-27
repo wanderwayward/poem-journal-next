@@ -1,5 +1,5 @@
 "use client";
-import { Box, Typography, Grid } from "@mui/joy";
+import { Box, Typography, Grid } from "@mui/material";
 import { FC } from "react";
 import { PoemType } from "../../_types/Types";
 import PoemTitleCard from "./Poem-Title-Card/Poem-Title-Card";
@@ -20,17 +20,15 @@ const PoemsList: FC<PoemsListProps> = ({
   return (
     <Box>
       <Typography
-        level="h2"
-        marginBottom="16px"
-        variant="plain"
-        textColor="success.200"
+        variant="h4"
+        sx={{ marginBottom: "16px", color: "success.main" }}
       >
         {listLabel}
       </Typography>
       {poems.length > 0 ? (
         <Grid container spacing={2}>
           {poems.map((poem) => (
-            <Grid xs={12} sm={6} lg={4} xl={3} key={poem._id}>
+            <Grid item xs={12} sm={6} lg={4} xl={3} key={poem._id}>
               <PoemTitleCard
                 poem={poem}
                 handleDelete={() => handleDelete(poem._id)}

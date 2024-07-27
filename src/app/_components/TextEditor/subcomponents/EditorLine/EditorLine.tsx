@@ -1,4 +1,4 @@
-import { Typography } from "@mui/joy";
+import { Typography } from "@mui/material";
 import { RenderElementProps } from "slate-react";
 
 const EditorLine = ({ attributes, children, element }: RenderElementProps) => (

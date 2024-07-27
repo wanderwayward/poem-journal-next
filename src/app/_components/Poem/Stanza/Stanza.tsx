@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@mui/joy";
+import { Box } from "@mui/material";
 import Line from "../Line/Line";
 import { PoemStanzaType } from "@/app/_types/Types";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@mui/joy";
+import { Button } from "@mui/material";
 
 interface FormattingButtonProps {
   label: string;
@@ -12,7 +12,7 @@ const FormattingButton: React.FC<FormattingButtonProps> = ({
 }) => {
   return (
     <Button
-      variant="soft"
+      variant="contained"
       color="success"
       onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault(); // Prevent focus change
