@@ -1,11 +1,29 @@
 "use client";
 import Link from "next/link";
+import { Fragment } from "react";
 import { Grid, Typography, Button, Box, Avatar } from "@mui/material";
 import { useUser } from "../_contexts/User.context";
 import { signOut } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const { user } = useUser();
+
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const newIsScrolled = window.scrollY > 10;
+      if (newIsScrolled !== isScrolled) {
+        setIsScrolled(newIsScrolled);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isScrolled]);
 
   return (
     <Grid
@@ -19,35 +37,37 @@ const Navbar = () => {
         right: 0,
         zIndex: 1100,
         width: "100%",
-        backgroundColor: "beige",
+        backgroundColor: isScrolled ? "transparent" : "success.dark",
+        transition: "background-color 0.5s",
+
         padding: "8px 16px",
-        boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+        boxShadow: isScrolled ? "none" : "0px 2px 4px rgba(0, 0, 0, 0.1)",
       }}
     >
       <Box flex={1} display="flex" justifyContent="flex-start">
         <Link href="/poem-upload" passHref>
           <Typography
             component="span"
-            sx={{ textDecoration: "none", color: "red" }}
+            sx={{ textDecoration: "none", color: "success.light" }}
           >
             Upload
           </Typography>
         </Link>
       </Box>
-
-      <Box flex={2} display="flex" justifyContent="center">
-        <Link href="/" passHref>
-          <Typography
-            component="span"
-            color="warning.main"
-            sx={{ textDecoration: "none", color: "inherit" }}
-            variant="h6"
-          >
-            Poem Journal
-          </Typography>
-        </Link>
-      </Box>
-
+      {isScrolled ? null : (
+        <Box flex={2} display="flex" justifyContent="center">
+          <Link href="/" passHref>
+            <Typography
+              component="span"
+              color="warning.main"
+              sx={{ textDecoration: "none", color: "inherit" }}
+              variant="h6"
+            >
+              Poem Journal
+            </Typography>
+          </Link>
+        </Box>
+      )}
       <Box
         flex={1}
         display="flex"
@@ -55,7 +75,7 @@ const Navbar = () => {
         alignItems="center"
       >
         {user ? (
-          <>
+          <Fragment>
             <Button
               color="warning"
               variant="text"
@@ -65,14 +85,14 @@ const Navbar = () => {
               Sign Out
             </Button>
             <Link href="/user" passHref>
-              <Typography component="span" color="warning.main">
+              <Typography component="span" color="contrastText">
                 {user.name}
               </Typography>
             </Link>
             {user.image && (
               <Avatar src={user.image} alt={user.name} sx={{ marginLeft: 1 }} />
             )}
-          </>
+          </Fragment>
         ) : (
           <Button
             component={Link}
