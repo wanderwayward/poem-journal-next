@@ -21,14 +21,21 @@ const PoemsList: FC<PoemsListProps> = ({
     <Box>
       <Typography
         variant="h4"
-        sx={{ marginBottom: "16px", color: "success.main" }}
+        sx={{
+          marginBottom: "16px",
+          color: "success.main",
+          textAlign: {
+            xs: "center",
+            sm: "left",
+          },
+        }}
       >
         {listLabel}
       </Typography>
       {poems.length > 0 ? (
         <Grid container spacing={2}>
           {poems.map((poem) => (
-            <Grid item xs={12} sm={6} lg={4} xl={3} key={poem._id}>
+            <Grid item xs={12} sm={6} lg={4} key={poem._id}>
               <PoemTitleCard
                 poem={poem}
                 handleDelete={() => handleDelete(poem._id)}

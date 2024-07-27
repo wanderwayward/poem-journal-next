@@ -48,13 +48,22 @@ const UserView: FC = () => {
       <Paper
         sx={{
           width: {
-            xs: "100%",
-            sm: "75%",
-            md: "80%",
-            lg: "50%",
+            xs: "100%", // Full width on smallest screens
+            sm: "97%",
+            md: "95%",
+            lg: "90%", // Narrowest point
+            xl: "97%", // Slight increase as screen size grows
           },
           borderRadius: ".1em",
-          padding: ".8em",
+          padding: {
+            xs: ".5em",
+            sm: ".8em",
+            md: "1em",
+            lg: "1.2em",
+            xl: "1.5em",
+            xxl: "2em",
+            xxxl: "2.5em",
+          },
           margin: { xs: ".5em", sm: "auto" },
           backgroundColor: "neutral.main", // Adjust as needed for theme
         }}

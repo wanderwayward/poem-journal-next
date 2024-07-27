@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Box, Card, CardContent, Typography, IconButton } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
-import { PoemType } from "../../../_types/Types";
 import Link from "next/link";
+import { PoemType } from "../../../_types/Types";
 
 interface PoemTitleCardProps {
   poem: PoemType;
@@ -20,27 +20,32 @@ export default function PoemTitleCard({
       sx={{
         width: {
           xs: "100%",
-          xl: "15em",
+          sm: "97%",
+        },
+        height: {
+          xs: "auto",
+          sm: "8em",
         },
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        paddingX: ".2em",
-        paddingY: ".5em",
-        backgroundColor: "success.main", // This replaces the `color` prop
+        paddingX: ".1em",
+        paddingY: ".2em",
+        backgroundColor: "success.main",
       }}
     >
-      <CardContent sx={{ width: "100%" }}>
+      <CardContent sx={{ width: "100%", padding: "0 !important" }}>
         <Box
           sx={{
             display: "grid",
             gridTemplateColumns: "1fr auto",
             width: "100%",
             alignItems: "center",
+            padding: "0 1em",
           }}
         >
           <Link href={`/poem/${poem._id}`} passHref>
-            <Typography variant="h6" sx={{ textAlign: "center" }}>
+            <Typography variant="h6" sx={{ textAlign: { xs: "left" } }}>
               {poem.title}
             </Typography>
           </Link>
@@ -55,14 +60,15 @@ export default function PoemTitleCard({
             width: "100%",
             alignItems: "center",
             marginTop: 1,
+            padding: "0 1em",
           }}
         >
-          <Typography variant="body2" sx={{ textAlign: "center" }}>
+          <Typography variant="body2" sx={{ textAlign: "left" }}>
             {poem.author === "Original"
               ? poem.username
               : poem.author || "Unknown"}
           </Typography>
-          <Typography variant="body2" sx={{ textAlign: "center" }}>
+          <Typography variant="body2" sx={{ textAlign: "left" }}>
             {poem.status}
           </Typography>
           <IconButton onClick={handleDelete}>
