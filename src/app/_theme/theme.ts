@@ -4,16 +4,16 @@ export const getDesignTokens = (mode: "light" | "dark") => ({
     ...(mode === "light"
       ? {
           primary: {
-            light: "#c7e0f7",
-            main: "#b0c4de",
-            dark: "#95a3c2",
-            contrastText: "#000",
+            light: "#e2ece9ff", // Mint Cream
+            main: "#cddafdff", // Periwinkle (softened)
+            dark: "#7f9172ff", // Reseda Green (muted)
+            contrastText: "#2d2a32ff", // Raisin Black
           },
           secondary: {
-            light: "#efcfe7",
-            main: "#d9aad0",
-            dark: "#b78bb5",
-            contrastText: "#000",
+            light: "#fde2e4ff", // Misty Rose
+            main: "#fff1e6ff", // Linen
+            dark: "#bd4f6cff", // Fuchsia Rose (softened)
+            contrastText: "#2d2a32ff", // Raisin Black
           },
           error: {
             light: "#f7c3c3",
@@ -40,27 +40,27 @@ export const getDesignTokens = (mode: "light" | "dark") => ({
             contrastText: "#fff",
           },
           background: {
-            default: "#fafafa",
+            default: "#f3f3f3", // Slightly warmer than #fafafa
             paper: "#ffffff",
           },
           text: {
-            primary: "rgba(0, 0, 0, 0.87)",
-            secondary: "rgba(0, 0, 0, 0.6)",
-            disabled: "rgba(0, 0, 0, 0.38)",
+            primary: "#2d2a32ff", // Raisin Black
+            secondary: "rgba(45, 42, 50, 0.6)", // Raisin Black with transparency
+            disabled: "rgba(45, 42, 50, 0.38)",
           },
-          divider: "rgba(0, 0, 0, 0.12)",
+          divider: "rgba(45, 42, 50, 0.12)",
         }
       : {
           primary: {
-            light: "#c7e0f7",
-            main: "#b0c4de",
-            dark: "#95a3c2",
+            light: "#95a3c2", // Muted Blue-Grey
+            main: "#7f9172ff", // Reseda Green
+            dark: "#3d0814ff", // Chocolate Cosmos
             contrastText: "#fff",
           },
           secondary: {
-            light: "#efcfe7",
-            main: "#d9aad0",
-            dark: "#b78bb5",
+            light: "#cddafdff", // Periwinkle
+            main: "#fff1e6ff", // Linen
+            dark: "#bd4f6cff", // Fuchsia Rose
             contrastText: "#fff",
           },
           error: {
@@ -89,7 +89,7 @@ export const getDesignTokens = (mode: "light" | "dark") => ({
           },
           background: {
             default: "#1e1e1e",
-            paper: "#1e1e1e",
+            paper: "#2d2a32ff", // Raisin Black
           },
           text: {
             primary: "#fff",

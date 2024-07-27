@@ -89,7 +89,9 @@ const PoemPage = () => {
 
   return poemData ? (
     <Paper
+      elevation={3}
       sx={{
+        backgroundColor: "primary.light",
         padding: "20px",
         textAlign: "center",
       }}

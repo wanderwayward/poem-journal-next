@@ -36,7 +36,7 @@ export default function RootLayout({
               minHeight: "100vh",
               display: "flex",
               flexDirection: "column",
-              bgcolor: "warning.main",
+              bgcolor: "secondary.main",
             }}
           >
             <Navbar />
