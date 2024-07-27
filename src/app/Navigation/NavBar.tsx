@@ -28,7 +28,7 @@ const Navbar = () => {
         <Link href="/poem-upload" passHref>
           <Typography
             component="span"
-            sx={{ textDecoration: "none", color: "inherit" }}
+            sx={{ textDecoration: "none", color: "red" }}
           >
             Upload
           </Typography>

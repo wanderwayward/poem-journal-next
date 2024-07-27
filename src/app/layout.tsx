@@ -1,11 +1,9 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ThemeProvider, CssBaseline } from "@mui/material";
-import { Box, Container, Grid } from "@mui/material";
 import dynamic from "next/dynamic";
 import "./globals.css";
-import theme from "./_theme/theme";
+import { Box, Container, Grid } from "@mui/material";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,56 +15,49 @@ export const metadata: Metadata = {
 // Dynamically import ClientProviders with no SSR
 const ClientProviders = dynamic(
   () => import("@/app/_components/ClientProviders/ClientProviders"),
-  {
-    ssr: false,
-  }
+  { ssr: false }
 );
 
 // Dynamically import Navbar with no SSR
-const Navbar = dynamic(() => import("./Navigation/NavBar"), {
-  ssr: false,
-});
+const Navbar = dynamic(() => import("./Navigation/NavBar"), { ssr: false });
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body className={inter.className}>
         <ClientProviders>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Box
+          <Box
+            sx={{
+              width: "100%",
+              minHeight: "100vh",
+              display: "flex",
+              flexDirection: "column",
+              bgcolor: "warning.main",
+            }}
+          >
+            <Navbar />
+            <Container
               sx={{
-                width: "100%",
-                minHeight: "100vh",
+                flexGrow: 1,
                 display: "flex",
-                flexDirection: "column",
-                bgcolor: "warning.main",
+                justifyContent: "center",
+                alignItems: "center",
+                paddingTop: "60px",
               }}
             >
-              <Navbar />
-              <Container
-                sx={{
-                  flexGrow: 1,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  paddingTop: "60px",
-                }}
-              >
-                <Grid container justifyContent="center" alignItems="center">
-                  <Grid item xs={12}>
-                    <Grid container justifyContent="center" alignItems="unset">
-                      {children}
-                    </Grid>
+              <Grid container justifyContent="center" alignItems="center">
+                <Grid item xs={12}>
+                  <Grid container justifyContent="center" alignItems="unset">
+                    {children}
                   </Grid>
                 </Grid>
-              </Container>
-            </Box>
-          </ThemeProvider>
+              </Grid>
+            </Container>
+          </Box>
         </ClientProviders>
       </body>
     </html>
