@@ -18,26 +18,26 @@ const TextEditor = () => {
       onChange={(value) => setContent(value)}
     >
       <Paper
+        variant="outlined"
         sx={{
+          border: "none",
           display: "flex",
-          justifyContent: "space-around",
+          justifyContent: "space-between",
           alignItems: "center",
-          height: "3em",
-          marginTop: "1em",
-          boxShadow: "1px 2px 1px rgba(0, 0, 0, 0.1)",
+          height: "2.5em",
           padding: "0.5em",
         }}
       >
         <FormattingButton
-          label="Bold"
+          label="B"
           onFormat={() => CustomEditor.toggleBoldMark(editor)}
         />
         <FormattingButton
-          label="Italic"
+          label="I"
           onFormat={() => CustomEditor.toggleItalicMark(editor)}
         />
         <FormattingButton
-          label="Underline"
+          label="U"
           onFormat={() => CustomEditor.toggleUnderlineMark(editor)}
         />
         <FormattingButton
@@ -53,17 +53,16 @@ const TextEditor = () => {
           onFormat={() => CustomEditor.toggleAlignment(editor, "right")}
         />
       </Paper>
-      <Paper variant="outlined" sx={{ mt: 2, p: 1 }}>
+      <Paper variant="outlined" sx={{ p: 1 }}>
         <Editable
           renderElement={renderElement}
           renderLeaf={renderLeaf}
           onKeyDown={onKeyDown}
           style={{
-            height: "300px", // You can adjust this height as needed
+            height: "auto",
             overflowY: "auto",
-            padding: "1em",
+            padding: "0.2em",
             borderRadius: "4px",
-            boxShadow: "1px 2px 1px rgba(0, 0, 0, 0.1)",
           }}
         />
       </Paper>

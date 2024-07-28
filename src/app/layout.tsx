@@ -42,6 +42,7 @@ export default function RootLayout({
             <Navbar />
             <Container
               sx={{
+                maxWidth: "xl",
                 flexGrow: 1,
                 display: "flex",
                 justifyContent: "center",

@@ -14,6 +14,7 @@ import {
   Chip,
   IconButton,
 } from "@mui/material";
+import { SoftTextField } from "../CustomComponents/CustomComponents";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TextEditor from "../TextEditor/TextEditor";
 import { useEditorContext } from "../../_contexts/Editor.context";
@@ -98,18 +99,13 @@ const PoemForm = () => {
   };
 
   return (
-    <Paper sx={{ width: "100%", maxWidth: "1200px", p: 3 }}>
+    <Paper sx={{ width: "100%", p: 2 }}>
       <Box component="form">
-        <Grid container spacing={2}>
-          <Grid
-            item
-            xs={12}
-            md={6}
-            sx={{ maxHeight: "600px", overflowY: "auto" }}
-          >
+        <Grid container spacing={5}>
+          <Grid item xs={12} md={6} sx={{ height: "auto", overflowY: "auto" }}>
             <FormControl fullWidth>
               <FormLabel>Title</FormLabel>
-              <TextField
+              <SoftTextField
                 variant="outlined"
                 placeholder="Untitled"
                 value={title}
@@ -124,7 +120,7 @@ const PoemForm = () => {
             >
               <FormControl fullWidth>
                 <FormLabel>Author</FormLabel>
-                <TextField
+                <SoftTextField
                   variant="outlined"
                   placeholder="Author"
                   value={author}
@@ -147,7 +143,8 @@ const PoemForm = () => {
                   />
                 ))}
               </Box>
-              <TextField
+              <SoftTextField
+                sx={{ mb: 1 }}
                 variant="outlined"
                 placeholder="Comma separated"
                 value={currentTag}
@@ -157,7 +154,16 @@ const PoemForm = () => {
             </FormControl>
             <TextEditor />
           </Grid>
-          <Grid item xs={12} md={6}>
+
+          {/* second column */}
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={{
+              padding: "1rem",
+            }}
+          >
             <FormControl fullWidth>
               <FormLabel sx={{ fontSize: "1.25rem", fontWeight: "bold" }}>
                 Comment about the Poem
@@ -188,8 +194,8 @@ const PoemForm = () => {
         >
           <Button
             onClick={(e) => handleSave(e, false)}
-            variant="outlined"
-            color="secondary"
+            variant="contained"
+            color="primary"
             size="large"
           >
             Save Draft
