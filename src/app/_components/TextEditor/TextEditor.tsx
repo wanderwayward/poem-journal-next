@@ -53,13 +53,16 @@ const TextEditor = () => {
           onFormat={() => CustomEditor.toggleAlignment(editor, "right")}
         />
       </Paper>
-      <Paper variant="outlined" sx={{ p: 1 }}>
+      <Paper
+        variant="outlined"
+        sx={{ p: 1, overflowY: "hidden", maxHeight: "10em" }}
+      >
         <Editable
           renderElement={renderElement}
           renderLeaf={renderLeaf}
           onKeyDown={onKeyDown}
           style={{
-            height: "auto",
+            maxHeight: "10em",
             overflowY: "auto",
             padding: "0.2em",
             borderRadius: "4px",

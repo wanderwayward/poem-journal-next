@@ -102,11 +102,16 @@ const PoemForm = () => {
     <Paper sx={{ width: "100%", p: 2 }}>
       <Box component="form">
         <Grid container spacing={5}>
-          <Grid item xs={12} md={6} sx={{ height: "auto", overflowY: "auto" }}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={{ maxHeight: "600px", overflowY: "hidden" }}
+          >
             <FormControl fullWidth>
               <FormLabel>Title</FormLabel>
               <SoftTextField
-                variant="outlined"
+                style={{ marginBottom: ".6em" }}
                 placeholder="Untitled"
                 value={title}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -121,7 +126,7 @@ const PoemForm = () => {
               <FormControl fullWidth>
                 <FormLabel>Author</FormLabel>
                 <SoftTextField
-                  variant="outlined"
+                  style={{ marginBottom: ".6em" }}
                   placeholder="Author"
                   value={author}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -144,8 +149,7 @@ const PoemForm = () => {
                 ))}
               </Box>
               <SoftTextField
-                sx={{ mb: 1 }}
-                variant="outlined"
+                style={{ marginBottom: ".6em" }}
                 placeholder="Comma separated"
                 value={currentTag}
                 onChange={handleTagChange}

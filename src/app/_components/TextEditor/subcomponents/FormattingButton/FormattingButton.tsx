@@ -39,11 +39,7 @@ const FormattingButton: React.FC<FormattingButtonProps> = ({
       sx={{
         maxHeight: "2em",
         width: "0.5em",
-        backgroundColor: "success.dark",
-        color: "white",
-        "&:hover": {
-          backgroundColor: "success.main",
-        },
+        backgroundColor: "success",
       }}
     >
       {renderLabel(label)}

@@ -30,6 +30,7 @@ import parseStanzasToContent from "../../_utils/parseStanzasToContent";
 import { useUser } from "@/app/_contexts/User.context";
 import { useUserPoems } from "@/app/_contexts/UserPoems.context";
 import { PoemType } from "@/app/_types/Types";
+import { SoftTextField } from "../CustomComponents/CustomComponents";
 
 const PoemEditForm = () => {
   const { content, setContent } = useEditorContext();
@@ -164,19 +165,19 @@ const PoemEditForm = () => {
   }
 
   return poemData ? (
-    <Paper sx={{ width: "100%", maxWidth: "1200px", p: 3 }}>
+    <Paper sx={{ width: "100%", p: 2 }}>
       <Box component="form">
-        <Grid container spacing={2}>
+        <Grid container spacing={5}>
           <Grid
             item
             xs={12}
             md={6}
-            sx={{ maxHeight: "600px", overflowY: "auto" }}
+            sx={{ maxHeight: "600px", overflowY: "hidden" }}
           >
             <FormControl fullWidth>
               <FormLabel>Title</FormLabel>
-              <TextField
-                variant="outlined"
+              <SoftTextField
+                style={{ marginBottom: ".6em" }}
                 placeholder="Untitled"
                 value={title}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -190,8 +191,8 @@ const PoemEditForm = () => {
             >
               <FormControl fullWidth>
                 <FormLabel>Author</FormLabel>
-                <TextField
-                  variant="outlined"
+                <SoftTextField
+                  style={{ marginBottom: ".6em" }}
                   placeholder="Author"
                   value={author}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -213,8 +214,8 @@ const PoemEditForm = () => {
                   />
                 ))}
               </Box>
-              <TextField
-                variant="outlined"
+              <SoftTextField
+                style={{ marginBottom: ".6em" }}
                 placeholder="Comma separated"
                 value={currentTag}
                 onChange={handleTagChange}
@@ -223,7 +224,14 @@ const PoemEditForm = () => {
             </FormControl>
             <TextEditor />
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={{
+              padding: "1rem",
+            }}
+          >
             <FormControl fullWidth>
               <FormLabel sx={{ fontSize: "1.25rem", fontWeight: "bold" }}>
                 Comment about the Poem
@@ -254,8 +262,8 @@ const PoemEditForm = () => {
         >
           <Button
             onClick={(e) => handleSave(e, false)}
-            variant="outlined"
-            color="secondary"
+            variant="contained"
+            color="primary"
             size="large"
           >
             Save Draft

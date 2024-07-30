@@ -1,5 +1,12 @@
 import * as React from "react";
-import { Box, Card, CardContent, Typography, IconButton } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  IconButton,
+  useTheme,
+} from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import Link from "next/link";
 import { PoemType } from "../../../_types/Types";
@@ -15,6 +22,8 @@ export default function PoemTitleCard({
   handleDelete,
   handleEdit,
 }: PoemTitleCardProps) {
+  const theme = useTheme();
+
   return (
     <Card
       sx={{
@@ -30,7 +39,8 @@ export default function PoemTitleCard({
         alignItems: "center",
         paddingX: ".1em",
         paddingY: ".2em",
-        backgroundColor: "success.main",
+        backgroundColor:
+          theme.palette.mode === "light" ? "primary.main" : "primary.dark",
       }}
     >
       <CardContent sx={{ width: "100%", padding: "0 !important" }}>
