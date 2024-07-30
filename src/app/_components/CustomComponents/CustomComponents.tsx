@@ -12,21 +12,18 @@ export const SoftTextField = (props: TextFieldProps) => {
         "& .MuiInputBase-root": {
           backgroundColor: theme.palette.background.default,
           borderRadius: "8px",
-          border: "1px solid ${theme.palette.divider}",
-          transition: "border-color 0.3s",
         },
-        "& .MuiInputBase-input": {
-          fontSize: "16px",
-          color: theme.palette.text.primary,
-        },
-        "& .MuiOutlinedInput-notchedOutline": {
-          border: "none",
-        },
-        "&:hover .MuiInputBase-root": {
-          borderColor: theme.palette.primary.light,
-        },
-        "& .Mui-focused .MuiInputBase-root": {
-          borderColor: theme.palette.primary.main,
+        "& .MuiOutlinedInput-root": {
+          "& > fieldset": {
+            borderColor: "transparent",
+            transition: "border-color 0.3s",
+          },
+          "&:hover > fieldset": {
+            borderColor: `rgba(229, 159, 178, 0.8)`, // Lighter shade for hover state
+          },
+          "&.Mui-focused > fieldset": {
+            borderColor: `rgba(189, 79, 108, 0.8)`, // Custom color for focused state
+          },
         },
       }}
     />

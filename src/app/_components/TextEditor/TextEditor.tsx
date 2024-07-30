@@ -53,22 +53,30 @@ const TextEditor = () => {
           onFormat={() => CustomEditor.toggleAlignment(editor, "right")}
         />
       </Paper>
-      <Paper
-        variant="outlined"
-        sx={{ p: 1, overflowY: "hidden", maxHeight: "10em" }}
+      <Box
+        sx={{
+          padding: "0.1em",
+          borderRadius: "4px",
+          border: "2px solid transparent",
+          transition: "border 0.2s ease-in-out",
+          "&:focus-within": {
+            border: "2px solid rgba(189, 79, 108, 0.8)",
+          },
+        }}
       >
         <Editable
           renderElement={renderElement}
           renderLeaf={renderLeaf}
           onKeyDown={onKeyDown}
           style={{
-            maxHeight: "10em",
+            height: "15em",
             overflowY: "auto",
             padding: "0.2em",
             borderRadius: "4px",
+            outline: "none",
           }}
         />
-      </Paper>
+      </Box>
     </Slate>
   );
 };

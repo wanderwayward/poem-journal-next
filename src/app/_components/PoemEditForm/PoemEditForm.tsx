@@ -172,7 +172,7 @@ const PoemEditForm = () => {
             item
             xs={12}
             md={6}
-            sx={{ maxHeight: "600px", overflowY: "hidden" }}
+            sx={{ minHeight: "500px", maxHeight: "600px", overflowY: "hidden" }}
           >
             <FormControl fullWidth>
               <FormLabel>Title</FormLabel>
@@ -202,11 +202,24 @@ const PoemEditForm = () => {
               </FormControl>
             </Box>
 
+            <TextEditor />
+          </Grid>
+
+          {/* second column */}
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={{
+              padding: "1rem",
+            }}
+          >
             <FormControl fullWidth>
-              <FormLabel>Tags</FormLabel>
+              <FormLabel sx={{ mb: "0.1em" }}>Tags</FormLabel>
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 1 }}>
                 {tags.map((tag, index) => (
                   <Chip
+                    color="error"
                     key={index}
                     label={tag}
                     onDelete={() => handleTagRemove(tag)}
@@ -222,32 +235,23 @@ const PoemEditForm = () => {
                 onKeyDown={handleTagKeyDown}
               />
             </FormControl>
-            <TextEditor />
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={6}
-            sx={{
-              padding: "1rem",
-            }}
-          >
             <FormControl fullWidth>
-              <FormLabel sx={{ fontSize: "1.25rem", fontWeight: "bold" }}>
+              <FormLabel
+                sx={{ fontSize: "1.25rem", fontWeight: "bold", mb: 1 }}
+              >
                 Comment about the Poem
               </FormLabel>
-              <Typography variant="subtitle1" sx={{ marginBottom: "0.5rem" }}>
+              <Typography variant="subtitle1" sx={{ marginBottom: "1rem" }}>
                 What did this make you think/feel? What memory do you associate
                 with this?
               </Typography>
-              <TextareaAutosize
+              <SoftTextField
                 placeholder="Share your thoughts or feelings about this poem..."
                 value={comment}
-                onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                  setComment(e.target.value)
-                }
-                minRows={10}
-                style={{ width: "100%" }}
+                onChange={(e) => setComment(e.target.value)}
+                multiline
+                minRows={7}
+                fullWidth
               />
             </FormControl>
           </Grid>
