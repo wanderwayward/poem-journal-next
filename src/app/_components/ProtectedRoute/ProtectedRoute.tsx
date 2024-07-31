@@ -17,8 +17,11 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
     if (status === "loading") {
       return; // Do nothing while loading
     }
+
     if (!session) {
-      router.push("/auth"); // Redirect to login page if not authenticated
+      // Store the current path the user was trying to access
+      const callbackUrl = window.location.pathname;
+      router.push(`/auth?callbackUrl=${callbackUrl}`); // Redirect to login page with the callback URL
     }
   }, [session, status, router]);
 

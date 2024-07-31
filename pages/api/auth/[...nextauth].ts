@@ -80,19 +80,22 @@ const options: NextAuthOptions = {
         return false;
       }
     },
-    async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
-      console.log("Redirecting to:", url);
+    async redirect({ url, baseUrl }) {
+      // Extract callbackUrl from the query parameters if it exists
+      const callbackUrl = new URL(url).searchParams.get("callbackUrl");
 
-      // Normalize URL to avoid trailing slash issues
-      const cleanUrl = url.endsWith("/") ? url.slice(0, -1) : url;
+      // Normalize the callbackUrl to remove any trailing slash
+      const cleanCallbackUrl = callbackUrl
+        ? callbackUrl.replace(/\/$/, "")
+        : null;
 
-      // Check if the user is on the /auth page
-      if (cleanUrl === `${baseUrl}/auth`) {
-        // Redirect to the homepage instead of staying on the /auth page
-        return baseUrl;
+      // If the callbackUrl is provided and starts with baseUrl, use it
+      if (cleanCallbackUrl && cleanCallbackUrl.startsWith(baseUrl)) {
+        return cleanCallbackUrl;
       }
 
-      // Allow redirection to proceed if within the base URL, otherwise default to base URL
+      // If no callbackUrl or it's not safe, use the provided url or default to baseUrl
+      const cleanUrl = url.replace(/\/$/, "");
       return cleanUrl.startsWith(baseUrl) ? cleanUrl : baseUrl;
     },
     async session({
