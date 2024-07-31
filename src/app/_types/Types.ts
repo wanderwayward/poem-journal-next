@@ -59,3 +59,10 @@ export interface PoemType {
   username: string;
   comment: string;
 }
+
+export interface UserType {
+  id: string;
+  name: string;
+  email: string;
+  image: string;
+}

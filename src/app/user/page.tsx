@@ -1,20 +1,23 @@
 "use client";
-import { Box, Button, CircularProgress, Paper } from "@mui/material";
+import { Paper, Box, Divider } from "@mui/material";
 import { FC, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUserPoems } from "../_contexts/UserPoems.context";
+import { useUser } from "../_contexts/User.context";
 import ProtectedRoute from "../_components/ProtectedRoute/ProtectedRoute";
-import PoemsList from "../_components/User/PoemsList";
+import PoemsList from "../_components/User/Poems-List/PoemsList";
+import UserTopHub from "../_components/User/User-Top-Hub/UserTopHub";
+import { UserType } from "../_types/Types";
 
 const UserView: FC = () => {
   const { poems, setPoems, loading } = useUserPoems();
+  const { user } = useUser();
   const router = useRouter();
 
-  const searchParams = new URLSearchParams(
-    typeof window !== "undefined" ? window.location.search : ""
+  const [showDrafts, setShowDrafts] = useState(
+    typeof window !== "undefined" &&
+      new URLSearchParams(window.location.search).get("showDrafts") === "true"
   );
-  const showDraftsParam = searchParams.get("showDrafts");
-  const [showDrafts, setShowDrafts] = useState(showDraftsParam === "true");
 
   const handleEditClick = (id: string) => {
     router.push(`/poem-edit/${id}`);
@@ -38,7 +41,7 @@ const UserView: FC = () => {
   const handleToggleDrafts = () => {
     setShowDrafts(!showDrafts);
     const newQuery = new URLSearchParams({
-      showDrafts: !showDrafts ? "true" : "false",
+      showDrafts: (!showDrafts).toString(),
     });
     router.push(`/user?${newQuery.toString()}`);
   };
@@ -48,11 +51,12 @@ const UserView: FC = () => {
       <Paper
         sx={{
           width: {
-            xs: "100%", // Full width on smallest screens
+            xs: "100%",
             sm: "97%",
             md: "95%",
-            lg: "90%", // Narrowest point
-            xl: "97%", // Slight increase as screen size grows
+            lg: "90%",
+            xl: "97%",
+            xxl: "98%",
           },
           borderRadius: ".1em",
           padding: {
@@ -65,45 +69,26 @@ const UserView: FC = () => {
             xxxl: "2.5em",
           },
           margin: { xs: ".5em", sm: "auto" },
-          backgroundColor: "neutral.main", // Adjust as needed for theme
+          backgroundColor: "success.main",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          textAlign: "left",
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            textAlign: "left",
-          }}
-        >
-          <Button
-            onClick={handleToggleDrafts}
-            variant="contained"
-            sx={{ marginBottom: "16px" }}
-          >
-            {showDrafts ? "Show Published" : "Show Drafts"}
-          </Button>
-          {loading ? (
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100px",
-                width: "100%",
-              }}
-            >
-              <CircularProgress />
-            </Box>
-          ) : (
-            <PoemsList
-              poems={filteredPoems}
-              handleEdit={handleEditClick}
-              handleDelete={handleDeleteClick}
-              listLabel={showDrafts ? "Drafts" : "Published Poems"}
-            />
-          )}
-        </Box>
+        <UserTopHub
+          handleToggleDrafts={handleToggleDrafts}
+          user={user as UserType}
+        />
+        <Divider sx={{ width: "100%", my: 2 }} />
+
+        <PoemsList
+          loading={loading}
+          poems={filteredPoems}
+          handleEdit={handleEditClick}
+          handleDelete={handleDeleteClick}
+          listLabel={showDrafts ? "Drafts" : "Published Poems"}
+        />
       </Paper>
     </ProtectedRoute>
   );
