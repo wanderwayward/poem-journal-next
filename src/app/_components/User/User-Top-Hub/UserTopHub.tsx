@@ -3,11 +3,10 @@ import { FC } from "react";
 import { UserType } from "@/app/_types/Types";
 
 interface UserTopHubProps {
-  handleToggleDrafts: () => void;
   user: UserType | null;
 }
 
-const UserTopHub: FC<UserTopHubProps> = ({ handleToggleDrafts, user }) => {
+const UserTopHub: FC<UserTopHubProps> = ({ user }) => {
   return user ? (
     <Grid container spacing={2}>
       <Grid
@@ -30,12 +29,6 @@ const UserTopHub: FC<UserTopHubProps> = ({ handleToggleDrafts, user }) => {
           <Typography variant="h6">{user.name}</Typography>
           <Typography variant="h6">{user.email}</Typography>
         </Grid>
-      </Grid>
-
-      <Grid item xs={12} sm={6} sx={{ alignContent: "center" }}>
-        <Button onClick={handleToggleDrafts} variant="contained">
-          Toggle Drafts
-        </Button>
       </Grid>
     </Grid>
   ) : null;

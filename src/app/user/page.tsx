@@ -74,15 +74,15 @@ const UserView: FC = () => {
           flexDirection: "column",
           alignItems: "center",
           textAlign: "left",
+          height: "calc(60vh - 64px)",
         }}
       >
-        <UserTopHub
-          handleToggleDrafts={handleToggleDrafts}
-          user={user as UserType}
-        />
+        <UserTopHub user={user as UserType} />
         <Divider sx={{ width: "100%", my: 2 }} />
 
         <PoemsList
+          showDrafts={showDrafts}
+          handleToggleDrafts={handleToggleDrafts}
           loading={loading}
           poems={filteredPoems}
           handleEdit={handleEditClick}
