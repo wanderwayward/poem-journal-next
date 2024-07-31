@@ -85,13 +85,17 @@ const options: NextAuthOptions = {
       const urlParams = new URL(url);
       const callbackUrl = urlParams.searchParams.get("callbackUrl");
 
-      // If callbackUrl exists, validate it and redirect accordingly
+      // Normalize callbackUrl if it exists
       if (callbackUrl) {
+        // Create a new URL object with the callbackUrl and baseUrl to normalize
         const validCallbackUrl = new URL(callbackUrl, baseUrl);
 
+        // Remove trailing slash for consistency
+        const normalizedCallbackUrl = validCallbackUrl.href.replace(/\/$/, "");
+
         // Ensure the callbackUrl starts with the baseUrl
-        if (validCallbackUrl.origin === new URL(baseUrl).origin) {
-          return validCallbackUrl.href;
+        if (normalizedCallbackUrl.startsWith(baseUrl)) {
+          return normalizedCallbackUrl;
         }
       }
 
