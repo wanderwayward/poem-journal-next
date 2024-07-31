@@ -81,15 +81,21 @@ const options: NextAuthOptions = {
       }
     },
     async redirect({ url, baseUrl }) {
-      // Ensure the URL is an absolute URL
+      const urlObj = new URL(url, baseUrl);
+      const callbackUrl = urlObj.searchParams.get("callbackUrl");
+
+      if (callbackUrl && new URL(callbackUrl, baseUrl).origin === baseUrl) {
+        return callbackUrl;
+      }
+
       if (url.startsWith("/")) {
         return `${baseUrl}${url}`;
       } else if (new URL(url).origin === baseUrl) {
         return url;
       }
-      // For external URLs, redirect to the base URL
       return baseUrl;
     },
+
     async session({
       session,
       token,
