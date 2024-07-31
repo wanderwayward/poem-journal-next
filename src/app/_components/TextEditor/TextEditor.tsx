@@ -1,4 +1,4 @@
-// TextEditor.tsx
+"use client";
 import { useState } from "react";
 import { Paper, Box, Button, Dialog, DialogContent } from "@mui/material";
 import { Slate, Editable } from "slate-react";
