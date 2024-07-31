@@ -6,6 +6,28 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Account, Profile, Session, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
 
+// Extend the session and token types to include the id
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      name?: string | null;
+      email?: string | null;
+      image?: string | null;
+    };
+  }
+
+  interface User {
+    id: string;
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    id: string;
+  }
+}
+
 const options: NextAuthOptions = {
   providers: [
     GoogleProvider({
@@ -28,10 +50,6 @@ const options: NextAuthOptions = {
         const client: MongoClient = await clientPromise;
         const db = client.db("poetrystream");
         const usersCollection = db.collection("users");
-
-        // Create index on the userId field in the poems collection if not exists
-        const poemsCollection = db.collection("poems");
-        await poemsCollection.createIndex({ userId: 1 });
 
         const existingUser = await usersCollection.findOne({
           email: user.email,
@@ -58,47 +76,30 @@ const options: NextAuthOptions = {
         return false;
       }
     },
-    async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
-      console.log("Redirecting to:", url);
-
-      // Normalize URL to avoid trailing slash issues
-      const cleanUrl = url.endsWith("/") ? url.slice(0, -1) : url;
-
-      // Check if the user is on the /auth page
-      if (cleanUrl === `${baseUrl}/auth`) {
-        // Redirect to the homepage instead of staying on the /auth page
-        return baseUrl;
-      }
-
-      // Allow redirection to proceed if within the base URL, otherwise default to base URL
-      return cleanUrl.startsWith(baseUrl) ? cleanUrl : baseUrl;
-    },
     async session({
       session,
-      user,
       token,
     }: {
       session: Session;
-      user: User;
       token: JWT;
     }): Promise<Session> {
-      console.log("Session callback:", session);
+      if (session.user) {
+        session.user.id = token.id;
+      }
       return session;
     },
     async jwt({
       token,
       user,
       account,
-      profile,
-      isNewUser,
     }: {
       token: JWT;
       user?: User;
       account?: Account | null;
-      profile?: Profile;
-      isNewUser?: boolean;
     }): Promise<JWT> {
-      console.log("JWT callback:", token);
+      if (user && account) {
+        token.id = `${account.provider}-${account.providerAccountId}`;
+      }
       return token;
     },
   },

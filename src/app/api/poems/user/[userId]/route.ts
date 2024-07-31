@@ -17,7 +17,6 @@ export async function GET(req: Request) {
     const db = client.db("poetrystream");
     const poemsCollection = db.collection("poems");
 
-    // Ensure userId is used correctly (assuming userId is a string, which matches the "userId" field in your poem object)
     const poems = await poemsCollection.find({ userId }).toArray();
 
     return NextResponse.json({ status: "success", data: poems });
