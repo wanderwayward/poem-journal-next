@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { Fragment } from "react";
-import { Grid, Typography, Button, Box, Avatar } from "@mui/material";
+import { Grid, Typography, Button, Box } from "@mui/material";
 import { useUser } from "../_contexts/User.context";
 import { signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -39,9 +39,8 @@ const Navbar = () => {
         width: "100%",
         backgroundColor: isScrolled ? "transparent" : "success.dark",
         transition: "background-color 0.5s",
-
         padding: "8px 16px",
-        boxShadow: isScrolled ? "none" : "0px 2px 4px rgba(0, 0, 0, 0.1)",
+        boxShadow: isScrolled ? "none" : "0px 4px 8px rgba(0, 0, 0, 0.1)",
       }}
     >
       <Box flex={1} display="flex" justifyContent="flex-start">
@@ -76,37 +75,49 @@ const Navbar = () => {
       >
         {user ? (
           <Fragment>
-            <Button
-              color="warning"
-              variant="text"
-              onClick={() => signOut()}
-              sx={{ marginRight: 1 }}
-            >
-              Sign Out
-            </Button>
             <Link href="/user" passHref>
-              <Typography component="span" color="contrastText">
+              <Typography
+                component="span"
+                sx={{
+                  textDecoration: "none",
+                  color: "contrastText",
+                  fontSize: "inherit",
+                  lineHeight: "1.5",
+                  marginRight: 1,
+                }}
+              >
                 {user.name}
               </Typography>
             </Link>
-            {user.image && (
-              <Avatar src={user.image} alt={user.name} sx={{ marginLeft: 1 }} />
-            )}
+            <Typography
+              component="span"
+              onClick={() => signOut()}
+              sx={{
+                cursor: "pointer",
+                textDecoration: "none",
+                color: "warning.main",
+                fontSize: "inherit",
+                lineHeight: "1.5",
+              }}
+            >
+              Sign Out
+            </Typography>
           </Fragment>
         ) : (
-          <Button
-            component={Link}
-            href="/auth"
-            color="warning"
-            variant="text"
-            sx={{
-              marginRight: 1,
-              textDecoration: "none",
-              color: "inherit",
-            }}
-          >
-            Sign In
-          </Button>
+          <Link href="/auth" passHref>
+            <Typography
+              component="span"
+              sx={{
+                cursor: "pointer",
+                textDecoration: "none",
+                color: "warning.main",
+                fontSize: "inherit",
+                lineHeight: "1.5",
+              }}
+            >
+              Sign In
+            </Typography>
+          </Link>
         )}
       </Box>
     </Grid>
