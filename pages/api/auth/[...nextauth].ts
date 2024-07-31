@@ -82,21 +82,21 @@ const options: NextAuthOptions = {
     },
     async redirect({ url, baseUrl }) {
       // Extract callbackUrl from the query parameters if it exists
-      const callbackUrl = new URL(url).searchParams.get("callbackUrl");
+      const urlParams = new URL(url);
+      const callbackUrl = urlParams.searchParams.get("callbackUrl");
 
-      // Normalize the callbackUrl to remove any trailing slash
-      const cleanCallbackUrl = callbackUrl
-        ? callbackUrl.replace(/\/$/, "")
-        : null;
+      // If callbackUrl exists, validate it and redirect accordingly
+      if (callbackUrl) {
+        const validCallbackUrl = new URL(callbackUrl, baseUrl);
 
-      // If the callbackUrl is provided and starts with baseUrl, use it
-      if (cleanCallbackUrl && cleanCallbackUrl.startsWith(baseUrl)) {
-        return cleanCallbackUrl;
+        // Ensure the callbackUrl starts with the baseUrl
+        if (validCallbackUrl.origin === new URL(baseUrl).origin) {
+          return validCallbackUrl.href;
+        }
       }
 
-      // If no callbackUrl or it's not safe, use the provided url or default to baseUrl
-      const cleanUrl = url.replace(/\/$/, "");
-      return cleanUrl.startsWith(baseUrl) ? cleanUrl : baseUrl;
+      // Fallback to baseUrl if callbackUrl is not valid or not present
+      return baseUrl;
     },
     async session({
       session,
