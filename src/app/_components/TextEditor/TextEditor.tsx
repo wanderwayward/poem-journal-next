@@ -1,9 +1,17 @@
 "use client";
 import { useState } from "react";
-import { Paper, Box, Button, Dialog, DialogContent } from "@mui/material";
+import {
+  Paper,
+  Box,
+  IconButton,
+  Dialog,
+  DialogContent,
+  Button,
+} from "@mui/material";
 import { Slate, Editable } from "slate-react";
-import CustomEditor from "../../_utils/CustomEditor";
+import { LuExpand } from "react-icons/lu";
 import useEditor from "../../_hooks/useEditor";
+import CustomEditor from "../../_utils/CustomEditor";
 import FormattingButton from "./subcomponents/FormattingButton/FormattingButton";
 import { useEditorContext } from "../../_contexts/Editor.context";
 
@@ -21,7 +29,10 @@ const TextEditor = () => {
       <Slate
         editor={editor}
         initialValue={content}
-        onChange={(value) => setContent(value)}
+        onChange={(value) => {
+          onChange(value);
+          setContent(value); // Ensure state synchronization
+        }}
       >
         <Paper
           variant="outlined"
@@ -58,21 +69,20 @@ const TextEditor = () => {
             label="Align Right"
             onFormat={() => CustomEditor.toggleAlignment(editor, "right")}
           />
-          <Button
-            variant="outlined"
-            onClick={handleModalOpen}
-            sx={{ marginLeft: "auto" }}
-          >
-            Expand Editor
-          </Button>
         </Paper>
         <Box
           sx={{
+            position: "relative",
             padding: "0.1em",
             borderRadius: "4px",
             border: "2px solid transparent",
             transition: "border 0.2s ease-in-out",
-            "&:focus-within": { border: "2px solid rgba(189, 79, 108, 0.8)" },
+            "&:focus-within": {
+              border: "2px solid rgba(189, 79, 108, 0.8)",
+            },
+            "&:hover .expand-icon": {
+              display: "flex",
+            },
           }}
         >
           <Editable
@@ -87,6 +97,22 @@ const TextEditor = () => {
               outline: "none",
             }}
           />
+          <IconButton
+            className="expand-icon"
+            onClick={handleModalOpen}
+            sx={{
+              display: "none",
+              position: "absolute",
+              bottom: 8,
+              right: 8,
+              backgroundColor: "rgba(255, 255, 255, 0.8)",
+              "&:hover": {
+                backgroundColor: "rgba(255, 255, 255, 1)",
+              },
+            }}
+          >
+            <LuExpand />
+          </IconButton>
         </Box>
       </Slate>
 
@@ -96,34 +122,99 @@ const TextEditor = () => {
         maxWidth="lg"
         fullWidth
       >
-        <DialogContent>
-          <Slate
-            editor={editor}
-            initialValue={content}
-            onChange={(value) => setContent(value)}
-          >
-            <Box
-              sx={{
-                minHeight: "500px",
-                padding: "1em",
-                borderRadius: "4px",
-                outline: "none",
-                border: "2px solid rgba(189, 79, 108, 0.8)",
+        <DialogContent
+          sx={{
+            height: "70vh",
+            display: "flex",
+            flexDirection: "column",
+            overflow: "hidden",
+            pb: 1,
+          }}
+        >
+          {isModalOpen && (
+            <Slate
+              editor={editor}
+              initialValue={content}
+              onChange={(value) => {
+                onChange(value);
+                setContent(value);
               }}
             >
-              <Editable
-                renderElement={renderElement}
-                renderLeaf={renderLeaf}
-                onKeyDown={onKeyDown}
-                style={{
-                  minHeight: "500px",
-                  overflowY: "auto",
-                  padding: "1em",
-                  borderRadius: "4px",
+              <Paper
+                variant="outlined"
+                sx={{
+                  border: "none",
+                  display: "flex",
+                  justifyContent: "space-around",
+                  alignItems: "center",
+                  height: "2.5em",
+                  padding: "0.5em",
+                  mb: "0.3em",
+                  position: "sticky",
+                  zIndex: 1,
                 }}
-              />
-            </Box>
-          </Slate>
+              >
+                <FormattingButton
+                  label="B"
+                  onFormat={() => CustomEditor.toggleBoldMark(editor)}
+                />
+                <FormattingButton
+                  label="I"
+                  onFormat={() => CustomEditor.toggleItalicMark(editor)}
+                />
+                <FormattingButton
+                  label="U"
+                  onFormat={() => CustomEditor.toggleUnderlineMark(editor)}
+                />
+                <FormattingButton
+                  label="Align Left"
+                  onFormat={() => CustomEditor.toggleAlignment(editor, "left")}
+                />
+                <FormattingButton
+                  label="Align Center"
+                  onFormat={() =>
+                    CustomEditor.toggleAlignment(editor, "center")
+                  }
+                />
+                <FormattingButton
+                  label="Align Right"
+                  onFormat={() => CustomEditor.toggleAlignment(editor, "right")}
+                />
+              </Paper>
+              <Box
+                sx={{
+                  flex: 1, // Allow the box to grow to fill available space
+                  overflowY: "auto", // Make the content scrollable
+                  padding: "0.1em",
+                  borderRadius: "4px",
+                  border: "2px solid rgba(189, 79, 108, 0.8)",
+                }}
+              >
+                <Editable
+                  renderElement={renderElement}
+                  renderLeaf={renderLeaf}
+                  onKeyDown={onKeyDown}
+                  style={{
+                    minHeight: "100%",
+                    padding: "1em",
+                    borderRadius: "4px",
+                    outline: "none",
+                  }}
+                />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  mt: 1,
+                }}
+              >
+                <Button variant="contained" onClick={handleModalClose}>
+                  Close
+                </Button>
+              </Box>
+            </Slate>
+          )}
         </DialogContent>
       </Dialog>
     </>
