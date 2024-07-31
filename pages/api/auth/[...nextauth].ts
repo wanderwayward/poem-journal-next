@@ -5,6 +5,7 @@ import clientPromise from "@/app/_utils/mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Account, Profile, Session, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
+import Cookies from "js-cookie";
 
 // Extend the session and token types to include the id
 declare module "next-auth" {
@@ -83,41 +84,25 @@ const options: NextAuthOptions = {
     async redirect({ url, baseUrl }) {
       try {
         console.log("Redirect callback triggered");
-        console.log("Received URL:", url);
-        console.log("Base URL:", baseUrl);
 
-        // Parse the URL to extract query parameters
-        const urlParams = new URL(url);
-        const callbackUrl = urlParams.searchParams.get("callbackUrl");
+        // Retrieve callbackUrl from the cookie
+        const callbackUrl = Cookies.get("callbackUrl");
+        console.log("Extracted callbackUrl from cookie:", callbackUrl);
 
-        console.log("Extracted callbackUrl:", callbackUrl);
-
-        // If callbackUrl exists, use it for redirection
+        // If callbackUrl exists and is valid, use it for redirection
         if (callbackUrl) {
-          // Create a new URL object to ensure the URL is valid
-          const validCallbackUrl = new URL(callbackUrl, baseUrl);
-
-          // Normalize the URL (remove trailing slash)
-          const normalizedCallbackUrl = validCallbackUrl.href.replace(
-            /\/$/,
-            ""
-          );
-
-          console.log("Normalized callbackUrl:", normalizedCallbackUrl);
-
-          // Ensure the callbackUrl starts with the baseUrl for security
-          if (normalizedCallbackUrl.startsWith(baseUrl)) {
-            console.log("Redirecting to callbackUrl:", normalizedCallbackUrl);
-            return normalizedCallbackUrl;
-          }
+          const validCallbackUrl = new URL(callbackUrl, baseUrl).href;
+          Cookies.remove("callbackUrl"); // Clear the cookie after using it
+          return validCallbackUrl.startsWith(baseUrl)
+            ? validCallbackUrl
+            : baseUrl;
         }
 
         console.log("No valid callbackUrl found, redirecting to baseUrl");
-        // If no callbackUrl or it's not valid, use baseUrl
         return baseUrl;
       } catch (error) {
         console.error("Error in redirect callback:", error);
-        return baseUrl; // Fallback in case of any error
+        return baseUrl;
       }
     },
     async session({
