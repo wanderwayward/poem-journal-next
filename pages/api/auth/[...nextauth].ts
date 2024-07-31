@@ -85,14 +85,13 @@ const options: NextAuthOptions = {
       try {
         console.log("Redirect callback triggered");
 
-        // Retrieve callbackUrl from the cookie
-        const callbackUrl = Cookies.get("callbackUrl");
+        // Retrieve callbackUrl from the custom cookie
+        const callbackUrl = Cookies.get("customCallbackUrl");
         console.log("Extracted callbackUrl from cookie:", callbackUrl);
 
-        // If callbackUrl exists and is valid, use it for redirection
         if (callbackUrl) {
           const validCallbackUrl = new URL(callbackUrl, baseUrl).href;
-          Cookies.remove("callbackUrl"); // Clear the cookie after using it
+          Cookies.remove("customCallbackUrl"); // Clear the cookie after using it
           return validCallbackUrl.startsWith(baseUrl)
             ? validCallbackUrl
             : baseUrl;

@@ -2,7 +2,7 @@
 import React from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Cookies from "js-cookie"; // Import js-cookie for handling cookies
+import Cookies from "js-cookie";
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -22,12 +22,12 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
     if (!session) {
       // Store the current path the user was trying to access in a cookie
       const callbackUrl = window.location.pathname;
-      Cookies.set("callbackUrl", window.location.pathname, {
+      Cookies.set("customCallbackUrl", callbackUrl, {
         path: "/",
         secure: true, // Ensure cookie is sent over HTTPS
         sameSite: "None", // Required for cross-site cookie access
       });
-      console.log("Set callbackUrl cookie:", callbackUrl); // Add logging here
+      console.log("Set customCallbackUrl cookie:", callbackUrl); // Add logging here
       router.push("/auth"); // Redirect to login page
     }
   }, [session, status, router]);
