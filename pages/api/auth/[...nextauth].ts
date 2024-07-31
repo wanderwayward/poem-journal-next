@@ -5,7 +5,6 @@ import clientPromise from "@/app/_utils/mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Account, Profile, Session, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
-import Cookies from "js-cookie";
 
 // Extend the session and token types to include the id
 declare module "next-auth" {
@@ -82,27 +81,14 @@ const options: NextAuthOptions = {
       }
     },
     async redirect({ url, baseUrl }) {
-      try {
-        console.log("Redirect callback triggered");
-
-        // Retrieve callbackUrl from the custom cookie
-        const callbackUrl = Cookies.get("customCallbackUrl");
-        console.log("Extracted callbackUrl from cookie:", callbackUrl);
-
-        if (callbackUrl) {
-          const validCallbackUrl = new URL(callbackUrl, baseUrl).href;
-          Cookies.remove("customCallbackUrl"); // Clear the cookie after using it
-          return validCallbackUrl.startsWith(baseUrl)
-            ? validCallbackUrl
-            : baseUrl;
-        }
-
-        console.log("No valid callbackUrl found, redirecting to baseUrl");
-        return baseUrl;
-      } catch (error) {
-        console.error("Error in redirect callback:", error);
-        return baseUrl;
+      // Ensure the URL is an absolute URL
+      if (url.startsWith("/")) {
+        return `${baseUrl}${url}`;
+      } else if (new URL(url).origin === baseUrl) {
+        return url;
       }
+      // For external URLs, redirect to the base URL
+      return baseUrl;
     },
     async session({
       session,

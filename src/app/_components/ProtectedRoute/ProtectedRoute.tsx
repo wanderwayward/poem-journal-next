@@ -1,8 +1,7 @@
-"use client";
+// Using use client
 import React from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -20,19 +19,12 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
     }
 
     if (!session) {
-      // Store the current path the user was trying to access in a cookie
-      const callbackUrl = window.location.pathname;
-      Cookies.set("customCallbackUrl", callbackUrl, {
-        path: "/",
-        secure: true, // Ensure cookie is sent over HTTPS
-        sameSite: "None", // Required for cross-site cookie access
-      });
-      console.log("Set customCallbackUrl cookie:", callbackUrl); // Add logging here
-      router.push("/auth"); // Redirect to login page
+      // Pass the current path as a callbackUrl query parameter
+      const callbackUrl = encodeURIComponent(window.location.pathname);
+      router.push(`/auth?callbackUrl=${callbackUrl}`);
     }
   }, [session, status, router]);
 
-  // Always render children in development mode, otherwise render if session is available
   if (process.env.NODE_ENV === "development" || session) {
     return <>{children}</>;
   }
