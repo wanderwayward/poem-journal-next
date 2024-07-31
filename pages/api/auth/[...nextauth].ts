@@ -81,26 +81,44 @@ const options: NextAuthOptions = {
       }
     },
     async redirect({ url, baseUrl }) {
-      // Extract callbackUrl from the query parameters if it exists
-      const urlParams = new URL(url);
-      const callbackUrl = urlParams.searchParams.get("callbackUrl");
+      try {
+        console.log("Redirect callback triggered");
+        console.log("Received URL:", url);
+        console.log("Base URL:", baseUrl);
 
-      // Normalize callbackUrl if it exists
-      if (callbackUrl) {
-        // Create a new URL object with the callbackUrl and baseUrl to normalize
-        const validCallbackUrl = new URL(callbackUrl, baseUrl);
+        // Parse the URL to extract query parameters
+        const urlParams = new URL(url);
+        const callbackUrl = urlParams.searchParams.get("callbackUrl");
 
-        // Remove trailing slash for consistency
-        const normalizedCallbackUrl = validCallbackUrl.href.replace(/\/$/, "");
+        console.log("Extracted callbackUrl:", callbackUrl);
 
-        // Ensure the callbackUrl starts with the baseUrl
-        if (normalizedCallbackUrl.startsWith(baseUrl)) {
-          return normalizedCallbackUrl;
+        // If callbackUrl exists, use it for redirection
+        if (callbackUrl) {
+          // Create a new URL object to ensure the URL is valid
+          const validCallbackUrl = new URL(callbackUrl, baseUrl);
+
+          // Normalize the URL (remove trailing slash)
+          const normalizedCallbackUrl = validCallbackUrl.href.replace(
+            /\/$/,
+            ""
+          );
+
+          console.log("Normalized callbackUrl:", normalizedCallbackUrl);
+
+          // Ensure the callbackUrl starts with the baseUrl for security
+          if (normalizedCallbackUrl.startsWith(baseUrl)) {
+            console.log("Redirecting to callbackUrl:", normalizedCallbackUrl);
+            return normalizedCallbackUrl;
+          }
         }
-      }
 
-      // Fallback to baseUrl if callbackUrl is not valid or not present
-      return baseUrl;
+        console.log("No valid callbackUrl found, redirecting to baseUrl");
+        // If no callbackUrl or it's not valid, use baseUrl
+        return baseUrl;
+      } catch (error) {
+        console.error("Error in redirect callback:", error);
+        return baseUrl; // Fallback in case of any error
+      }
     },
     async session({
       session,
