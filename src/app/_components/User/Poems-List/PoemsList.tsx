@@ -1,14 +1,15 @@
 "use client";
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid, CircularProgress } from "@mui/material";
 import { FC } from "react";
-import { PoemType } from "../../_types/Types";
-import PoemTitleCard from "./Poem-Title-Card/Poem-Title-Card";
+import { PoemType } from "../../../_types/Types";
+import PoemTitleCard from "../Poem-Title-Card/Poem-Title-Card";
 
 interface PoemsListProps {
   poems: PoemType[];
   handleEdit: (id: string) => void;
   handleDelete: (id: string) => void;
   listLabel: string;
+  loading: boolean;
 }
 
 const PoemsList: FC<PoemsListProps> = ({
@@ -16,14 +17,31 @@ const PoemsList: FC<PoemsListProps> = ({
   handleEdit,
   handleDelete,
   listLabel,
+  loading,
 }) => {
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100px",
+          width: "100%",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <Box>
       <Typography
         variant="h4"
         sx={{
           marginBottom: "16px",
-          color: "success.main",
+          color: "secondary.dark",
           textAlign: {
             xs: "center",
             sm: "left",
