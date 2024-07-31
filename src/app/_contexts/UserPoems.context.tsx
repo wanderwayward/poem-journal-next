@@ -31,11 +31,13 @@ export const UserPoemsProvider = ({ children }: UserPoemsProviderProps) => {
 
   const fetchPoems = useCallback(async () => {
     if (user && user.id) {
+      console.log("Fetching poems for user:", user.id);
       try {
         setLoading(true);
         const response = await fetch(`/api/poems/user/${user.id}`);
         const result = await response.json();
         if (response.ok) {
+          console.log("Fetched poems:", result.data);
           setPoems(result.data);
         } else {
           console.error(result.message);
