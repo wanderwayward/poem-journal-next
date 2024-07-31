@@ -2,6 +2,7 @@
 import React from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie"; // Import js-cookie for handling cookies
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -11,7 +12,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
 
   React.useEffect(() => {
     if (process.env.NODE_ENV === "development") {
-      return; // Skip authentication check in development
+      return; // Skip authentication check in development mode
     }
 
     if (status === "loading") {
@@ -19,9 +20,9 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
     }
 
     if (!session) {
-      // Store the current path the user was trying to access
-      const callbackUrl = window.location.pathname;
-      router.push(`/auth?callbackUrl=${callbackUrl}`); // Redirect to login page with the callback URL
+      // Store the current path the user was trying to access in a cookie
+      Cookies.set("callbackUrl", window.location.pathname);
+      router.push("/auth"); // Redirect to login page
     }
   }, [session, status, router]);
 
