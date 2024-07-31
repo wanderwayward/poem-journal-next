@@ -184,7 +184,7 @@ const PoemForm = () => {
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 multiline
-                minRows={7}
+                minRows={9}
                 fullWidth
               />
             </FormControl>
