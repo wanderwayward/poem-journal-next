@@ -36,7 +36,7 @@ const PoemsList: FC<PoemsListProps> = ({
           onClick={handleToggleDrafts}
           variant="h4"
           sx={{
-            color: !showDrafts ? "secondary.dark" : "grey",
+            color: !showDrafts ? "secondary.dark" : "text.disabled",
             textAlign: {
               xs: "center",
               sm: "left",
@@ -60,7 +60,7 @@ const PoemsList: FC<PoemsListProps> = ({
           onClick={handleToggleDrafts}
           variant="h4"
           sx={{
-            color: showDrafts ? "secondary.dark" : "grey",
+            color: showDrafts ? "secondary.dark" : "text.disabled",
             textAlign: {
               xs: "center",
               sm: "left",

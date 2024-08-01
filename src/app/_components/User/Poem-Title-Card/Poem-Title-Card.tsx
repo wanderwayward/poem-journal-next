@@ -40,7 +40,7 @@ export default function PoemTitleCard({
         paddingX: ".1em",
         paddingY: ".2em",
         backgroundColor:
-          theme.palette.mode === "light" ? "primary.main" : "primary.dark",
+          theme.palette.mode === "light" ? "secondary.main" : "error.dark",
       }}
     >
       <CardContent sx={{ width: "100%", padding: "0 !important" }}>

@@ -69,7 +69,7 @@ const UserView: FC = () => {
             xxxl: "2.5em",
           },
           margin: { xs: ".5em", sm: "auto" },
-          backgroundColor: "success.main",
+          backgroundColor: "neutral.main",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",

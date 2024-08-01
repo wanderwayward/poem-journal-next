@@ -58,8 +58,7 @@ const Navbar = () => {
           <Link href="/" passHref>
             <Typography
               component="span"
-              color="warning.main"
-              sx={{ textDecoration: "none", color: "inherit" }}
+              sx={{ textDecoration: "none", color: "success.contrastText" }}
               variant="h6"
             >
               Poem Journal
@@ -80,7 +79,7 @@ const Navbar = () => {
                 component="span"
                 sx={{
                   textDecoration: "none",
-                  color: "contrastText",
+                  color: "success.contrastText",
                   fontSize: "inherit",
                   lineHeight: "1.5",
                   marginRight: 1,
@@ -98,6 +97,7 @@ const Navbar = () => {
                 color: "warning.main",
                 fontSize: "inherit",
                 lineHeight: "1.5",
+                pt: 0.2,
               }}
             >
               Sign Out
@@ -113,6 +113,7 @@ const Navbar = () => {
                 color: "warning.main",
                 fontSize: "inherit",
                 lineHeight: "1.5",
+                pt: 0.2,
               }}
             >
               Sign In
