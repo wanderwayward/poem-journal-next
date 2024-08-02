@@ -14,6 +14,7 @@ import useEditor from "../../_hooks/useEditor";
 import CustomEditor from "../../_utils/CustomEditor";
 import FormattingButton from "./subcomponents/FormattingButton/FormattingButton";
 import { useEditorContext } from "../../_contexts/Editor.context";
+import { useTheme } from "@mui/material/styles";
 
 const TextEditor = () => {
   const { editor, renderElement, renderLeaf, onChange, onKeyDown } =
@@ -23,6 +24,8 @@ const TextEditor = () => {
 
   const handleModalOpen = () => setIsModalOpen(true);
   const handleModalClose = () => setIsModalOpen(false);
+
+  const theme = useTheme();
 
   return (
     <>
@@ -72,6 +75,8 @@ const TextEditor = () => {
         </Paper>
         <Box
           sx={{
+            bgcolor:
+              theme.palette.mode === "light" ? "primary.light" : "primary.dark",
             position: "relative",
             padding: "0.1em",
             borderRadius: "4px",
@@ -80,8 +85,15 @@ const TextEditor = () => {
             "&:focus-within": {
               border: "2px solid rgba(189, 79, 108, 0.8)",
             },
+            "&:hover": {
+              border: "2px solid rgba(229, 159, 178, 0.8)",
+            },
             "&:hover .expand-icon": {
               display: "flex",
+            },
+            ".expand-icon": {
+              transition: "transform 0.2s ease-in-out",
+              transform: "scale(1)",
             },
           }}
         >
@@ -90,7 +102,7 @@ const TextEditor = () => {
             renderLeaf={renderLeaf}
             onKeyDown={onKeyDown}
             style={{
-              height: "15em",
+              height: "13.9em",
               overflowY: "auto",
               padding: "0.2em",
               borderRadius: "4px",
@@ -104,11 +116,8 @@ const TextEditor = () => {
               display: "none",
               position: "absolute",
               bottom: 8,
-              right: 8,
-              backgroundColor: "rgba(255, 255, 255, 0.8)",
-              "&:hover": {
-                backgroundColor: "rgba(255, 255, 255, 1)",
-              },
+              border: null,
+              color: "rgba(189, 79, 108, 0.8)",
             }}
           >
             <LuExpand />
