@@ -20,7 +20,7 @@ const UserView: FC = () => {
   );
 
   const handleEditClick = (id: string) => {
-    router.push(`/poem-edit/${id}`);
+    router.push(`/poem/${id}/edit`);
   };
 
   const handleDeleteClick = async (id: string) => {

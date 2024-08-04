@@ -44,7 +44,7 @@ const Navbar = () => {
       }}
     >
       <Box flex={1} display="flex" justifyContent="flex-start">
-        <Link href="/poem-upload" passHref>
+        <Link href="/poem/upload" passHref>
           <Typography
             component="span"
             sx={{ textDecoration: "none", color: "success.light" }}
