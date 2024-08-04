@@ -116,6 +116,7 @@ const TextEditor = () => {
               display: "none",
               position: "absolute",
               bottom: 8,
+              right: 8,
               border: null,
               color: "rgba(189, 79, 108, 0.8)",
             }}
