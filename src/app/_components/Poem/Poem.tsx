@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "@mui/material";
-import Stanza from "./Stanza/Stanza";
+import Stanza from "./subcomponents/Stanza/Stanza";
 import { PoemStanzaType } from "@/app/_types/Types";
 
 interface PoemProps {
