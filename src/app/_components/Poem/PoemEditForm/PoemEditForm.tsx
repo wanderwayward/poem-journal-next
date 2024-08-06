@@ -11,16 +11,15 @@ import { useParams, useRouter } from "next/navigation";
 import {
   Box,
   Button,
-  TextField,
   FormControl,
   FormLabel,
   Paper,
-  TextareaAutosize,
   Grid,
   Typography,
   CircularProgress,
   Chip,
-  IconButton,
+  Tooltip,
+  Switch,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TextEditor from "../../TextEditor/TextEditor";
@@ -44,12 +43,16 @@ const PoemEditForm = () => {
 
   const { user } = useUser();
   const { updatePoems } = useUserPoems();
+  const initialAuthor = user?.name || "Original";
 
+  const [areTags, setAreTags] = useState(false);
   const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("Original");
+  const [author, setAuthor] = useState(initialAuthor);
   const [tags, setTags] = useState<string[]>([]);
   const [currentTag, setCurrentTag] = useState("");
   const [comment, setComment] = useState("");
+  const [isPublic, setIsPublic] = useState(false);
+  const [isOriginal, setIsOriginal] = useState(false);
 
   const fetchPoem = useCallback(async () => {
     setLoading(true);
@@ -63,6 +66,9 @@ const PoemEditForm = () => {
         setAuthor(poem.author);
         setTags(poem.tags);
         setComment(poem.comment);
+        setAreTags(poem.tags.length > 0);
+        setIsPublic(poem.public);
+        setIsOriginal(poem.type === "original");
 
         // Convert stanzas to Slate format
         const formattedContent = parseStanzasToContent(poem.stanzas);
@@ -97,6 +103,8 @@ const PoemEditForm = () => {
       userId: user?.id,
       username: user?.name,
       comment,
+      type: isOriginal ? "original" : "non-original",
+      public: isPublic,
     };
 
     try {
@@ -134,11 +142,15 @@ const PoemEditForm = () => {
       e.preventDefault();
       setTags([...tags, currentTag.trim()]);
       setCurrentTag("");
+      setAreTags(true); // Update areTags to true when a new tag is added
     }
   };
 
   const handleTagRemove = (tagToRemove: string) => {
     setTags(tags.filter((tag) => tag !== tagToRemove));
+    if (tags.length === 1 && tagToRemove === tags[0]) {
+      setAreTags(false); // Update areTags to false if all tags are removed
+    }
   };
 
   if (loading) {
@@ -202,7 +214,7 @@ const PoemEditForm = () => {
               </FormControl>
             </Box>
 
-            <TextEditor />
+            <TextEditor areTags={areTags} />
           </Grid>
 
           {/* second column */}
@@ -252,6 +264,38 @@ const PoemEditForm = () => {
                 multiline
                 minRows={7}
                 fullWidth
+              />
+            </FormControl>
+            <FormControl
+              sx={{ display: "flex", flexDirection: "row", mb: 1, mt: 2 }}
+            >
+              <FormLabel sx={{ fontSize: "1.25rem", fontWeight: "bold" }}>
+                Make my poem visible to the community.
+              </FormLabel>
+              <Switch
+                checked={isPublic}
+                sx={{ ml: "auto", position: "relative", top: -3 }}
+                onChange={() => setIsPublic(!isPublic)}
+              />
+            </FormControl>
+            <FormControl
+              sx={{ display: "flex", flexDirection: "row", mb: 1, mt: 2 }}
+            >
+              <FormLabel
+                sx={{ fontSize: "1.25rem", fontWeight: "bold", mb: 1 }}
+              >
+                My poem is an
+                <Tooltip
+                  title="Original poems are marked with a star on your profile."
+                  disableInteractive
+                >
+                  <Button>original work.</Button>
+                </Tooltip>
+              </FormLabel>
+              <Switch
+                checked={isOriginal}
+                onChange={() => setIsOriginal(!isOriginal)}
+                sx={{ ml: "auto", position: "relative", top: -3 }}
               />
             </FormControl>
           </Grid>

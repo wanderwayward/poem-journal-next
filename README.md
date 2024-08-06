@@ -40,16 +40,14 @@ poem-journal-next
 │     ├─ page.module.css
 │     ├─ page.tsx
 │     ├─ poem
+│     │  ├─ upload
+│     │  │  └─ page.tsx
 │     │  └─ [id]
 │     │     ├─ annotate
 │     │     │  └─ page.tsx
+│     │     ├─ edit
+│     │     │  └─ page.tsx
 │     │     └─ page.tsx
-│     ├─ poem-edit
-│     │  └─ [id]
-│     │     └─ page.tsx
-│     ├─ poem-upload
-│     │  └─ page.tsx
-│     ├─ poems
 │     ├─ test
 │     │  └─ page.tsx
 │     ├─ user
@@ -64,15 +62,16 @@ poem-journal-next
 │     │  ├─ CustomComponents
 │     │  │  └─ CustomComponents.tsx
 │     │  ├─ Poem
-│     │  │  ├─ Line
-│     │  │  │  └─ Line.tsx
 │     │  │  ├─ Poem.tsx
-│     │  │  └─ Stanza
-│     │  │     └─ Stanza.tsx
-│     │  ├─ PoemEditForm
-│     │  │  └─ PoemEditForm.tsx
-│     │  ├─ PoemForm
-│     │  │  └─ PoemForm.tsx
+│     │  │  ├─ PoemEditForm
+│     │  │  │  └─ PoemEditForm.tsx
+│     │  │  ├─ PoemForm
+│     │  │  │  └─ PoemForm.tsx
+│     │  │  └─ subcomponents
+│     │  │     ├─ Line
+│     │  │     │  └─ Line.tsx
+│     │  │     └─ Stanza
+│     │  │        └─ Stanza.tsx
 │     │  ├─ ProtectedRoute
 │     │  │  └─ ProtectedRoute.tsx
 │     │  ├─ TextEditor

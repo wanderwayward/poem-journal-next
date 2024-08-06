@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, FC } from "react";
 import {
   Paper,
   Box,
@@ -16,7 +16,11 @@ import FormattingButton from "./subcomponents/FormattingButton/FormattingButton"
 import { useEditorContext } from "../../_contexts/Editor.context";
 import { useTheme } from "@mui/material/styles";
 
-const TextEditor = () => {
+declare interface TextEditorProps {
+  areTags: boolean;
+}
+
+const TextEditor: FC<TextEditorProps> = ({ areTags }) => {
   const { editor, renderElement, renderLeaf, onChange, onKeyDown } =
     useEditor();
   const { content, setContent } = useEditorContext();
@@ -102,7 +106,7 @@ const TextEditor = () => {
             renderLeaf={renderLeaf}
             onKeyDown={onKeyDown}
             style={{
-              height: "13.9em",
+              height: areTags ? "15.5em" : "13.9em",
               overflowY: "auto",
               padding: "0.2em",
               borderRadius: "4px",

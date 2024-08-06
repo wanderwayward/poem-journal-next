@@ -6,7 +6,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Account, Profile, Session, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
 
-// Extend the session and token types to include the id
 declare module "next-auth" {
   interface Session {
     user: {

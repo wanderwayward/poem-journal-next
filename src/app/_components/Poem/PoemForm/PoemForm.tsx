@@ -10,6 +10,8 @@ import {
   Paper,
   Typography,
   Chip,
+  Tooltip,
+  Switch,
 } from "@mui/material";
 import { SoftTextField } from "../../CustomComponents/CustomComponents";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -23,12 +25,17 @@ const PoemForm = () => {
   const { content } = useEditorContext();
   const router = useRouter();
 
+  const { user } = useUser();
+  const initialAuthor = user?.name || "Original";
+
   const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("Original");
+  const [author, setAuthor] = useState(initialAuthor);
+  const [areTags, setAreTags] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
   const [currentTag, setCurrentTag] = useState("");
+  const [isPublic, setIsPublic] = useState(false);
+  const [isOriginal, setIsOriginal] = useState(false);
   const [comment, setComment] = useState("");
-  const { user } = useUser();
   const { updatePoems } = useUserPoems();
 
   const handleSave = async (event: FormEvent, publish: boolean) => {
@@ -45,6 +52,8 @@ const PoemForm = () => {
       userId: user?.id,
       username: user?.name,
       comment,
+      type: isOriginal ? "original" : "non-original",
+      public: isPublic,
     };
 
     console.log("Saving poem:", poem);
@@ -62,10 +71,8 @@ const PoemForm = () => {
       const result = await response.json();
       console.log("Poem saved successfully:", result.data);
 
-      // Update user poems
       updatePoems();
 
-      // Redirect based on status
       if (result.data.id) {
         const redirectUrl = publish
           ? `/poem/${result.data.id}`
@@ -87,16 +94,20 @@ const PoemForm = () => {
       if (currentTag.trim() !== "") {
         setTags([...tags, currentTag.trim()]);
         setCurrentTag("");
+        setAreTags(true);
       }
     }
   };
 
   const handleTagRemove = (tagToRemove: string) => {
     setTags(tags.filter((tag) => tag !== tagToRemove));
+    if (tags.length === 1 && tagToRemove === tags[0]) {
+      setAreTags(false); // Update areTags to false if all tags are removed
+    }
   };
 
   return (
-    <Paper sx={{ width: "100%", p: 2 }}>
+    <Paper sx={{ width: "100%", p: 2, backgroundColor: "neutral.light" }}>
       <Box component="form">
         <Grid container spacing={5}>
           <Grid
@@ -124,7 +135,7 @@ const PoemForm = () => {
                 <FormLabel>Author</FormLabel>
                 <SoftTextField
                   style={{ marginBottom: ".6em" }}
-                  placeholder="Author"
+                  placeholder={user?.name || "Original"}
                   value={author}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setAuthor(e.target.value)
@@ -133,7 +144,7 @@ const PoemForm = () => {
               </FormControl>
             </Box>
 
-            <TextEditor />
+            <TextEditor areTags={areTags} />
           </Grid>
 
           {/* second column */}
@@ -181,8 +192,40 @@ const PoemForm = () => {
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 multiline
-                minRows={9}
+                minRows={4}
                 fullWidth
+              />
+            </FormControl>
+            <FormControl
+              sx={{ display: "flex", flexDirection: "row", mb: 1, mt: 2 }}
+            >
+              <FormLabel sx={{ fontSize: "1.25rem", fontWeight: "bold" }}>
+                Make my poem visible to the community.
+              </FormLabel>
+              <Switch
+                checked={isPublic}
+                sx={{ ml: "auto", position: "relative", top: -3 }}
+                onChange={() => setIsPublic(!isPublic)}
+              />
+            </FormControl>
+            <FormControl
+              sx={{ display: "flex", flexDirection: "row", mb: 1, mt: 2 }}
+            >
+              <FormLabel
+                sx={{ fontSize: "1.25rem", fontWeight: "bold", mb: 1 }}
+              >
+                My poem is an
+                <Tooltip
+                  title="Original poems are marked with a star on your profile."
+                  disableInteractive
+                >
+                  <Button>original work.</Button>
+                </Tooltip>
+              </FormLabel>
+              <Switch
+                checked={isOriginal}
+                onChange={() => setIsOriginal(!isOriginal)}
+                sx={{ ml: "auto", position: "relative", top: -3 }}
               />
             </FormControl>
           </Grid>
