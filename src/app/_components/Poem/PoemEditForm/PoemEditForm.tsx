@@ -103,7 +103,7 @@ const PoemEditForm = () => {
       userId: user?.id,
       username: user?.name,
       comment,
-      type: isOriginal ? "original" : "non-original",
+      type: isOriginal ? "Original" : "Non-original",
       public: isPublic,
     };
 

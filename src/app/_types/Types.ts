@@ -71,7 +71,7 @@ export interface PoemType {
   comment: string;
   type: "original" | "non-original";
   public: boolean; // Indicates if the poem is public
-  status: "draft" | "published"; // User-specific status
+  status: "Draft" | "Published"; // User-specific status
 }
 
 export interface UserType {
