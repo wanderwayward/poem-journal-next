@@ -69,7 +69,7 @@ export interface PoemType {
   userId: string; // The original creator's ID for original poems
   username: string; // The original creator's name for original poems
   comment: string;
-  type: "original" | "non-original";
+  type: "Original" | "Non-original";
   public: boolean; // Indicates if the poem is public
   status: "Draft" | "Published"; // User-specific status
 }

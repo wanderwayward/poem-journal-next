@@ -21,6 +21,7 @@ import {
   Tooltip,
   Switch,
 } from "@mui/material";
+import { alpha, useTheme } from "@mui/material/styles";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TextEditor from "../../TextEditor/TextEditor";
 import { useEditorContext } from "../../../_contexts/Editor.context";
@@ -32,6 +33,9 @@ import { PoemType } from "@/app/_types/Types";
 import { SoftTextField } from "../../CustomComponents/CustomComponents";
 
 const PoemEditForm = () => {
+  const theme = useTheme();
+  const backgroundColor = alpha(theme.palette.warning.main, 0.2);
+
   const { content, setContent } = useEditorContext();
   const router = useRouter();
   const params = useParams();
@@ -177,7 +181,7 @@ const PoemEditForm = () => {
   }
 
   return poemData ? (
-    <Paper sx={{ width: "100%", p: 2 }}>
+    <Paper sx={{ width: "100%", p: 2, bgcolor: backgroundColor }}>
       <Box component="form">
         <Grid container spacing={5}>
           <Grid

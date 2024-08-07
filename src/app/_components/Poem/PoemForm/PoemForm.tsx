@@ -13,6 +13,7 @@ import {
   Tooltip,
   Switch,
 } from "@mui/material";
+import { useTheme, alpha } from "@mui/material/styles";
 import { SoftTextField } from "../../CustomComponents/CustomComponents";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TextEditor from "../../TextEditor/TextEditor";
@@ -22,6 +23,9 @@ import { useUser } from "@/app/_contexts/User.context";
 import { useUserPoems } from "@/app/_contexts/UserPoems.context";
 
 const PoemForm = () => {
+  const theme = useTheme();
+  const backgroundColor = alpha(theme.palette.warning.main, 0.2);
+
   const { content } = useEditorContext();
   const router = useRouter();
 
@@ -107,7 +111,7 @@ const PoemForm = () => {
   };
 
   return (
-    <Paper sx={{ width: "100%", p: 2, backgroundColor: "neutral.light" }}>
+    <Paper sx={{ width: "100%", p: 2, backgroundColor: backgroundColor }}>
       <Box component="form">
         <Grid container spacing={5}>
           <Grid

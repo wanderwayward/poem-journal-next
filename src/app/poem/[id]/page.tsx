@@ -98,7 +98,8 @@ const PoemPage = () => {
     >
       <Typography variant="h4">{poemData.title}</Typography>
       <Typography variant="body2" color="textSecondary">
-        {poemData.author} by {poemData.username}
+        {poemData.type === "Original" ? poemData.type : null} by{" "}
+        {poemData.author}
       </Typography>
       <Poem stanzas={poemData.stanzas} />
       {poemData.tags && poemData.tags.length > 0 && (
