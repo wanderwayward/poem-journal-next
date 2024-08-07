@@ -12,6 +12,7 @@ const Line: React.FC<LineProps> = ({ line }) => {
       component="div"
       sx={{
         textAlign: line.alignment || "left",
+        whiteSpace: "pre-wrap",
       }}
     >
       {line.children.map((textNode: PoemCustomText, index: number) => (
@@ -21,6 +22,7 @@ const Line: React.FC<LineProps> = ({ line }) => {
             fontWeight: textNode.bold ? "bold" : "normal",
             fontStyle: textNode.italic ? "italic" : "normal",
             textDecoration: textNode.underline ? "underline" : "none",
+            whiteSpace: "pre-wrap",
           }}
         >
           {textNode.text}
