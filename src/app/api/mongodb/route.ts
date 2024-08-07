@@ -32,7 +32,6 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    console.log("Incoming request body:", body);
 
     const client = await clientPromise;
     const db = client.db("poetrystream");
