@@ -9,7 +9,7 @@ interface PoemProps {
 
 const Poem: React.FC<PoemProps> = ({ stanzas }) => {
   return (
-    <Container maxWidth="sm" sx={{ padding: "10px", paddingLeft: "30px" }}>
+    <Container maxWidth="sm" sx={{ py: "10px" }}>
       {stanzas.map((stanza) => (
         <Stanza key={stanza.id} stanza={stanza} />
       ))}
