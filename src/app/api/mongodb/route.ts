@@ -39,19 +39,21 @@ export async function POST(req: Request) {
     const poemsCollection = db.collection("poems");
     const userPoemsCollection = db.collection("userPoems");
 
-    const result = await poemsCollection.insertOne(body);
+    const { status, ...poemData } = body;
+
+    const result = await poemsCollection.insertOne(poemData);
     const poemId = result.insertedId;
 
     const userPoem = {
       userId: body.userId,
       poemId,
-      status: body.status,
+      status,
     };
     await userPoemsCollection.insertOne(userPoem);
 
     return NextResponse.json({
       success: true,
-      data: { id: result.insertedId },
+      data: { id: poemId },
     });
   } catch (error) {
     console.error("Error creating poem:", error);

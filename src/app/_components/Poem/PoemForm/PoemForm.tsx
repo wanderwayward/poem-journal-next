@@ -106,7 +106,7 @@ const PoemForm = () => {
   const handleTagRemove = (tagToRemove: string) => {
     setTags(tags.filter((tag) => tag !== tagToRemove));
     if (tags.length === 1 && tagToRemove === tags[0]) {
-      setAreTags(false); // Update areTags to false if all tags are removed
+      setAreTags(false);
     }
   };
 

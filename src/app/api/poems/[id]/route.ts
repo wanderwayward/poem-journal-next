@@ -78,9 +78,11 @@ export async function PUT(req: Request) {
     const poemsCollection = db.collection("poems");
     const userPoemsCollection = db.collection("userPoems");
 
+    const { status, ...poemData } = body;
+
     const result = await poemsCollection.updateOne(
       { _id: new ObjectId(id) },
-      { $set: body }
+      { $set: poemData }
     );
 
     if (result.modifiedCount === 0) {
@@ -92,7 +94,7 @@ export async function PUT(req: Request) {
 
     // Update the userPoems collection with the new status
     const userPoem = {
-      status: body.status,
+      status,
     };
     await userPoemsCollection.updateOne(
       { poemId: new ObjectId(id) },
@@ -129,8 +131,27 @@ export async function DELETE(req: Request) {
     const client = await clientPromise;
     const db = client.db("poetrystream");
     const poemsCollection = db.collection("poems");
+    const userPoemsCollection = db.collection("userPoems");
 
-    const result = await poemsCollection.deleteOne({ _id: new ObjectId(id) });
+    const poem = await poemsCollection.findOne({ _id: new ObjectId(id) });
+
+    if (!poem) {
+      return NextResponse.json(
+        { status: "error", message: "Poem not found" },
+        { status: 404 }
+      );
+    }
+
+    let result;
+
+    if (poem.type === "Original") {
+      result = await poemsCollection.deleteOne({ _id: new ObjectId(id) });
+      await userPoemsCollection.deleteOne({ poemId: new ObjectId(id) });
+    } else {
+      result = await userPoemsCollection.deleteOne({
+        poemId: new ObjectId(id),
+      });
+    }
 
     if (result.deletedCount === 0) {
       return NextResponse.json(
