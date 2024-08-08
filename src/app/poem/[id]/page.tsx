@@ -88,7 +88,7 @@ const PoemPage = () => {
   }
 
   return poemData ? (
-    <Container maxWidth="sm" sx={{ padding: "20px" }}>
+    <Container maxWidth="sm">
       <Paper
         elevation={3}
         sx={{
@@ -99,30 +99,12 @@ const PoemPage = () => {
           margin: "0 auto",
         }}
       >
-        <Typography
-          variant="h4"
-          sx={{
-            wordWrap: "break-word",
-            overflowWrap: "break-word",
-            maxWidth: "100%",
-            textAlign: {
-              xs: "center",
-              sm: poemData.title.length > 30 ? "left" : "center",
-            },
-          }}
-        >
-          {poemData.title}
-        </Typography>
-        <Typography variant="body2" color="textSecondary">
-          {poemData.type === "Original" ? poemData.type : null} by{" "}
-          {poemData.author}
-        </Typography>
-        <Poem stanzas={poemData.stanzas} />
+        <Poem poemData={poemData} />
         {poemData.tags && poemData.tags.length > 0 && (
           <Box
             sx={{
               display: "flex",
-              justifyContent: "center",
+              justifyContent: "start",
               width: "100%",
             }}
           >
@@ -142,7 +124,7 @@ const PoemPage = () => {
                 }}
               >
                 {poemData.tags.map((tag) => (
-                  <Chip key={tag} label={tag} />
+                  <Chip key={tag} label={tag} color="warning" />
                 ))}
               </Box>
             </Box>
