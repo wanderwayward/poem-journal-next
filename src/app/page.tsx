@@ -2,7 +2,7 @@
 import { Box, Paper } from "@mui/material";
 import { FC } from "react";
 import Poem from "@/features/poem/components/Poem";
-import { useUserPoems } from "../features/poem/context/UserPoemsContext";
+import { useUserPoems } from "@/features/poem/context/UserPoemsContext";
 
 const Home: FC = () => {
 	const { poems } = useUserPoems();

@@ -14,12 +14,12 @@ import {
 	Switch,
 } from "@mui/material";
 import { useTheme, alpha } from "@mui/material/styles";
-import { SoftTextField } from "../../../../../app/_components/CustomComponents/CustomComponents";
+import { SoftTextField } from "../../../../shared/components/CustomComponents/CustomComponents";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TextEditor from "@/features/editor/components/Editor";
 import { useEditorContext } from "@/features/editor/contexts/EditorContext";
 import parseContentToStanzas from "@/features/editor/utils/parseContentToStanzas";
-import { useUser } from "@/features/user/context/User.context";
+import { useUser } from "@/features/user/context/UserContext";
 import { useUserPoems } from "@/features/poem/context/UserPoemsContext";
 
 const PoemForm = () => {

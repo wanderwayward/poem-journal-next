@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Box, Container, Grid2 as Grid } from "@mui/material";
-import ClientProviders from "./_components/ClientProviders/ClientProviders";
-import Navbar from "./Navigation/NavBar";
+import ClientProviders from "@/features/shared/components/ClientProviders/ClientProviders";
+import Navbar from "@/features/shared/components/Navigation/NavBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -43,7 +43,7 @@ export default function RootLayout({
 							}}
 						>
 							<Grid container justifyContent="center" alignItems="center">
-								<Grid xs={12}>
+								<Grid size={12}>
 									<Grid container justifyContent="center" alignItems="unset">
 										{children}
 									</Grid>

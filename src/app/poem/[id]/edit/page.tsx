@@ -1,4 +1,4 @@
-import ProtectedRoute from "@/app/_components/ProtectedRoute/ProtectedRoute";
+import ProtectedRoute from "@/features/shared/components/ProtectedRoute/ProtectedRoute";
 import PoemEditForm from "@/features/poem/components/forms/PoemEditForm/PoemEditForm";
 import { EditorProvider } from "@/features/editor/contexts/EditorContext";
 

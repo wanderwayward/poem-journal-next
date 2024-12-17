@@ -3,7 +3,7 @@ import { Paper, Box, Divider } from "@mui/material";
 import { FC, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUserPoems } from "../../poem/context/UserPoemsContext";
-import { useUser } from "../context/User.context";
+import { useUser } from "../context/UserContext";
 import PoemsList from "./Poems-List/PoemsList";
 import UserTopHub from "./User-Top-Hub/UserTopHub";
 import { UserType } from "@/features/user/userTypes";

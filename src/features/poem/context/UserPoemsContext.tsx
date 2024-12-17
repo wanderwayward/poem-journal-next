@@ -9,7 +9,7 @@ import {
 	SetStateAction,
 } from "react";
 import { PoemType } from "@/features/poem/poemTypes";
-import { useUser } from "../../user/context/User.context";
+import { useUser } from "../../user/context/UserContext";
 
 interface UserPoemsContextType {
 	poems: PoemType[];

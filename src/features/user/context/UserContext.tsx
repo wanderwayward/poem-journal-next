@@ -7,7 +7,7 @@ import React, {
 	useMemo,
 } from "react";
 import { useSession } from "next-auth/react";
-import { UserType } from "@/features/editor/editorTypes";
+import { UserType } from "@/features/user/userTypes";
 // Define the context value type
 interface UserContextType {
 	user: UserType | null;
