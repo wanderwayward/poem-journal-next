@@ -10,11 +10,8 @@ export const SoftTextField = (props: TextFieldProps) => {
       variant="outlined"
       sx={{
         "& .MuiInputBase-root": {
-          backgroundColor:
-            theme.palette.mode === "light"
-              ? theme.palette.primary.light
-              : theme.palette.primary.dark,
-          borderRadius: "4px",
+          backgroundColor: theme.palette.background.default,
+          borderRadius: "8px",
         },
         "& .MuiOutlinedInput-root": {
           "& > fieldset": {

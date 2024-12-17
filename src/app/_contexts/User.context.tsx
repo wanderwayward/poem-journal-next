@@ -7,12 +7,19 @@ import React, {
   useMemo,
 } from "react";
 import { useSession } from "next-auth/react";
-import { UserType } from "@/app/_types/Types";
+
+// Define the shape of the user data
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  image: string;
+}
 
 // Define the context value type
 interface UserContextType {
-  user: UserType | null;
-  setUser: React.Dispatch<React.SetStateAction<UserType | null>>;
+  user: User | null;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
 }
 
 // Create the UserContext with default values
@@ -32,7 +39,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const { data: session } = useSession(); // Use NextAuth's useSession to get the current session
-  const [user, setUser] = useState<UserType | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   // Memoize mock user data for development
   const mockUser = useMemo(
@@ -53,7 +60,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     } else {
       // In production, use the actual session user
       if (session) {
-        const { id, name, email, image } = session.user as UserType;
+        const { id, name, email, image } = session.user as User;
         setUser({ id, name, email, image });
       } else {
         setUser(null);

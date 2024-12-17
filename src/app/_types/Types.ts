@@ -48,50 +48,14 @@ export interface PoemStanzaType {
   children: PoemLineType[];
 }
 
-// export interface PoemType {
-//   _id: string;
-//   title: string;
-//   author: string;
-//   tags: string[];
-//   stanzas: PoemStanzaType[];
-//   status: string;
-//   userId: string;
-//   username: string;
-//   comment: string;
-// }
-
 export interface PoemType {
   _id: string;
   title: string;
   author: string;
   tags: string[];
   stanzas: PoemStanzaType[];
-  userId: string; // The original creator's ID for original poems
-  username: string; // The original creator's name for original poems
-  comment: string;
-  type: "Original" | "Non-original";
-  public: boolean; // Indicates if the poem is public
-  status: "Draft" | "Published"; // User-specific status
-}
-
-export interface UserType {
-  id: string;
-  name: string;
-  email: string;
-  image: string;
-}
-
-export interface AnnotationType {
-  _id: string;
+  status: string;
   userId: string;
-  poemId: string;
-  selectedText: string;
-  startLineId: string;
-  endLineId: string;
-  startCharIndex: number;
-  endCharIndex: number;
+  username: string;
   comment: string;
-  memory: string;
-  imageUrl?: string;
-  createdAt: Date;
 }

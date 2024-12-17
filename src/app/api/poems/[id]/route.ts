@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import clientPromise from "@/app/_utils/mongodb";
 import { ObjectId } from "mongodb";
 
+// Existing GET handler
 export async function GET(req: Request) {
   try {
     const url = new URL(req.url);
@@ -17,9 +18,7 @@ export async function GET(req: Request) {
     const client = await clientPromise;
     const db = client.db("poetrystream");
     const poemsCollection = db.collection("poems");
-    const userPoemsCollection = db.collection("userPoems");
 
-    // Fetch the poem data from the poems collection
     const poem = await poemsCollection.findOne({ _id: new ObjectId(id) });
 
     if (!poem) {
@@ -29,26 +28,7 @@ export async function GET(req: Request) {
       );
     }
 
-    // Fetch the userPoem data from the userPoems collection
-    const userPoem = await userPoemsCollection.findOne({
-      poemId: new ObjectId(id),
-    });
-
-    if (!userPoem) {
-      return NextResponse.json(
-        { status: "error", message: "User-specific poem data not found" },
-        { status: 404 }
-      );
-    }
-
-    // Combine the poem data with the user-specific data
-    const combinedData = {
-      ...poem,
-      status: userPoem.status,
-      userId: userPoem.userId,
-    };
-
-    return NextResponse.json({ status: "success", data: combinedData });
+    return NextResponse.json({ status: "success", data: poem });
   } catch (error) {
     console.error("Error fetching poem:", error);
     return NextResponse.json({
@@ -59,6 +39,7 @@ export async function GET(req: Request) {
   }
 }
 
+// New PUT handler
 export async function PUT(req: Request) {
   try {
     const url = new URL(req.url);
@@ -72,17 +53,15 @@ export async function PUT(req: Request) {
     }
 
     const body = await req.json(); // Parse JSON body
+    console.log("Incoming update request body:", body);
 
     const client = await clientPromise;
     const db = client.db("poetrystream");
     const poemsCollection = db.collection("poems");
-    const userPoemsCollection = db.collection("userPoems");
-
-    const { status, ...poemData } = body;
 
     const result = await poemsCollection.updateOne(
       { _id: new ObjectId(id) },
-      { $set: poemData }
+      { $set: body }
     );
 
     if (result.modifiedCount === 0) {
@@ -91,15 +70,6 @@ export async function PUT(req: Request) {
         { status: 404 }
       );
     }
-
-    // Update the userPoems collection with the new status
-    const userPoem = {
-      status,
-    };
-    await userPoemsCollection.updateOne(
-      { poemId: new ObjectId(id) },
-      { $set: userPoem }
-    );
 
     return NextResponse.json({
       status: "success",
@@ -131,27 +101,8 @@ export async function DELETE(req: Request) {
     const client = await clientPromise;
     const db = client.db("poetrystream");
     const poemsCollection = db.collection("poems");
-    const userPoemsCollection = db.collection("userPoems");
 
-    const poem = await poemsCollection.findOne({ _id: new ObjectId(id) });
-
-    if (!poem) {
-      return NextResponse.json(
-        { status: "error", message: "Poem not found" },
-        { status: 404 }
-      );
-    }
-
-    let result;
-
-    if (poem.type === "Original") {
-      result = await poemsCollection.deleteOne({ _id: new ObjectId(id) });
-      await userPoemsCollection.deleteOne({ poemId: new ObjectId(id) });
-    } else {
-      result = await userPoemsCollection.deleteOne({
-        poemId: new ObjectId(id),
-      });
-    }
+    const result = await poemsCollection.deleteOne({ _id: new ObjectId(id) });
 
     if (result.deletedCount === 0) {
       return NextResponse.json(

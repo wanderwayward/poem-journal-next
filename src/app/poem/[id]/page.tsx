@@ -88,76 +88,68 @@ const PoemPage = () => {
   }
 
   return poemData ? (
-    <Container maxWidth="sm">
-      <Paper
-        elevation={3}
-        sx={{
-          backgroundColor: "primary.light",
-          padding: "20px",
-          textAlign: "center",
-          maxWidth: "100%",
-          margin: "0 auto",
-        }}
-      >
-        <Poem poemData={poemData} />
-        {poemData.tags && poemData.tags.length > 0 && (
+    <Paper
+      elevation={3}
+      sx={{
+        backgroundColor: "primary.light",
+        padding: "20px",
+        textAlign: "center",
+      }}
+    >
+      <Typography variant="h4">{poemData.title}</Typography>
+      <Typography variant="body2" color="textSecondary">
+        {poemData.author} by {poemData.username}
+      </Typography>
+      <Poem stanzas={poemData.stanzas} />
+      {poemData.tags && poemData.tags.length > 0 && (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            width: "100%",
+          }}
+        >
           <Box
             sx={{
-              display: "flex",
-              justifyContent: "start",
-              width: "100%",
+              textAlign: "left",
+              padding: "20px",
             }}
           >
+            <Typography variant="subtitle1">Tags:</Typography>
             <Box
               sx={{
-                textAlign: "left",
-                padding: "20px",
+                marginTop: "5px",
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "5px",
               }}
             >
-              <Typography variant="subtitle1">Tags:</Typography>
-              <Box
-                sx={{
-                  marginTop: "5px",
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: "5px",
-                }}
-              >
-                {poemData.tags.map((tag) => (
-                  <Chip key={tag} label={tag} color="warning" />
-                ))}
-              </Box>
+              {poemData.tags.map((tag) => (
+                <Chip key={tag} label={tag} />
+              ))}
             </Box>
           </Box>
-        )}
+        </Box>
+      )}
 
-        {user && (
-          <Box
-            sx={{
-              marginTop: "20px",
-              display: "flex",
-              justifyContent: "center",
-              gap: "5em",
-            }}
-          >
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleEditClick}
-            >
-              Edit
-            </Button>
-            <Button
-              variant="outlined"
-              color="error"
-              onClick={handleDeleteClick}
-            >
-              Delete
-            </Button>
-          </Box>
-        )}
-      </Paper>
-    </Container>
+      {user && (
+        <Box
+          sx={{
+            marginTop: "20px",
+            display: "flex",
+            justifyContent: "center",
+            gap: "5em",
+          }}
+        >
+          <Button variant="contained" color="primary" onClick={handleEditClick}>
+            Edit
+          </Button>
+          <Button variant="outlined" color="error" onClick={handleDeleteClick}>
+            Delete
+          </Button>
+        </Box>
+      )}
+    </Paper>
   ) : (
     <Container maxWidth="md" sx={{ padding: "20px" }}>
       <Typography>No poem found</Typography>
