@@ -8,7 +8,7 @@ import {
 	DefaultElement,
 	Leaf,
 } from "@/features/editor/utils/editorRenderUtils";
-import { useEditorContext } from "@/features/editor/contexts/EditorContext";
+import { useEditorContext } from "@/features/editor/context/EditorContext";
 import parseContentToStanzas from "@/features/editor/utils/parseContentToStanzas";
 
 const useEditor = () => {

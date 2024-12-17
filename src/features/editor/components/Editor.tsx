@@ -13,7 +13,7 @@ import { LuExpand } from "react-icons/lu";
 import useEditor from "@/features/editor/hooks/useEditor";
 import CustomEditor from "@/features/editor/utils/CustomEditor";
 import FormattingButton from "@/features/editor/components/controls/FormattingButton";
-import { useEditorContext } from "@/features/editor/contexts/EditorContext";
+import { useEditorContext } from "@/features/editor/context/EditorContext";
 import { useTheme } from "@mui/material/styles";
 
 declare interface TextEditorProps {
