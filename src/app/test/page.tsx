@@ -1,5 +1,5 @@
 import { Paper } from "@mui/material";
-import { EditorProvider } from "@/features/editor/contexts/EditorContext";
+import { EditorProvider } from "@/features/editor/context/EditorContext";
 
 function Upload() {
 	return (

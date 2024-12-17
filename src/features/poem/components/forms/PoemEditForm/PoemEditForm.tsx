@@ -25,7 +25,7 @@ import { alpha, useTheme } from "@mui/material/styles";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import TextEditor from "@/features/editor/components/Editor";
-import { useEditorContext } from "@/features/editor/contexts/EditorContext";
+import { useEditorContext } from "@/features/editor/context/EditorContext";
 import parseContentToStanzas from "@/features/editor/utils/parseContentToStanzas";
 import parseStanzasToContent from "@/features/editor/utils/parseStanzasToContent";
 

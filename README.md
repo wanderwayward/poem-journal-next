@@ -93,7 +93,7 @@ poem-journal-next
 │     │     │  └─ PoemsList.tsx
 │     │     └─ User-Top-Hub
 │     │        └─ UserTopHub.tsx
-│     ├─ _contexts
+│     ├─ _context
 │     │  ├─ Editor.context.tsx
 │     │  ├─ Theme.context.tsx
 │     │  ├─ User.context.tsx

@@ -17,7 +17,7 @@ import { useTheme, alpha } from "@mui/material/styles";
 import { SoftTextField } from "../../../../shared/components/CustomComponents/CustomComponents";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TextEditor from "@/features/editor/components/Editor";
-import { useEditorContext } from "@/features/editor/contexts/EditorContext";
+import { useEditorContext } from "@/features/editor/context/EditorContext";
 import parseContentToStanzas from "@/features/editor/utils/parseContentToStanzas";
 import { useUser } from "@/features/user/context/UserContext";
 import { useUserPoems } from "@/features/poem/context/UserPoemsContext";
