@@ -31,18 +31,28 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json(); // Parse JSON body
-    console.log("Incoming request body:", body);
+    const body = await req.json();
 
     const client = await clientPromise;
     const db = client.db("poetrystream");
     const poemsCollection = db.collection("poems");
+    const userPoemsCollection = db.collection("userPoems");
 
-    const result = await poemsCollection.insertOne(body);
-    console.log("Insert result:", result);
+    const { status, ...poemData } = body;
+
+    const result = await poemsCollection.insertOne(poemData);
+    const poemId = result.insertedId;
+
+    const userPoem = {
+      userId: body.userId,
+      poemId,
+      status,
+    };
+    await userPoemsCollection.insertOne(userPoem);
+
     return NextResponse.json({
       success: true,
-      data: { id: result.insertedId },
+      data: { id: poemId },
     });
   } catch (error) {
     console.error("Error creating poem:", error);

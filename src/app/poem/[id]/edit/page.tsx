@@ -1,6 +1,6 @@
-import PoemEditForm from "../../_components/PoemEditForm/PoemEditForm";
-import { EditorProvider } from "../../_contexts/Editor.context";
 import ProtectedRoute from "@/app/_components/ProtectedRoute/ProtectedRoute";
+import PoemEditForm from "@/app/_components/Poem/PoemEditForm/PoemEditForm";
+import { EditorProvider } from "@/app/_contexts/Editor.context";
 
 function Edit() {
   return (

@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { useUser } from "@/app/_contexts/User.context";
 
-const PoemPage = () => {
+const AnnotatePoemPage = () => {
   const params = useParams();
   const router = useRouter();
   const id = params?.id as string | undefined;
@@ -165,4 +165,4 @@ const PoemPage = () => {
   );
 };
 
-export default PoemPage;
+export default AnnotatePoemPage;

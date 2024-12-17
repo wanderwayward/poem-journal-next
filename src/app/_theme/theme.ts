@@ -4,110 +4,122 @@ export const getDesignTokens = (mode: "light" | "dark") => ({
     ...(mode === "light"
       ? {
           primary: {
-            light: "#e2ece9ff", // Mint Cream
-            main: "#cddafdff", // Periwinkle (softened)
-            dark: "#7f9172ff", // Reseda Green (muted)
-            contrastText: "#2d2a32ff", // Raisin Black
+            light: "#babd8dff", // Sage
+            main: "#7c6a0aff", // Olive
+            dark: "#5a2a27ff", // Caput Mortuum
+            contrastText: "#264653ff", // Charcoal
           },
           secondary: {
-            light: "#fde2e4ff", // Misty Rose
-            main: "#fff1e6ff", // Linen
-            dark: "#bd4f6cff", // Fuchsia Rose (softened)
-            contrastText: "#2d2a32ff", // Raisin Black
+            light: "#eabfcbff", // Fairy Tale
+            main: "#cd8987ff", // Old Rose
+            dark: "#9c3848ff", // Cordovan
+            contrastText: "#264653ff", // Charcoal
           },
           error: {
-            light: "#f7c3c3",
-            main: "#e0a4a4",
-            dark: "#c18383",
-            contrastText: "#fff",
+            light: "#e8a09eff", // Derived light shade
+            main: "#d47472ff", // Derived main shade
+            dark: "#ab4540ff", // Derived dark shade
+            contrastText: "#E9ECF5", // Light Gray
           },
           warning: {
-            light: "#ffe3a1",
-            main: "#f7c684",
-            dark: "#e0a56e",
-            contrastText: "#000",
+            light: "#ffdac6ff", // Apricot
+            main: "#fcbf49ff", // Xanthous
+            dark: "#fa9500ff", // Princeton Orange
+            contrastText: "#000000", // Black
           },
           info: {
-            light: "#b3e3f7",
-            main: "#99cde0",
-            dark: "#7fb1c2",
-            contrastText: "#fff",
+            light: "#b0d0d3ff", // Light Blue
+            main: "#388659ff", // Sea Green
+            dark: "#003e1fff", // British Racing Green
+            contrastText: "#E9ECF5", // Light Gray
           },
           success: {
-            light: "#cdebcf",
-            main: "#a8d4aa",
-            dark: "#87b286",
-            contrastText: "#fff",
+            light: "#cdebcfff", // Derived light shade
+            main: "#a8d4aaff", // Derived main shade
+            dark: "#87b286ff", // Derived dark shade
+            contrastText: "#E9ECF5", // Light Gray
+          },
+          neutral: {
+            light: "#f0e5d8ff", // A very light beige
+            main: "#e9e4e1ff", // Light warm gray
+            dark: "#e9ecf5ff", // Very light gray, close to white
+            contrastText: "#264653ff", // Charcoal
           },
           background: {
-            default: "#f3f3f3", // Slightly warmer than #fafafa
-            paper: "#ffffff",
+            default: "#E9ECF5", // Light Gray
+            paper: "#E9ECF5", // White
           },
           text: {
-            primary: "#2d2a32ff", // Raisin Black
-            secondary: "rgba(45, 42, 50, 0.6)", // Raisin Black with transparency
-            disabled: "rgba(45, 42, 50, 0.38)",
+            primary: "#264653ff", // Charcoal
+            secondary: "rgba(38, 70, 83, 0.7)", // Charcoal with transparency
+            disabled: "rgba(38, 70, 83, 0.5)", // Charcoal with transparency
           },
-          divider: "rgba(45, 42, 50, 0.12)",
+          divider: "rgba(38, 70, 83, 0.12)", // Charcoal with transparency
         }
       : {
           primary: {
-            light: "#95a3c2", // Muted Blue-Grey
-            main: "#7f9172ff", // Reseda Green
-            dark: "#3d0814ff", // Chocolate Cosmos
-            contrastText: "#fff",
+            light: "#a1a69eff", // Derived light shade from Sage
+            main: "#003e1fff", // British Racing Green
+            dark: "#1b3a31ff", // Derived dark shade from British Racing Green
+            contrastText: "#E9ECF5", // Light Gray
           },
           secondary: {
-            light: "#cddafdff", // Periwinkle
-            main: "#fff1e6ff", // Linen
-            dark: "#bd4f6cff", // Fuchsia Rose
-            contrastText: "#fff",
+            light: "#e8b0a1ff", // Derived light shade from Old Rose
+            main: "#9c3848ff", // Cordovan
+            dark: "#74121dff", // Burgundy
+            contrastText: "#E9ECF5", // Light Gray
           },
           error: {
-            light: "#f7c3c3",
-            main: "#e0a4a4",
-            dark: "#c18383",
-            contrastText: "#fff",
+            light: "#eabfcbff", // Fairy Tale
+            main: "#cd8987ff", // Old Rose
+            dark: "#9c3848ff", // Cordovan
+            contrastText: "#E9ECF5", // Light Gray
           },
           warning: {
-            light: "#ffe3a1",
-            main: "#f7c684",
-            dark: "#e0a56e",
-            contrastText: "#fff",
+            light: "#e6c5a5ff", // Derived light shade (muted apricot)
+            main: "#e69500ff", // Derived main shade (burnt orange)
+            dark: "#cc7a00ff", // Derived dark shade (deep burnt orange)
+            contrastText: "#E9ECF5", // Light Gray
           },
           info: {
-            light: "#b3e3f7",
-            main: "#99cde0",
-            dark: "#7fb1c2",
-            contrastText: "#fff",
+            light: "#8fb2c3ff", // Derived light shade from Light Blue
+            main: "#2b5b5fff", // Derived main shade from Sea Green
+            dark: "#002f33ff", // Derived dark shade from British Racing Green
+            contrastText: "#E9ECF5", // Light Gray
           },
           success: {
-            light: "#cdebcf",
-            main: "#a8d4aa",
-            dark: "#87b286",
-            contrastText: "#fff",
+            light: "#b5c2b2ff", // Derived light shade from Olive
+            main: "#4a6040ff", // Derived main shade from Olive
+            dark: "#2f3c2bff", // Derived dark shade from Olive
+            contrastText: "#E9ECF5", // Light Gray
+          },
+          neutral: {
+            light: "#707974ff", // Light Gray with a hint of green
+            main: "#545d58ff", // Medium Gray with a subtle green undertone
+            dark: "#3a413cff", // Dark Gray with a faint green hue
+            contrastText: "#e9ecf5ff", // Light Gray
           },
           background: {
-            default: "#1e1e1e",
-            paper: "#2d2a32ff", // Raisin Black
+            default: "#0b2027ff", // Rich Black
+            paper: "#264653ff", // Charcoal
           },
           text: {
-            primary: "#fff",
-            secondary: "rgba(255, 255, 255, 0.7)",
-            disabled: "rgba(255, 255, 255, 0.5)",
+            primary: "#E9ECF5", // Light Gray
+            secondary: "rgba(233, 236, 245, 0.7)", // Light Gray with transparency
+            disabled: "rgba(233, 236, 245, 0.5)", // Light Gray with transparency
           },
-          divider: "rgba(255, 255, 255, 0.12)",
+          divider: "rgba(233, 236, 245, 0.12)", // Light Gray with transparency
         }),
-  },
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 900,
-      lg: 1200,
-      xl: 1536,
-      xxl: 1920,
-      xxxl: 2560,
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 600,
+        md: 900,
+        lg: 1200,
+        xl: 1536,
+        xxl: 1920,
+        xxxl: 2560,
+      },
     },
   },
 });
