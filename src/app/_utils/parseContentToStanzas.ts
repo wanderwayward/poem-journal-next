@@ -2,73 +2,98 @@ import { v4 as uuidv4 } from "uuid";
 import { CustomElement, Descendant, CustomText } from "../_types/Types";
 import { isCustomElement } from "./typeGuards";
 
+/**
+ * Function to parse an array of Descendant elements into structured stanzas.
+ * Each stanza contains lines of formatted text nodes. Empty lines separate stanzas.
+ *
+ * @param elements - Array of Descendant elements to process.
+ * @returns An array of CustomElement stanzas with properly formatted children.
+ */
 function parseContentToStanzas(elements: Descendant[]): CustomElement[] {
-  console.log("Parsing elements:", elements);
+	const stanzas: CustomElement[] = []; // Final list of stanzas to return
+	let currentStanza = createNewStanza(); // Initialize the first stanza
 
-  const stanzas: CustomElement[] = [];
-  let currentStanza: CustomElement = {
-    type: "stanza",
-    id: uuidv4(),
-    children: [],
-  };
+	elements.forEach((element, index) => {
+		// Only process elements that are CustomElements of type 'stanza'
+		if (!isCustomElement(element) || element.type !== "stanza") {
+			return; // Skip invalid or non-stanza elements
+		}
 
-  elements.forEach((element, index) => {
-    if (isCustomElement(element) && element.type === "stanza") {
-      element.children.forEach((child, childIndex) => {
-        if (isCustomElement(child) && child.type === "line") {
-          const textNodes = child.children as CustomText[];
+		// Process each child (lines) of the stanza
+		element.children.forEach((child) => {
+			if (!isCustomElement(child) || child.type !== "line") return; // Skip invalid lines
 
-          const formattedTextNodes = textNodes.map((textNode) => ({
-            ...textNode,
-            bold: textNode.bold || false,
-            italic: textNode.italic || false,
-            underline: textNode.underline || false,
-            alignment: textNode.alignment || "left",
-          }));
+			// Format all text nodes within the current line
+			const formattedTextNodes = formatTextNodes(
+				child.children as CustomText[]
+			);
 
-          if (
-            formattedTextNodes.every((textNode) => textNode.text.trim() === "")
-          ) {
-            // Empty line: push current stanza and start a new one
-            if (currentStanza.children.length > 0) {
-              stanzas.push(currentStanza);
-              currentStanza = {
-                type: "stanza",
-                id: uuidv4(),
-                children: [],
-              };
-            }
-          } else {
-            // Non-empty line: add to current stanza with unique ID
-            currentStanza.children.push({
-              ...child,
-              children: formattedTextNodes,
-              id: uuidv4(),
-            });
-          }
-        }
-      });
+			// Check if the line is empty (all text nodes contain whitespace or are blank)
+			if (isEmptyLine(formattedTextNodes)) {
+				if (currentStanza.children.length > 0) {
+					// If the current stanza has content, save it and start a new stanza
+					stanzas.push(currentStanza);
+					currentStanza = createNewStanza();
+				}
+			} else {
+				// Non-empty line: Add the formatted line to the current stanza
+				currentStanza.children.push({
+					...child, // Copy the line element
+					children: formattedTextNodes, // Add formatted text nodes
+					id: uuidv4(), // Assign a unique ID to the line
+				});
+			}
+		});
 
-      // After processing all children, push the stanza if it has content
-      if (currentStanza.children.length > 0) {
-        stanzas.push(currentStanza);
-        currentStanza = {
-          type: "stanza",
-          id: uuidv4(),
-          children: [],
-        };
-      }
-    } else {
-      console.log(`Element ${index} is not a stanza`);
-    }
-  });
+		// After processing all lines in this stanza, push the current stanza if it has content
+		if (currentStanza.children.length > 0) {
+			stanzas.push(currentStanza);
+			currentStanza = createNewStanza();
+		}
+	});
 
-  // Push the last stanza if it has content
-  if (currentStanza.children.length > 0) {
-    stanzas.push(currentStanza);
-  }
+	// Push the last stanza if there are any remaining lines
+	if (currentStanza.children.length > 0) {
+		stanzas.push(currentStanza);
+	}
 
-  return stanzas;
+	return stanzas;
+}
+
+/**
+ * Helper function to create a new empty stanza.
+ * @returns A new CustomElement of type 'stanza'.
+ */
+function createNewStanza(): CustomElement {
+	return { type: "stanza", id: uuidv4(), children: [] };
+}
+
+/**
+ * Helper function to format text nodes in a line.
+ * Ensures default values for styling properties (bold, italic, underline, alignment).
+ *
+ * @param textNodes - Array of CustomText nodes to format.
+ * @returns An array of formatted CustomText nodes.
+ */
+function formatTextNodes(textNodes: CustomText[]): CustomText[] {
+	return textNodes.map((node) => ({
+		...node, // Copy existing properties
+		bold: node.bold || false, // Default to false if undefined
+		italic: node.italic || false, // Default to false if undefined
+		underline: node.underline || false, // Default to false if undefined
+		alignment: node.alignment || "left", // Default to "left" if undefined
+	}));
+}
+
+/**
+ * Helper function to check if a line is empty.
+ * A line is empty if all text nodes contain only whitespace or are blank.
+ *
+ * @param textNodes - Array of CustomText nodes to check.
+ * @returns True if the line is empty, false otherwise.
+ */
+function isEmptyLine(textNodes: CustomText[]): boolean {
+	return textNodes.every((node) => node.text.trim() === "");
 }
 
 export default parseContentToStanzas;
