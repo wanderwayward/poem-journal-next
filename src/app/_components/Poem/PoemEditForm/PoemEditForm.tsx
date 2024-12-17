@@ -24,9 +24,9 @@ import {
 import { alpha, useTheme } from "@mui/material/styles";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TextEditor from "../../TextEditor/TextEditor";
-import { useEditorContext } from "../../../_contexts/Editor.context";
-import parseContentToStanzas from "../../../_utils/parseContentToStanzas";
-import parseStanzasToContent from "../../../_utils/parseStanzasToContent";
+import { useEditorContext } from "../../@/editor/Editor.context";
+import parseContentToStanzas from "../../@/editor/parseContentToStanzas";
+import parseStanzasToContent from "../../@/editor/parseStanzasToContent";
 import { useUser } from "@/app/_contexts/User.context";
 import { useUserPoems } from "@/app/_contexts/UserPoems.context";
 import { PoemType } from "@/app/_types/Types";

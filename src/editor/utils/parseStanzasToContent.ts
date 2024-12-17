@@ -1,5 +1,5 @@
 import { Descendant } from "slate";
-import { CustomElement, CustomText } from "../_types/Types";
+import { CustomElement, CustomText } from "@/editor/Types";
 
 /**
  * Function to transform an array of CustomElement stanzas into a flat array of Descendant elements.
