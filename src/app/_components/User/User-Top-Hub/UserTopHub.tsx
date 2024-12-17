@@ -1,6 +1,6 @@
 import { Grid2 as Grid, Avatar, Typography } from "@mui/material";
 import { FC } from "react";
-import { UserType } from "@/app/_types/Types";
+import { UserType } from "@/editor/types/editorTypes"; //user types need to be moved out of the editor folder but that will be later
 
 interface UserTopHubProps {
 	user: UserType | null;
