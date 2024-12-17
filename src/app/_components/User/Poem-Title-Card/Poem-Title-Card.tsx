@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import Link from "next/link";
-import { PoemType } from "@/features/editor/types/editorTypes"; // needs to be changed so i can take out my poem types from the editor folder, but that will be later
+import { PoemType } from "@/features/poem/poemTypes";
 
 interface PoemTitleCardProps {
 	poem: PoemType;
@@ -51,7 +51,7 @@ export default function PoemTitleCard({
 					alignItems="center"
 					sx={{ padding: "0 1em", width: "100%" }}
 				>
-					<Grid xs zeroMinWidth>
+					<Grid>
 						<Link href={`/poem/${poem._id}`} passHref>
 							<Tooltip
 								title={poem.title}

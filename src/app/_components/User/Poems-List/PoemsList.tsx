@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { FC } from "react";
 import PoemTitleCard from "../Poem-Title-Card/Poem-Title-Card";
-import { PoemType } from "@/features/editor/types/editorTypes"; //the poem types need to be moved out of the editor folder but that will be later
+import { PoemType } from "@/features/poem/poemTypes"; //the poem types need to be moved out of the editor folder but that will be later
 
 interface PoemsListProps {
 	poems: PoemType[];
@@ -91,7 +91,7 @@ const PoemsList: FC<PoemsListProps> = ({
 			) : poems.length > 0 ? (
 				<Grid container spacing={2}>
 					{poems.map((poem) => (
-						<Grid size={{ xs: "12", sm: "6", lg: "4" }} key={poem._id}>
+						<Grid size={{ xs: 12, sm: 6, lg: 4 }} key={poem._id}>
 							<PoemTitleCard
 								poem={poem}
 								handleDelete={() => handleDelete(poem._id)}

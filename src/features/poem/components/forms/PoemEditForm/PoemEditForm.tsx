@@ -1,46 +1,99 @@
 "use client";
-import { useState, ChangeEvent, FormEvent, KeyboardEvent } from "react";
-import { useRouter } from "next/navigation";
+import {
+	useState,
+	useEffect,
+	ChangeEvent,
+	FormEvent,
+	KeyboardEvent,
+	useCallback,
+} from "react";
+import { useParams, useRouter } from "next/navigation";
 import {
 	Box,
 	Button,
 	FormControl,
 	FormLabel,
-	Grid2 as Grid,
 	Paper,
+	Grid2 as Grid,
 	Typography,
+	CircularProgress,
 	Chip,
 	Tooltip,
 	Switch,
 } from "@mui/material";
-import { useTheme, alpha } from "@mui/material/styles";
-import { SoftTextField } from "../../CustomComponents/CustomComponents";
+import { alpha, useTheme } from "@mui/material/styles";
 import DeleteIcon from "@mui/icons-material/Delete";
+
 import TextEditor from "@/features/editor/components/Editor";
 import { useEditorContext } from "@/features/editor/contexts/EditorContext";
 import parseContentToStanzas from "@/features/editor/utils/parseContentToStanzas";
-import { useUser } from "@/app/_contexts/User.context";
-import { useUserPoems } from "@/app/_contexts/UserPoems.context";
+import parseStanzasToContent from "@/features/editor/utils/parseStanzasToContent";
 
-const PoemForm = () => {
+import { useUser } from "@/app/_contexts/User.context";
+import { useUserPoems } from "@/features/poem/context/UserPoemsContext";
+import { PoemType } from "@/features/poem/poemTypes"; //user types need to be moved out of the editor folder but that will be later
+import { SoftTextField } from "../../../../../app/_components/CustomComponents/CustomComponents";
+
+const PoemEditForm = () => {
 	const theme = useTheme();
 	const backgroundColor = alpha(theme.palette.warning.main, 0.2);
 
-	const { content } = useEditorContext();
+	const { content, setContent } = useEditorContext();
 	const router = useRouter();
+	const params = useParams();
+	const id = params?.id;
+
+	const [poemData, setPoemData] = useState<PoemType | null>(null);
+	const [loading, setLoading] = useState<boolean>(true);
+	const [error, setError] = useState<string | null>(null);
 
 	const { user } = useUser();
+	const { updatePoems } = useUserPoems();
 	const initialAuthor = user?.name || "Original";
 
+	const [areTags, setAreTags] = useState(false);
 	const [title, setTitle] = useState("");
 	const [author, setAuthor] = useState(initialAuthor);
-	const [areTags, setAreTags] = useState(false);
 	const [tags, setTags] = useState<string[]>([]);
 	const [currentTag, setCurrentTag] = useState("");
+	const [comment, setComment] = useState("");
 	const [isPublic, setIsPublic] = useState(false);
 	const [isOriginal, setIsOriginal] = useState(false);
-	const [comment, setComment] = useState("");
-	const { updatePoems } = useUserPoems();
+
+	const fetchPoem = useCallback(async () => {
+		setLoading(true);
+		try {
+			const response = await fetch(`/api/poems/${id}`);
+			const result = await response.json();
+			if (result.status === "success") {
+				const poem = result.data;
+				setPoemData(poem);
+				setTitle(poem.title);
+				setAuthor(poem.author);
+				setTags(poem.tags);
+				setComment(poem.comment);
+				setAreTags(poem.tags.length > 0);
+				setIsPublic(poem.public);
+				setIsOriginal(poem.type === "original");
+
+				// Convert stanzas to Slate format
+				const formattedContent = parseStanzasToContent(poem.stanzas);
+				setContent(formattedContent);
+			} else {
+				setError(result.message);
+			}
+		} catch (error) {
+			setError("Failed to fetch poem");
+		} finally {
+			setLoading(false);
+		}
+	}, [id, setContent]);
+
+	useEffect(() => {
+		if (id) {
+			fetchPoem();
+		}
+	}, [id, fetchPoem]);
 
 	const handleSave = async (event: FormEvent, publish: boolean) => {
 		event.preventDefault(); // Prevent default form submission
@@ -60,23 +113,21 @@ const PoemForm = () => {
 			public: isPublic,
 		};
 
-		console.log("Saving poem:", poem);
-
 		try {
-			const response = await fetch("/api/mongodb", {
-				method: "POST",
+			const response = await fetch(id ? `/api/poems/${id}` : "/api/mongodb", {
+				method: id ? "PUT" : "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(poem),
 			});
 
-			console.log("Response status:", response.status);
 			const result = await response.json();
-			console.log("Poem saved successfully:", result.data);
 
+			// Update user poems
 			updatePoems();
 
+			// Redirect based on status
 			if (result.data.id) {
 				const redirectUrl = publish
 					? `/poem/${result.data.id}`
@@ -95,23 +146,44 @@ const PoemForm = () => {
 	const handleTagKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
 		if ((e.key === "Enter" || e.key === ",") && currentTag.trim() !== "") {
 			e.preventDefault();
-			if (currentTag.trim() !== "") {
-				setTags([...tags, currentTag.trim()]);
-				setCurrentTag("");
-				setAreTags(true);
-			}
+			setTags([...tags, currentTag.trim()]);
+			setCurrentTag("");
+			setAreTags(true); // Update areTags to true when a new tag is added
 		}
 	};
 
 	const handleTagRemove = (tagToRemove: string) => {
 		setTags(tags.filter((tag) => tag !== tagToRemove));
 		if (tags.length === 1 && tagToRemove === tags[0]) {
-			setAreTags(false);
+			setAreTags(false); // Update areTags to false if all tags are removed
 		}
 	};
 
-	return (
-		<Paper sx={{ width: "100%", p: 2, backgroundColor: backgroundColor }}>
+	if (loading) {
+		return (
+			<Box
+				sx={{
+					display: "flex",
+					justifyContent: "center",
+					alignItems: "center",
+					minHeight: "100vh",
+				}}
+			>
+				<CircularProgress />
+			</Box>
+		);
+	}
+
+	if (error) {
+		return (
+			<Box sx={{ padding: "20px" }}>
+				<Typography color="error">{error}</Typography>
+			</Box>
+		);
+	}
+
+	return poemData ? (
+		<Paper sx={{ width: "100%", p: 2, bgcolor: backgroundColor }}>
 			<Box component="form">
 				<Grid container spacing={5}>
 					<Grid
@@ -137,7 +209,7 @@ const PoemForm = () => {
 								<FormLabel>Author</FormLabel>
 								<SoftTextField
 									style={{ marginBottom: ".6em" }}
-									placeholder={user?.name || "Original"}
+									placeholder="Author"
 									value={author}
 									onChange={(e: ChangeEvent<HTMLInputElement>) =>
 										setAuthor(e.target.value)
@@ -258,7 +330,11 @@ const PoemForm = () => {
 				</Box>
 			</Box>
 		</Paper>
+	) : (
+		<Box sx={{ padding: "20px" }}>
+			<Typography>No poem found</Typography>
+		</Box>
 	);
 };
 
-export default PoemForm;
+export default PoemEditForm;

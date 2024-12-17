@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
-import Poem from "@/app/_components/Poem/Poem";
-import { PoemType } from "@/features/editor/types/editorTypes";
+import Poem from "@/features/poem/components/Poem";
+import { PoemType } from "@/features/editor/editorTypes";
 import {
 	Container,
 	CircularProgress,

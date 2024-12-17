@@ -1,4 +1,4 @@
-import PoemForm from "@/app/_components/Poem/PoemForm/PoemForm";
+import PoemForm from "@/features/poem/components/forms/PoemForm/PoemForm";
 import { EditorProvider } from "@/features/editor/contexts/EditorContext";
 
 function Upload() {

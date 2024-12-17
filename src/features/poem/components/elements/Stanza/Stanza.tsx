@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@mui/material";
 import Line from "../Line/Line";
-import { PoemStanzaType } from "@/features/editor/types/editorTypes";
+import { PoemStanzaType } from "@/features/poem/poemTypes";
 
 interface StanzaProps {
 	stanza: PoemStanzaType;
