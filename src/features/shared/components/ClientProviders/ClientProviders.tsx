@@ -4,7 +4,7 @@
 import { SessionProvider } from "next-auth/react";
 import { UserProvider } from "@/features/user/context/UserContext";
 import { UserPoemsProvider } from "@/features/poem/context/UserPoemsContext";
-import { ThemeContextProvider } from "@/features/shared/context/ThemeContext";
+import { ThemeContextProvider } from "@/features/theme/context/ThemeContext";
 
 interface ClientProvidersProps {
 	children: React.ReactNode;

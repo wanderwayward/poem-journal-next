@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import { useSession } from "next-auth/react";
 import { UserType } from "@/features/user/userTypes";
+
 // Define the context value type
 interface UserContextType {
 	user: UserType | null;
@@ -45,6 +46,28 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 		[]
 	);
 
+	// Function to save user to MongoDB
+	const saveUserToMongoDB = async (userData: UserType) => {
+		try {
+			const response = await fetch("/api/mongodb/user", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(userData),
+			});
+			const data = await response.json();
+
+			if (response.ok) {
+				console.log("User saved or already exists:", data.user);
+			} else {
+				console.error("Error saving user:", data.error);
+			}
+		} catch (error) {
+			console.error("Failed to save user to MongoDB:", error);
+		}
+	};
+
 	useEffect(() => {
 		if (process.env.NODE_ENV === "development") {
 			// In development, use the mock user
@@ -53,7 +76,11 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 			// In production, use the actual session user
 			if (session) {
 				const { id, name, email, image } = session.user as UserType;
-				setUser({ id, name, email, image });
+				const newUser = { id, name, email, image };
+
+				// Save user to MongoDB if they don't exist
+				saveUserToMongoDB(newUser);
+				setUser(newUser);
 			} else {
 				setUser(null);
 			}
