@@ -23,13 +23,15 @@ import {
 } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
 import DeleteIcon from "@mui/icons-material/Delete";
-import TextEditor from "../../TextEditor/TextEditor";
-import { useEditorContext } from "../../@/editor/Editor.context";
-import parseContentToStanzas from "../../@/editor/parseContentToStanzas";
-import parseStanzasToContent from "../../@/editor/parseStanzasToContent";
+
+import TextEditor from "@/features/editor/components/Editor";
+import { useEditorContext } from "@/features/editor/contexts/EditorContext";
+import parseContentToStanzas from "@/features/editor/utils/parseContentToStanzas";
+import parseStanzasToContent from "@/features/editor/utils/parseStanzasToContent";
+
 import { useUser } from "@/app/_contexts/User.context";
 import { useUserPoems } from "@/app/_contexts/UserPoems.context";
-import { PoemType } from "@/app/_types/Types";
+import { PoemType } from "@/features/editor/types/editorTypes"; //user types need to be moved out of the editor folder but that will be later
 import { SoftTextField } from "../../CustomComponents/CustomComponents";
 
 const PoemEditForm = () => {

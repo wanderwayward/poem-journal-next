@@ -3,10 +3,13 @@ import { useCallback, useState } from "react";
 import { createEditor } from "slate";
 import { withReact } from "slate-react";
 import { RenderElementProps, RenderLeafProps } from "slate-react";
-import CustomEditor from "@/editor/utils/CustomEditor";
-import { DefaultElement, Leaf } from "@/editor/utils/editorRenderUtils";
-import { useEditorContext } from "@/editor/contexts/EditorContext";
-import parseContentToStanzas from "@/editor/utils/parseContentToStanzas";
+import CustomEditor from "@/features/editor/utils/CustomEditor";
+import {
+	DefaultElement,
+	Leaf,
+} from "@/features/editor/utils/editorRenderUtils";
+import { useEditorContext } from "@/features/editor/contexts/EditorContext";
+import parseContentToStanzas from "@/features/editor/utils/parseContentToStanzas";
 
 const useEditor = () => {
 	const [editor] = useState(() => withReact(createEditor()));

@@ -2,12 +2,12 @@
 import { Paper, Box, Divider } from "@mui/material";
 import { FC, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useUserPoems } from "@/editor/UserPoems.context";
-import { useUser } from "@/editor/User.context";
+import { useUserPoems } from "../_contexts/UserPoems.context";
+import { useUser } from "../_contexts/User.context";
 import ProtectedRoute from "../_components/ProtectedRoute/ProtectedRoute";
 import PoemsList from "../_components/User/Poems-List/PoemsList";
 import UserTopHub from "../_components/User/User-Top-Hub/UserTopHub";
-import { UserType } from "@/editor/Types";
+import { UserType } from "@/features/editor/types/editorTypes"; //user types need to be moved out of the editor folder but that will be later
 
 const UserView: FC = () => {
 	const { poems, setPoems, loading } = useUserPoems();

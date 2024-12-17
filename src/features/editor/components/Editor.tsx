@@ -10,10 +10,10 @@ import {
 } from "@mui/material";
 import { Slate, Editable } from "slate-react";
 import { LuExpand } from "react-icons/lu";
-import useEditor from "@/editor/hooks/useEditor";
-import CustomEditor from "@/editor/utils/CustomEditor";
-import FormattingButton from "@/editor/components/controls/FormattingButton";
-import { useEditorContext } from "@/editor/contexts/EditorContext";
+import useEditor from "@/features/editor/hooks/useEditor";
+import CustomEditor from "@/features/editor/utils/CustomEditor";
+import FormattingButton from "@/features/editor/components/controls/FormattingButton";
+import { useEditorContext } from "@/features/editor/contexts/EditorContext";
 import { useTheme } from "@mui/material/styles";
 
 declare interface TextEditorProps {

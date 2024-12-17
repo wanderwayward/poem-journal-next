@@ -1,6 +1,9 @@
 import React from "react";
 import { Typography } from "@mui/material";
-import { PoemLineType, PoemCustomText } from "../../../@/editor/Types";
+import {
+	PoemLineType,
+	PoemCustomText,
+} from "@/features/editor/types/editorTypes";
 
 interface LineProps {
 	line: PoemLineType;

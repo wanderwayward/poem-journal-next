@@ -1,8 +1,8 @@
 import { RenderElementProps, RenderLeafProps } from "slate-react";
 import { Typography } from "@mui/material";
-import EditorStanza from "@/editor/components/elements/Stanza";
-import EditorLine from "@/editor/components/elements/Line";
-import EditorParagraph from "@/editor/components/elements/Paragraph";
+import EditorStanza from "@/features/editor/components/elements/Stanza";
+import EditorLine from "@/features/editor/components/elements/Line";
+import EditorParagraph from "@/features/editor/components/elements/Paragraph";
 
 export const DefaultElement = (props: RenderElementProps) => {
 	switch (props.element.type) {

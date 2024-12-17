@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { FC } from "react";
 import PoemTitleCard from "../Poem-Title-Card/Poem-Title-Card";
-import { PoemType } from "@/editor/types/editorTypes"; //the poem types need to be moved out of the editor folder but that will be later
+import { PoemType } from "@/features/editor/types/editorTypes"; //the poem types need to be moved out of the editor folder but that will be later
 
 interface PoemsListProps {
 	poems: PoemType[];

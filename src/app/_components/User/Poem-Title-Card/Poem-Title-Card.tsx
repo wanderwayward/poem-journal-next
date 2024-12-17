@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import Link from "next/link";
-import { PoemType } from "@/editor/types/editorTypes"; // needs to be changed so i can take out my poem types from the editor folder, but that will be later
+import { PoemType } from "@/features/editor/types/editorTypes"; // needs to be changed so i can take out my poem types from the editor folder, but that will be later
 
 interface PoemTitleCardProps {
 	poem: PoemType;

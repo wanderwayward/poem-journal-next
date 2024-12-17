@@ -1,5 +1,5 @@
 import PoemForm from "@/app/_components/Poem/PoemForm/PoemForm";
-import { EditorProvider } from "@/editor/contexts/EditorContext";
+import { EditorProvider } from "@/features/editor/contexts/EditorContext";
 
 function Upload() {
 	return (

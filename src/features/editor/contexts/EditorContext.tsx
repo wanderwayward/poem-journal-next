@@ -2,7 +2,7 @@
 
 import { createContext, useState, useContext, ReactNode } from "react";
 import { Descendant, createEditor } from "slate"; // Ensure createEditor is imported
-import { CustomElement } from "@/editor/types/editorTypes"; // Import CustomElement type
+import { CustomElement } from "@/features/editor/types/editorTypes"; // Import CustomElement type
 import { v4 as uuidv4 } from "uuid";
 import { Editor } from "slate";
 

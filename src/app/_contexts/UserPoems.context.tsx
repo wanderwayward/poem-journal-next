@@ -8,7 +8,7 @@ import {
 	Dispatch,
 	SetStateAction,
 } from "react";
-import { PoemType } from "@/editor/Types";
+import { PoemType } from "@/features/editor/types/editorTypes";
 import { useUser } from "./User.context";
 
 interface UserPoemsContextType {

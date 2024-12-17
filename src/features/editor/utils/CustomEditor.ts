@@ -1,5 +1,5 @@
 import { Editor, Element as SlateElement, Transforms } from "slate";
-import { Alignment } from "@/editor/Types"; // Adjust the import path as necessary
+import { Alignment } from "@/features/editor/Types"; // Adjust the import path as necessary
 
 const CustomEditor = {
 	isBoldMarkActive: (editor: Editor) => {
