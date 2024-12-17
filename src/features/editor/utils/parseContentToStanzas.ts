@@ -1,5 +1,9 @@
 import { v4 as uuidv4 } from "uuid";
-import { CustomElement, Descendant, CustomText } from "@/features/editor/Types";
+import {
+	CustomElement,
+	Descendant,
+	CustomText,
+} from "@/features/editor/editorTypes";
 import { isCustomElement } from "./typeGuards";
 
 /**

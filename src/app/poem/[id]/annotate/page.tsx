@@ -12,7 +12,7 @@ import {
 	Chip,
 	Paper,
 } from "@mui/material";
-import { useUser } from "@/app/_contexts/User.context";
+import { useUser } from "@/features/user/context/User.context";
 
 const AnnotatePoemPage = () => {
 	const params = useParams();

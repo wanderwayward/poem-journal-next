@@ -29,7 +29,7 @@ import { useEditorContext } from "@/features/editor/contexts/EditorContext";
 import parseContentToStanzas from "@/features/editor/utils/parseContentToStanzas";
 import parseStanzasToContent from "@/features/editor/utils/parseStanzasToContent";
 
-import { useUser } from "@/app/_contexts/User.context";
+import { useUser } from "@/features/user/context/User.context";
 import { useUserPoems } from "@/features/poem/context/UserPoemsContext";
 import { PoemType } from "@/features/poem/poemTypes"; //user types need to be moved out of the editor folder but that will be later
 import { SoftTextField } from "../../../../../app/_components/CustomComponents/CustomComponents";

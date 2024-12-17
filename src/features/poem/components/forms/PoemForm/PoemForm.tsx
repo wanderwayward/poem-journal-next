@@ -19,7 +19,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import TextEditor from "@/features/editor/components/Editor";
 import { useEditorContext } from "@/features/editor/contexts/EditorContext";
 import parseContentToStanzas from "@/features/editor/utils/parseContentToStanzas";
-import { useUser } from "@/app/_contexts/User.context";
+import { useUser } from "@/features/user/context/User.context";
 import { useUserPoems } from "@/features/poem/context/UserPoemsContext";
 
 const PoemForm = () => {

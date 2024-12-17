@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { Fragment } from "react";
 import { Grid2 as Grid, Typography, Box } from "@mui/material";
-import { useUser } from "../_contexts/User.context";
+import { useUser } from "../../features/user/context/User.context";
 import { signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 

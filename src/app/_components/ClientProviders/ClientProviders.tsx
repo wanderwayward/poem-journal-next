@@ -2,7 +2,7 @@
 "use client";
 
 import { SessionProvider } from "next-auth/react";
-import { UserProvider } from "@/app/_contexts/User.context";
+import { UserProvider } from "@/features/user/context/User.context";
 import { UserPoemsProvider } from "@/features/poem/context/UserPoemsContext";
 import { ThemeContextProvider } from "@/app/_contexts/Theme.context";
 

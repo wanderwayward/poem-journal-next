@@ -1,4 +1,4 @@
-import { CustomElement, Descendant } from "@/features/editor/Types";
+import { CustomElement, Descendant } from "@/features/editor/editorTypes";
 
 export function isCustomElement(
 	descendant: Descendant
