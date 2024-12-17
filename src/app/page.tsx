@@ -1,12 +1,10 @@
-"use client";
-import { Box, Paper } from "@mui/material";
+// src/app/page.tsx
+import { Box, Typography } from "@mui/material";
 import { FC } from "react";
 import Poem from "./_components/Poem/Poem";
-import { useUserPoems } from "./_contexts/UserPoems.context";
+import { parsedTestPoem } from "../../parsedTestPoem";
 
 const Home: FC = () => {
-  const { poems } = useUserPoems();
-
   return (
     <Box
       sx={{
@@ -19,18 +17,10 @@ const Home: FC = () => {
         marginTop: "60px", // Adjust margin for navbar height
       }}
     >
-      <Paper
-        elevation={3}
-        sx={{
-          backgroundColor: "primary.light",
-          padding: "20px",
-          textAlign: "center",
-          maxWidth: "100%",
-          margin: "0 auto",
-        }}
-      >
-        <Poem poemData={poems[0]} />
-      </Paper>
+      <Typography variant="h4" sx={{ marginBottom: "16px" }}>
+        The Facts of Life
+      </Typography>
+      <Poem stanzas={parsedTestPoem} />
     </Box>
   );
 };
