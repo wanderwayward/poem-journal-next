@@ -5,6 +5,7 @@ import { SessionProvider } from "next-auth/react";
 import { UserProvider } from "@/features/user/context/UserContext";
 import { UserPoemsProvider } from "@/features/poem/context/UserPoemsContext";
 import { ThemeContextProvider } from "@/features/theme/context/ThemeContext";
+import { SeasonProvider } from "@/features/tree-animation/contexts/SeasonContext";
 
 interface ClientProvidersProps {
 	children: React.ReactNode;
@@ -15,7 +16,9 @@ const ClientProviders: React.FC<ClientProvidersProps> = ({ children }) => {
 		<SessionProvider>
 			<UserProvider>
 				<UserPoemsProvider>
-					<ThemeContextProvider>{children}</ThemeContextProvider>
+					<SeasonProvider>
+						<ThemeContextProvider>{children}</ThemeContextProvider>
+					</SeasonProvider>
 				</UserPoemsProvider>
 			</UserProvider>
 		</SessionProvider>

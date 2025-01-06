@@ -1,0 +1,60 @@
+export const groups = [
+  // Tree Structure
+  "#Trunk_Mid",
+  "#Trunk_Up",
+  "#Primary_Branches > #Branch_2",
+  "#Primary_Branches > #Branch_3",
+  "#Secondary_Branches > #Branch_2_3",
+  "#Secondary_Branches > #Branch_2_2_1",
+  "#Secondary_Branches > #Branch_2_2_2",
+
+  // Winter Features
+  "#Winter_features > #Wi_Snow > #Wi_Sn_1",
+  "#Winter_features > #Wi_Snow > #Wi_Sn_2",
+  "#Winter_features > #Wi_Snow > #Wi_Sn_3",
+  "#Winter_features > #Wi_Snow > #Wi_Sn_4",
+  "#Winter_features > #Wi_Wind",
+
+  // Summer Features
+  "#Summer_features > #Su_Bird_Top > #Su_Bird_Top_Wing_1",
+  "#Summer_features > #Su_Bird_Top > #Su_Bird_Top_Wing_2",
+  "#Summer_features > #Su_Bird_Top > #Su_Bird_Top_Body",
+  "#Summer_features > #Su_Bird_Top > #Su_Bird_Top_Beak",
+  "#Summer_features > #Su_Bird_Bot > #Su_Bird_Bot_Wing_1",
+  "#Summer_features > #Su_Bird_Bot > #Su_Bird_Bot_Wing_2",
+  "#Summer_features > #Su_Bird_Bot > #Su_Bird_Bot_Body",
+  "#Summer_features > #Su_Bird_Bot > #Su_Bird_Bot_Beak",
+  "#Summer_features > #Su_Leaves > #Su_Le_First_Quadrant",
+  "#Summer_features > #Su_Leaves > #Su_Le_Second_Quadrant_A",
+  "#Summer_features > #Su_Leaves > #Su_Le_Second_Quadrant_B",
+  "#Summer_features > #Su_Leaves > #Su_Le_Third_Quadrant_A",
+  "#Summer_features > #Su_Leaves > #Su_Le_Third_Quadrant_B",
+  "#Summer_features > #Su_Leaves > #Su_Le_Fourth_Quadrant",
+
+  // Autumn Features
+  "#Autumn_features > #Au_Leaves > #Au_Le_First_Quadrant",
+  "#Autumn_features > #Au_Leaves > #Au_Le_Second_Quadrant_A",
+  "#Autumn_features > #Au_Leaves > #Au_Le_Second_Quadrant_B",
+  "#Autumn_features > #Au_Leaves > #Au_Le_Third_Quadrant_A",
+  "#Autumn_features > #Au_Leaves > #Au_Le_Third_Quadrant_B",
+  "#Autumn_features > #Au_Leaves > #Au_Le_Fourth_Quadrant",
+  "#Floating_Leaves",
+
+  // Spring Features
+  "#Spring_features > #Flowers > #Sp_F_1",
+  "#Spring_features > #Flowers > #Sp_F_2",
+  "#Spring_features > #Flowers > #Sp_F_3",
+  "#Spring_features > #Flowers > #Sp_F_4",
+  "#Spring_features > #Flowers > #Sp_F_5",
+  "#Spring_features > #Flowers > #Sp_F_6",
+  "#Spring_features > #Flowers > #Sp_F_7",
+  "#Spring_features > #Flowers > #Sp_F_8",
+  "#Spring_features > #Flowers > #Sp_F_9",
+  "#Spring_features > #Flowers > #Sp_F_10",
+  "#Spring_features > #Sp_Leaves > #Sp_Le_First_Quadrant",
+  "#Spring_features > #Sp_Leaves > #Sp_Le_Second_Quadrant_A",
+  "#Spring_features > #Sp_Leaves > #Sp_Le_Second_Quadrant_B",
+  "#Spring_features > #Sp_Leaves > #Sp_Le_Third_Quadrant_A",
+  "#Spring_features > #Sp_Leaves > #Sp_Le_Third_Quadrant_B",
+  "#Spring_features > #Sp_Leaves > #Sp_Le_Fourth_Quadrant",
+];
