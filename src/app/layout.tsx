@@ -5,6 +5,7 @@ import "./globals.css";
 import { Box, Container, Grid2 as Grid } from "@mui/material";
 import ClientProviders from "@/features/shared/components/ClientProviders/ClientProviders";
 import Navbar from "@/features/shared/components/Navigation/NavBar";
+import TreeAnimation from "@/features/tree-animation/components/TreeAnimation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +33,7 @@ export default function RootLayout({
 						}}
 					>
 						<Navbar />
+						<TreeAnimation season="Spring" />
 						<Container
 							sx={{
 								maxWidth: "xl",

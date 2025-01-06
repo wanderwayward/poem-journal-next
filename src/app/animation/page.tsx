@@ -5,18 +5,5 @@ import { useSeason } from "@/features/tree-animation/contexts/SeasonContext";
 
 export default function Animation() {
 	const { season, bgColor } = useSeason();
-	return (
-		<Box
-			display="flex"
-			flexDirection="column"
-			alignItems="center"
-			sx={{
-				height: "100vh",
-				width: "100%",
-				bgcolor: bgColor,
-			}}
-		>
-			<TreeAnimation season={"Winter"} />
-		</Box>
-	);
+	return <TreeAnimation season={"Spring"} />;
 }

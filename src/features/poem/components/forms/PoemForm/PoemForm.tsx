@@ -24,7 +24,7 @@ import { useUserPoems } from "@/features/poem/context/UserPoemsContext";
 
 const PoemForm = () => {
 	const theme = useTheme();
-	const backgroundColor = alpha(theme.palette.warning.main, 0.2);
+	const backgroundColor = alpha(theme.palette.neutral.light, 0.9);
 
 	const { content } = useEditorContext();
 	const router = useRouter();

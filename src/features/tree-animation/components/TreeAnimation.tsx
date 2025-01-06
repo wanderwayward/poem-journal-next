@@ -135,6 +135,8 @@ const TreeAnimation: FC<TreeAnimationProps> = ({ season }) => {
 			ref={svgContainerRef}
 			sx={{
 				position: "absolute",
+				zIndex: -1,
+				bottom: 0, // Ensure it stretches to the bottom edge
 				left: 0, // Ensure it starts from the left edge
 				right: 0, // Ensure it stretches to the right edge
 				width: "100%", // Full width of the screen or parent container
