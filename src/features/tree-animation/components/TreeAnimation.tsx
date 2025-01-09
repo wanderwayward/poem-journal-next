@@ -9,7 +9,10 @@ import flowersAnimation from "../hooks/bootAnimation/flowersAnimation";
 import floatingLeavesAnimation from "../hooks/bootAnimation/floatingLeavesAnimation";
 import birdsAnimation from "../hooks/bootAnimation/birdsAnimation";
 import snowPlopsAnimation from "../hooks/bootAnimation/snowPlopsAnimation";
-import winterWindnimation from "../hooks/winterWindAnimation";
+import winterWindAnimation from "../hooks/bootAnimation/winterWindAnimation";
+import persistentWinterWindAnimation from "../hooks/loopAnimation/persistentWinterWindAnimation";
+import birdsMovementAnimation from "../hooks/loopAnimation/birdsMovementAnimation";
+import flowerTwirlPopRandomAnimation from "../hooks/loopAnimation/flowerTwirlPopRandomAnimation";
 import { Box } from "@mui/material";
 
 declare interface TreeAnimationProps {
@@ -17,17 +20,78 @@ declare interface TreeAnimationProps {
 }
 
 const TreeAnimation: FC<TreeAnimationProps> = ({ season }) => {
+	const hasPlayed = true;
+
 	const svgContainerRef = useRef<HTMLDivElement>(null);
 	useEffect(() => {
 		//fetch the svg file
 		if (svgContainerRef.current) {
-			fetch("/Master_Tree2.svg")
+			fetch("/Master_Tree3.svg")
 				.then((response) => response.text())
 				.then((svgContent) => {
 					// Step 0: Set the svg content
 					if (svgContainerRef.current) {
 						svgContainerRef.current.innerHTML = svgContent;
 
+						if (hasPlayed) {
+							// Mapping of seasonal features for filtering
+							const seasonFeatureMapping: Record<string, string[]> = {
+								Winter: ["#Winter_features"],
+								Summer: ["#Summer_features"],
+								Autumn: ["#Autumn_features"],
+								Spring: ["#Spring_features"],
+							};
+
+							// Selectors for the trunk structure (always visible)
+							const trunkSelectors = [
+								"#Trunk_Mid",
+								"#Trunk_Up",
+								"#Primary_Branches > #Branch_2",
+								"#Primary_Branches > #Branch_3",
+								"#Secondary_Branches > #Branch_2_3",
+								"#Secondary_Branches > #Branch_2_2_1",
+								"#Secondary_Branches > #Branch_2_2_2",
+							];
+
+							// Get all relevant selectors for the current season
+							const currentSeasonSelectors = seasonFeatureMapping[season] || [];
+
+							// Iterate through all groups and hide/show based on season
+							groups.forEach((selector) => {
+								const element =
+									svgContainerRef.current?.querySelector(selector);
+								if (element) {
+									if (
+										trunkSelectors.includes(selector) || // Always keep trunk structure visible
+										currentSeasonSelectors.some((seasonSelector) =>
+											selector.startsWith(seasonSelector)
+										)
+									) {
+										gsap.set(element, { visibility: "visible" });
+									} else {
+										gsap.set(element, { visibility: "hidden" });
+									}
+								}
+							});
+
+							// Play subtle animations based on the season
+							switch (season) {
+								case "Spring":
+									flowerTwirlPopRandomAnimation({ svgContainerRef }); // Subtle flowers animation
+									break;
+								case "Winter":
+									persistentWinterWindAnimation({ svgContainerRef }); // Subtle wind animation
+									break;
+								case "Summer":
+									birdsMovementAnimation({ svgContainerRef, repeat: 5 }); // Subtle birds animation
+									break;
+								// Add similar cases for Spring and Autumn when their animations are ready
+								default:
+									break;
+							}
+
+							return; // Ensure no further processing happens when hasPlayed is true
+						}
 						// Step 1: Hide all paths initially
 						const groupSelectors = groups;
 
@@ -116,7 +180,7 @@ const TreeAnimation: FC<TreeAnimationProps> = ({ season }) => {
 											svgContainerRef,
 											onComplete: () => {
 												console.log("snow plops animation complete");
-												winterWindnimation({ svgContainerRef });
+												winterWindAnimation({ svgContainerRef, repeat: -1 });
 											},
 										});
 										break;

@@ -1,59 +1,59 @@
 * {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
+	max-width: 100vw;
+	overflow-x: hidden;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+	color: inherit;
+	text-decoration: none;
 }
 
 @media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+	html {
+		color-scheme: dark;
+	}
 }
 
 /* Initial values for scrollbar colors, then changing in JS, is nice and easy */
 *::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+	width: 5px;
+	height: 5px;
 }
 
 *::-webkit-scrollbar-thumb {
-  background: rgb(172, 172, 172);
-  border-radius: 10px;
-  border: 2px solid transparent; /* Space around the thumb */
-  background-clip: border-box;
+	background: rgb(172, 172, 172);
+	border-radius: 10px;
+	border: 2px solid transparent; /* Space around the thumb */
+	background-clip: border-box;
 }
 
 *::-webkit-scrollbar-track {
-  background: #fdf0e1;
+	background: #fdf0e1;
 }
 
 /* Arrows */
 ::-webkit-scrollbar-button:single-button {
-  background-color: #ffffff00;
-  display: block;
-  border-style: solid;
-  height: 10px;
-  width: 10px;
+	background-color: #ffffff00;
+	display: block;
+	border-style: solid;
+	height: 10px;
+	width: 10px;
 }
 
 /* Up Arrow */
 ::-webkit-scrollbar-button:single-button:vertical:decrement {
-  display: none;
+	display: none;
 }
 
 /* Down Arrow */
 ::-webkit-scrollbar-button:single-button:vertical:increment {
-  display: none;
+	display: none;
 }

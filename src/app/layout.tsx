@@ -33,7 +33,7 @@ export default function RootLayout({
 						}}
 					>
 						<Navbar />
-						<TreeAnimation season="Spring" />
+						<TreeAnimation season="Winter" />
 						<Container
 							sx={{
 								maxWidth: "xl",

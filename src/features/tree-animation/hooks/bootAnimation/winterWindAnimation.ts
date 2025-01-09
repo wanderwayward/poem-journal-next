@@ -3,8 +3,12 @@ import { RefObject } from "react";
 
 declare interface WinterWindAnimationProps {
 	svgContainerRef: RefObject<HTMLDivElement | null>;
+	repeat: number;
 }
-const winterWindnimation = ({ svgContainerRef }: WinterWindAnimationProps) => {
+const winterWindAnimation = ({
+	svgContainerRef,
+	repeat,
+}: WinterWindAnimationProps) => {
 	if (svgContainerRef.current) {
 		const windSelectors = [
 			"#Winter_features > #Wi_Wind > #Wind_1",
@@ -13,7 +17,7 @@ const winterWindnimation = ({ svgContainerRef }: WinterWindAnimationProps) => {
 			"#Winter_features > #Wi_Wind > #Wind_4",
 		];
 
-		const timeline = gsap.timeline({ repeat: -1 });
+		const timeline = gsap.timeline({ repeat: repeat });
 
 		windSelectors.forEach((selector) => {
 			const windPath = svgContainerRef.current?.querySelector(
@@ -61,4 +65,4 @@ const winterWindnimation = ({ svgContainerRef }: WinterWindAnimationProps) => {
 	}
 };
 
-export default winterWindnimation;
+export default winterWindAnimation;

@@ -1,6 +1,6 @@
 import { gsap } from "gsap";
 import { RefObject } from "react";
-import birdsMovementAnimation from "../birdsMovementAnimation";
+import birdsMovementAnimation from "../loopAnimation/birdsMovementAnimation";
 
 declare interface BirdsAnimationProps {
 	svgContainerRef: RefObject<HTMLDivElement | null>;
