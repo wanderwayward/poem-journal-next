@@ -35,7 +35,7 @@ export default function RootLayout({
 					>
 						<Navbar />
 
-						<TreeAnimation season="Autumn" />
+						<TreeAnimation season="Spring" />
 						{/* <AnimationContainer /> */}
 						<Container
 							sx={{
