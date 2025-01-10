@@ -20,22 +20,41 @@ export default function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
+	const hasPlayedFlag = true;
 	return (
 		<html lang="en">
 			<body className={inter.className}>
 				<ClientProviders>
 					<Box
 						sx={{
+							position: "relative",
+							zIndex: -5,
 							width: "100%",
 							minHeight: "100vh",
 							display: "flex",
 							flexDirection: "column",
-							bgcolor: "secondary",
+							backgroundColor: "beige",
 						}}
 					>
 						<Navbar />
 
-						<TreeAnimation season="Autumn" />
+						<TreeAnimation season="Spring" />
+
+						{hasPlayedFlag && (
+							<Box
+								sx={{
+									position: "absolute",
+									top: 0,
+									left: 0,
+									width: "100%",
+									height: "100%",
+									backgroundColor: "rgba(36, 36, 36, 0.66)", // Full gray for mixing
+									mixBlendMode: "screen", // Muting effect
+									pointerEvents: "none", // Prevent interaction
+									zIndex: -1,
+								}}
+							/>
+						)}
 						{/* <AnimationContainer /> */}
 						<Container
 							sx={{

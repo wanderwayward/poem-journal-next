@@ -14,14 +14,14 @@ declare interface TreeAnimationProps {
 
 const TreeAnimation: FC<TreeAnimationProps> = ({ season }) => {
 	// Hard-coded hasPlayed flag
-	const hasPlayedFlag = false;
+	const hasPlayedFlag = true;
 	const svgContainerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		console.log("starting useEffect");
 		// Fetch the SVG file
 		if (svgContainerRef.current) {
-			fetch("/Master_Tree3.svg")
+			fetch("/Master_Tree4.svg")
 				.then((response) => response.text())
 				.then((svgContent) => {
 					console.log("svg has been fetched");
@@ -52,10 +52,7 @@ const TreeAnimation: FC<TreeAnimationProps> = ({ season }) => {
 			ref={svgContainerRef}
 			sx={{
 				position: "absolute",
-				zIndex: -1,
-				bottom: 0, // Ensure it stretches to the bottom edge
-				left: 0, // Ensure it starts from the left edge
-				right: 0, // Ensure it stretches to the right edge
+				zIndex: -2,
 				width: "100%", // Full width of the screen or parent container
 				height: "auto", // Maintain aspect ratio
 			}}
