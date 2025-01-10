@@ -46,7 +46,7 @@ const loopingAutumnLeaves = ({ svgContainerRef }: LeavesAnimationProps) => {
 						gsap.set(leaf, { x: 0, y: 0, rotate: 0, opacity: 0 });
 						gsap.to(leaf, {
 							opacity: 1, // Fade back in
-							duration: 3, // Smooth fade-in
+							duration: 5, // Smooth fade-in
 							ease: "power1.inOut",
 						});
 					},
@@ -57,7 +57,7 @@ const loopingAutumnLeaves = ({ svgContainerRef }: LeavesAnimationProps) => {
 					y: gsap.utils.random(100, 200), // Fall down vertically
 					rotate: gsap.utils.random(-50, 50), // Slight rotation
 					opacity: 0, // Fade out
-					duration: 4, // Animation duration
+					duration: 5, // Animation duration
 					ease: "power3.inOut", // Smooth easing
 				});
 			});
