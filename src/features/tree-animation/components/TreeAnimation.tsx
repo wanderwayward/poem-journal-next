@@ -13,6 +13,7 @@ import winterWindAnimation from "../hooks/bootAnimation/winterWindAnimation";
 import persistentWinterWindAnimation from "../hooks/loopAnimation/persistentWinterWindAnimation";
 import birdsMovementAnimation from "../hooks/loopAnimation/birdsMovementAnimation";
 import flowerTwirlPopRandomAnimation from "../hooks/loopAnimation/flowerTwirlPopRandomAnimation";
+import loopingAutumnLeavesAnimation from "../hooks/loopAnimation/loopingAutumnLeavesAnimation";
 import { Box } from "@mui/material";
 
 declare interface TreeAnimationProps {
@@ -24,16 +25,21 @@ const TreeAnimation: FC<TreeAnimationProps> = ({ season }) => {
 
 	const svgContainerRef = useRef<HTMLDivElement>(null);
 	useEffect(() => {
+		console.log("starting useEffect");
 		//fetch the svg file
 		if (svgContainerRef.current) {
 			fetch("/Master_Tree3.svg")
 				.then((response) => response.text())
 				.then((svgContent) => {
+					console.log("svg has been fetched");
 					// Step 0: Set the svg content
 					if (svgContainerRef.current) {
 						svgContainerRef.current.innerHTML = svgContent;
 
+						console.log("about to check hasPlayed", hasPlayed);
+
 						if (hasPlayed) {
+							console.log("inside hasPlayed");
 							// Mapping of seasonal features for filtering
 							const seasonFeatureMapping: Record<string, string[]> = {
 								Winter: ["#Winter_features"],
@@ -56,6 +62,10 @@ const TreeAnimation: FC<TreeAnimationProps> = ({ season }) => {
 							// Get all relevant selectors for the current season
 							const currentSeasonSelectors = seasonFeatureMapping[season] || [];
 
+							console.log(
+								"about to iterate through all groups and hide/show based on season"
+							);
+
 							// Iterate through all groups and hide/show based on season
 							groups.forEach((selector) => {
 								const element =
@@ -74,16 +84,28 @@ const TreeAnimation: FC<TreeAnimationProps> = ({ season }) => {
 								}
 							});
 
+							console.log(
+								"About to enter switch case for hasPlayed and season",
+								season
+							);
+
 							// Play subtle animations based on the season
 							switch (season) {
 								case "Spring":
+									console.log("hasPlayed and spring");
 									flowerTwirlPopRandomAnimation({ svgContainerRef }); // Subtle flowers animation
 									break;
-								case "Winter":
-									persistentWinterWindAnimation({ svgContainerRef }); // Subtle wind animation
-									break;
 								case "Summer":
+									console.log("hasPlayed and summer");
 									birdsMovementAnimation({ svgContainerRef, repeat: 5 }); // Subtle birds animation
+									break;
+								case "Autumn":
+									console.log("hasPlayed and autumn");
+									loopingAutumnLeavesAnimation({ svgContainerRef }); // Subtle wind animation
+									break;
+								case "Winter":
+									console.log("hasPlayed and winter");
+									persistentWinterWindAnimation({ svgContainerRef }); // Subtle wind animation
 									break;
 								// Add similar cases for Spring and Autumn when their animations are ready
 								default:
