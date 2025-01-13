@@ -33,7 +33,7 @@ export default function RootLayout({
 							minHeight: "100vh",
 							display: "flex",
 							flexDirection: "column",
-							backgroundColor: "beige",
+							backgroundColor: "neutral.light",
 						}}
 					>
 						<Navbar />
@@ -49,7 +49,7 @@ export default function RootLayout({
 									width: "100%",
 									height: "100%",
 									backgroundColor: "rgba(36, 36, 36, 0.66)", // Full gray for mixing
-									mixBlendMode: "screen", // Muting effect
+									mixBlendMode: "screen",
 									pointerEvents: "none", // Prevent interaction
 									zIndex: -1,
 								}}
