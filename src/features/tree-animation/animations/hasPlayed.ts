@@ -14,13 +14,6 @@ interface HasPlayedProps {
 
 const hasPlayed = ({ season, svgContainerRef }: HasPlayedProps) => {
 	if (!svgContainerRef.current) return;
-	// Show the translucent overlay
-	const overlay = svgContainerRef.current.querySelector("#Has_Played");
-	if (overlay) {
-		console.log("overlay found");
-		gsap.set(overlay, { visibility: "visible" });
-		console.log("overlay set");
-	}
 
 	// Mapping of seasonal features for filtering
 	const seasonFeatureMapping: Record<string, string[]> = {

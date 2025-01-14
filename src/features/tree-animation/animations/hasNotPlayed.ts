@@ -37,15 +37,7 @@ const hasNotPlayed = ({ season, svgContainerRef }: HasNotPlayedProps) => {
 		}
 	});
 
-	const overlay = svgContainerRef.current.querySelector("#Has_Played");
-	if (overlay) {
-		console.log("hasNotPlayed: overlay found and set to hidden");
-		gsap.set(overlay, { visibility: "hidden" });
-	} else {
-		console.log("hasNotPlayed: #Has_Played not found");
-	}
-
-	// Step 2: Trunk animation & prep for seasonal animations
+	// Step 1: Trunk animation & prep for seasonal animations
 	const prefix =
 		season === "Spring" ? "Sp_" : season === "Summer" ? "Su_" : "Au_";
 

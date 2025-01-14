@@ -28,7 +28,7 @@ export default function RootLayout({
 					<Box
 						sx={{
 							position: "relative",
-							zIndex: -5,
+							zIndex: 0,
 							width: "100%",
 							minHeight: "100vh",
 							display: "flex",
