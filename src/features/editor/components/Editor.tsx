@@ -78,6 +78,7 @@ const TextEditor: FC<TextEditorProps> = ({ areTags }) => {
 					/>
 				</Paper>
 				<Box
+					className="scroll-wrapper"
 					sx={{
 						bgcolor:
 							theme.palette.mode === "light" ? "primary.light" : "primary.dark",
@@ -101,18 +102,27 @@ const TextEditor: FC<TextEditorProps> = ({ areTags }) => {
 						},
 					}}
 				>
-					<Editable
-						renderElement={renderElement}
-						renderLeaf={renderLeaf}
-						onKeyDown={onKeyDown}
-						style={{
-							height: areTags ? "15.5em" : "13.9em",
-							overflowY: "auto",
-							padding: "0.2em",
+					<Box
+						className="scroll-content"
+						sx={{
+							overflowY: "auto", // Allow scrollable content
+							height: "35em",
+							width: "auto",
+							paddingLeft: "0.4em",
+							paddingRight: "0.4em",
 							borderRadius: "4px",
-							outline: "none",
 						}}
-					/>
+					>
+						<Editable
+							renderElement={renderElement}
+							renderLeaf={renderLeaf}
+							onKeyDown={onKeyDown}
+							style={{
+								minHeight: "100%",
+								outline: "none",
+							}}
+						/>
+					</Box>
 					<IconButton
 						className="expand-icon"
 						onClick={handleModalOpen}

@@ -54,7 +54,7 @@ const UserProfile: FC = () => {
 					md: "95%",
 					lg: "90%",
 					xl: "97%",
-					xxl: "98%",
+					xxl: "100%",
 				},
 				borderRadius: ".1em",
 				padding: {

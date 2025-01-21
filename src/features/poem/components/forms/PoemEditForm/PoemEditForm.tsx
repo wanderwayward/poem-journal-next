@@ -33,6 +33,8 @@ import { useUser } from "@/features/user/context/UserContext";
 import { useUserPoems } from "@/features/poem/context/UserPoemsContext";
 import { PoemType } from "@/features/poem/poemTypes"; //user types need to be moved out of the editor folder but that will be later
 import { SoftTextField } from "../../../../shared/components/CustomComponents/CustomComponents";
+import { display, height } from "@mui/system";
+import { Edit } from "@mui/icons-material";
 
 const PoemEditForm = () => {
 	const theme = useTheme();
@@ -159,16 +161,63 @@ const PoemEditForm = () => {
 		}
 	};
 
+	//---------------------------------STYLES---------------------------------//
+	const EditFormStyles = {
+		paper: {
+			height: { xs: "auto", md: "820px" },
+			padding: "16px",
+			bgcolor: alpha(theme.palette.neutral.main, 0.95),
+		},
+		mainBox: { flex: 1, height: "100%" },
+		mainGrid: { height: "100%", alignItems: "stretch" },
+		loadingContainer: {
+			display: "flex",
+			justifyContent: "center",
+			alignItems: "center",
+			minHeight: "100vh",
+		},
+		errorContainer: { padding: "20px" },
+		formGridFirstColumn: { height: "100%" },
+		formGridSecondColumn: {
+			display: "flex",
+			flexDirection: "column",
+			height: "100%",
+		},
+		secondColumnFieldsBox: {
+			flexGrow: 1,
+			display: "flex",
+			flexDirection: "column",
+			gap: 2,
+			justifyContent: "start",
+		},
+		titleAndAuthorFields: { marginBottom: ".6em" },
+		authorBox: { display: "flex", justifyContent: "space-between", gap: 2 },
+		tagBox: { display: "flex", flexWrap: "wrap", gap: 1, marginBottom: 1 },
+		addTag: { marginBottom: ".6em" },
+		tagTitle: { marginBottom: ".1em" },
+		commentTitle: { fontSize: "1.25rem", fontWeight: "bold", mb: 1 },
+		commentHelperText: { marginBottom: "1rem" },
+		publicBox: { display: "flex", flexDirection: "row", mb: 1, mt: 2 },
+		publicText: { fontSize: "1.25rem", fontWeight: "bold" },
+		originalWorkBox: { display: "flex", flexDirection: "row", mb: 1, mt: 2 },
+		originalWorkText: { fontSize: "1.25rem", fontWeight: "bold" },
+		switch: { ml: "auto", position: "relative", top: -3 },
+		buttonsContainer: {
+			flexwrap: "wrap",
+			display: "flex", // Flex container for the buttons
+			flexDirection: "row", // Arrange buttons horizontally
+			alignItems: "center", // Center buttons vertically
+			justifyContent: "center", // Center buttons horizontally
+		},
+		button: { width: "45%", marginX: 1 },
+		noPoem: { padding: "20px" },
+	};
+
+	//---------------------------------STYLES---------------------------------//
+
 	if (loading) {
 		return (
-			<Box
-				sx={{
-					display: "flex",
-					justifyContent: "center",
-					alignItems: "center",
-					minHeight: "100vh",
-				}}
-			>
+			<Box sx={EditFormStyles.loadingContainer}>
 				<CircularProgress />
 			</Box>
 		);
@@ -176,24 +225,24 @@ const PoemEditForm = () => {
 
 	if (error) {
 		return (
-			<Box sx={{ padding: "20px" }}>
+			<Box sx={EditFormStyles.errorContainer}>
 				<Typography color="error">{error}</Typography>
 			</Box>
 		);
 	}
 
 	return poemData ? (
-		<Paper sx={{ width: "100%", p: 2, bgcolor: backgroundColor }}>
-			<Box component="form">
-				<Grid container spacing={5}>
+		<Paper sx={EditFormStyles.paper}>
+			<Box component="form" sx={EditFormStyles.mainBox}>
+				<Grid container spacing={5} sx={EditFormStyles.mainGrid}>
 					<Grid
 						size={{ xs: 12, md: 6 }}
-						sx={{ minHeight: "500px", maxHeight: "600px", overflowY: "hidden" }}
+						sx={EditFormStyles.formGridFirstColumn}
 					>
 						<FormControl fullWidth>
 							<FormLabel>Title</FormLabel>
 							<SoftTextField
-								style={{ marginBottom: ".6em" }}
+								style={EditFormStyles.titleAndAuthorFields}
 								placeholder="Untitled"
 								value={title}
 								onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -202,13 +251,11 @@ const PoemEditForm = () => {
 							/>
 						</FormControl>
 
-						<Box
-							sx={{ display: "flex", justifyContent: "space-between", gap: 2 }}
-						>
+						<Box sx={EditFormStyles.authorBox}>
 							<FormControl fullWidth>
 								<FormLabel>Author</FormLabel>
 								<SoftTextField
-									style={{ marginBottom: ".6em" }}
+									style={EditFormStyles.titleAndAuthorFields}
 									placeholder="Author"
 									value={author}
 									onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -224,114 +271,103 @@ const PoemEditForm = () => {
 					{/* second column */}
 					<Grid
 						size={{ xs: 12, md: 6 }}
-						sx={{
-							padding: "1rem",
-						}}
+						sx={EditFormStyles.formGridSecondColumn}
 					>
-						<FormControl fullWidth>
-							<FormLabel sx={{ mb: "0.1em" }}>Tags</FormLabel>
-							<Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 1 }}>
-								{tags.map((tag, index) => (
-									<Chip
-										color="error"
-										key={index}
-										label={tag}
-										onDelete={() => handleTagRemove(tag)}
-										deleteIcon={<DeleteIcon />}
-									/>
-								))}
-							</Box>
-							<SoftTextField
-								style={{ marginBottom: ".6em" }}
-								placeholder="Comma separated"
-								value={currentTag}
-								onChange={handleTagChange}
-								onKeyDown={handleTagKeyDown}
-							/>
-						</FormControl>
-						<FormControl fullWidth>
-							<FormLabel
-								sx={{ fontSize: "1.25rem", fontWeight: "bold", mb: 1 }}
-							>
-								Comment about the Poem
-							</FormLabel>
-							<Typography variant="subtitle1" sx={{ marginBottom: "1rem" }}>
-								What did this make you think/feel? What memory do you associate
-								with this?
-							</Typography>
-							<SoftTextField
-								placeholder="Share your thoughts or feelings about this poem..."
-								value={comment}
-								onChange={(e) => setComment(e.target.value)}
-								multiline
-								minRows={4}
-								fullWidth
-							/>
-						</FormControl>
-						<FormControl
-							sx={{ display: "flex", flexDirection: "row", mb: 1, mt: 2 }}
-						>
-							<FormLabel sx={{ fontSize: "1.25rem", fontWeight: "bold" }}>
-								Make my poem visible to the community.
-							</FormLabel>
-							<Switch
-								checked={isPublic}
-								sx={{ ml: "auto", position: "relative", top: -3 }}
-								onChange={() => setIsPublic(!isPublic)}
-							/>
-						</FormControl>
-						<FormControl
-							sx={{ display: "flex", flexDirection: "row", mb: 1, mt: 2 }}
-						>
-							<FormLabel
-								sx={{ fontSize: "1.25rem", fontWeight: "bold", mb: 1 }}
-							>
-								My poem is an
-								<Tooltip
-									title="Original poems are marked with a star on your profile."
-									disableInteractive
+						<Box sx={EditFormStyles.secondColumnFieldsBox}>
+							<FormControl fullWidth>
+								<FormLabel sx={EditFormStyles.tagTitle}>Tags</FormLabel>
+								<Box sx={EditFormStyles.tagBox}>
+									{tags.map((tag, index) => (
+										<Chip
+											color="error"
+											key={index}
+											label={tag}
+											onDelete={() => handleTagRemove(tag)}
+											deleteIcon={<DeleteIcon />}
+										/>
+									))}
+								</Box>
+								<SoftTextField
+									style={EditFormStyles.addTag}
+									placeholder="Comma separated"
+									value={currentTag}
+									onChange={handleTagChange}
+									onKeyDown={handleTagKeyDown}
+								/>
+							</FormControl>
+							<FormControl fullWidth>
+								<FormLabel sx={EditFormStyles.commentTitle}>
+									Comment about the Poem
+								</FormLabel>
+								<Typography
+									variant="subtitle1"
+									sx={EditFormStyles.commentHelperText}
 								>
-									<Button>original work.</Button>
-								</Tooltip>
-							</FormLabel>
-							<Switch
-								checked={isOriginal}
-								onChange={() => setIsOriginal(!isOriginal)}
-								sx={{ ml: "auto", position: "relative", top: -3 }}
-							/>
-						</FormControl>
+									What did this make you think/feel? What memory do you
+									associate with this?
+								</Typography>
+								<SoftTextField
+									placeholder="Share your thoughts or feelings about this poem..."
+									value={comment}
+									onChange={(e) => setComment(e.target.value)}
+									multiline
+									minRows={8}
+									fullWidth
+								/>
+							</FormControl>
+							<FormControl sx={EditFormStyles.publicBox}>
+								<FormLabel sx={EditFormStyles.publicText}>
+									Make my poem visible to the community.
+								</FormLabel>
+								<Switch
+									checked={isPublic}
+									sx={EditFormStyles.switch}
+									onChange={() => setIsPublic(!isPublic)}
+								/>
+							</FormControl>
+							<FormControl sx={EditFormStyles.originalWorkBox}>
+								<FormLabel sx={EditFormStyles.originalWorkText}>
+									My poem is an
+									<Tooltip
+										title="Original poems are marked with a star on your profile."
+										disableInteractive
+									>
+										<Button>original work.</Button>
+									</Tooltip>
+								</FormLabel>
+								<Switch
+									checked={isOriginal}
+									onChange={() => setIsOriginal(!isOriginal)}
+									sx={EditFormStyles.switch}
+								/>
+							</FormControl>
+						</Box>
+						<Box sx={EditFormStyles.buttonsContainer}>
+							<Button
+								onClick={(e) => handleSave(e, false)}
+								variant="contained"
+								color="primary"
+								size="large"
+								sx={EditFormStyles.button}
+							>
+								Save Draft
+							</Button>
+							<Button
+								onClick={(e) => handleSave(e, true)}
+								variant="contained"
+								color="primary"
+								size="large"
+								sx={EditFormStyles.button}
+							>
+								Publish
+							</Button>
+						</Box>
 					</Grid>
 				</Grid>
-				<Box
-					sx={{
-						display: "flex",
-						justifyContent: "center",
-						width: "100%",
-						mt: 2,
-					}}
-				>
-					<Button
-						onClick={(e) => handleSave(e, false)}
-						variant="contained"
-						color="primary"
-						size="large"
-					>
-						Save Draft
-					</Button>
-					<Button
-						onClick={(e) => handleSave(e, true)}
-						variant="contained"
-						color="primary"
-						size="large"
-						sx={{ ml: 2 }}
-					>
-						Publish
-					</Button>
-				</Box>
 			</Box>
 		</Paper>
 	) : (
-		<Box sx={{ padding: "20px" }}>
+		<Box sx={EditFormStyles.noPoem}>
 			<Typography>No poem found</Typography>
 		</Box>
 	);

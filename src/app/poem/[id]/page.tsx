@@ -48,7 +48,7 @@ const PoemPage = () => {
 	}, [id, fetchPoem]);
 
 	const handleEditClick = () => {
-		router.push(`/poem-edit/${id}`);
+		router.push(`/poem/${id}/edit`);
 	};
 
 	const handleDeleteClick = async () => {

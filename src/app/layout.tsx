@@ -56,24 +56,18 @@ export default function RootLayout({
 							/>
 						)}
 						{/* <AnimationContainer /> */}
-						<Container
+						<Box
 							sx={{
-								maxWidth: "xl",
 								flexGrow: 1,
 								display: "flex",
 								justifyContent: "center",
 								alignItems: "center",
+								width: "100%", // Ensure it spans the full width
 								paddingTop: "60px",
 							}}
 						>
-							<Grid container justifyContent="center" alignItems="center">
-								<Grid size={12}>
-									<Grid container justifyContent="center" alignItems="unset">
-										{children}
-									</Grid>
-								</Grid>
-							</Grid>
-						</Container>
+							{children}
+						</Box>
 					</Box>
 				</ClientProviders>
 			</body>

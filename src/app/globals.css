@@ -22,38 +22,34 @@ a {
 	}
 }
 
-/* Initial values for scrollbar colors, then changing in JS, is nice and easy */
-*::-webkit-scrollbar {
-	width: 5px;
-	height: 5px;
+.scroll-wrapper {
+	position: relative;
+	overflow: hidden; /* Hide native scrollbar from affecting layout */
 }
 
-*::-webkit-scrollbar-thumb {
+.scroll-wrapper > .scroll-content {
+	position: relative;
+	overflow: auto; /* Enable scrolling inside the content */
+}
+
+/* Custom Scrollbar */
+.scroll-wrapper > .scroll-content::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+.scroll-wrapper > .scroll-content::-webkit-scrollbar-thumb {
 	background: rgb(172, 172, 172);
 	border-radius: 10px;
-	border: 2px solid transparent; /* Space around the thumb */
+	border: 2px solid transparent;
 	background-clip: border-box;
 }
 
-*::-webkit-scrollbar-track {
+.scroll-wrapper > .scroll-content::-webkit-scrollbar-track {
 	background: #fdf0e1;
 }
 
-/* Arrows */
-::-webkit-scrollbar-button:single-button {
-	background-color: #ffffff00;
-	display: block;
-	border-style: solid;
-	height: 10px;
-	width: 10px;
-}
-
-/* Up Arrow */
-::-webkit-scrollbar-button:single-button:vertical:decrement {
-	display: none;
-}
-
-/* Down Arrow */
-::-webkit-scrollbar-button:single-button:vertical:increment {
-	display: none;
+/* Push scrollbar outside with a negative margin */
+.scroll-wrapper > .scroll-content::-webkit-scrollbar {
+	margin-right: -15px; /* Moves scrollbar completely outside */
 }

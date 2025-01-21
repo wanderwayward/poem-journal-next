@@ -110,18 +110,67 @@ const PoemForm = () => {
 		}
 	};
 
+	//---------------------------------STYLES---------------------------------//
+	const FormStyles = {
+		paper: {
+			height: { xs: "auto", md: "820px" },
+			padding: "16px",
+			bgcolor: alpha(theme.palette.neutral.main, 0.95),
+		},
+		mainBox: { flex: 1, height: "100%" },
+		mainGrid: { height: "100%", alignItems: "stretch" },
+		loadingContainer: {
+			display: "flex",
+			justifyContent: "center",
+			alignItems: "center",
+			minHeight: "100vh",
+		},
+		errorContainer: { padding: "20px" },
+		formGridFirstColumn: { height: "100%" },
+		formGridSecondColumn: {
+			display: "flex",
+			flexDirection: "column",
+			height: "100%",
+		},
+		secondColumnFieldsBox: {
+			flexGrow: 1,
+			display: "flex",
+			flexDirection: "column",
+			gap: 2,
+			justifyContent: "start",
+		},
+		titleAndAuthorFields: { marginBottom: ".6em" },
+		authorBox: { display: "flex", justifyContent: "space-between", gap: 2 },
+		tagBox: { display: "flex", flexWrap: "wrap", gap: 1, marginBottom: 1 },
+		addTag: { marginBottom: ".6em" },
+		tagTitle: { marginBottom: ".1em" },
+		commentTitle: { fontSize: "1.25rem", fontWeight: "bold", mb: 1 },
+		commentHelperText: { marginBottom: "1rem" },
+		publicBox: { display: "flex", flexDirection: "row", mb: 1, mt: 2 },
+		publicText: { fontSize: "1.25rem", fontWeight: "bold" },
+		originalWorkBox: { display: "flex", flexDirection: "row", mb: 1, mt: 2 },
+		originalWorkText: { fontSize: "1.25rem", fontWeight: "bold" },
+		switch: { ml: "auto", position: "relative", top: -3 },
+		buttonsContainer: {
+			flexwrap: "wrap",
+			display: "flex", // Flex container for the buttons
+			flexDirection: "row", // Arrange buttons horizontally
+			alignItems: "center", // Center buttons vertically
+			justifyContent: "center", // Center buttons horizontally
+		},
+		button: { width: "45%", marginX: 1 },
+		noPoem: { padding: "20px" },
+	};
+
 	return (
-		<Paper sx={{ width: "100%", p: 2, backgroundColor: backgroundColor }}>
-			<Box component="form">
-				<Grid container spacing={5}>
-					<Grid
-						size={{ xs: 12, md: 6 }}
-						sx={{ minHeight: "500px", maxHeight: "600px", overflowY: "hidden" }}
-					>
+		<Paper sx={FormStyles.paper}>
+			<Box component="form" sx={FormStyles.mainBox}>
+				<Grid container spacing={5} sx={FormStyles.mainGrid}>
+					<Grid size={{ xs: 12, md: 6 }} sx={FormStyles.formGridFirstColumn}>
 						<FormControl fullWidth>
 							<FormLabel>Title</FormLabel>
 							<SoftTextField
-								style={{ marginBottom: ".6em" }}
+								style={FormStyles.titleAndAuthorFields}
 								placeholder="Untitled"
 								value={title}
 								onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -130,13 +179,11 @@ const PoemForm = () => {
 							/>
 						</FormControl>
 
-						<Box
-							sx={{ display: "flex", justifyContent: "space-between", gap: 2 }}
-						>
+						<Box sx={FormStyles.authorBox}>
 							<FormControl fullWidth>
 								<FormLabel>Author</FormLabel>
 								<SoftTextField
-									style={{ marginBottom: ".6em" }}
+									style={FormStyles.titleAndAuthorFields}
 									placeholder={user?.name || "Original"}
 									value={author}
 									onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -150,112 +197,98 @@ const PoemForm = () => {
 					</Grid>
 
 					{/* second column */}
-					<Grid
-						size={{ xs: 12, md: 6 }}
-						sx={{
-							padding: "1rem",
-						}}
-					>
-						<FormControl fullWidth>
-							<FormLabel sx={{ mb: "0.1em" }}>Tags</FormLabel>
-							<Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 1 }}>
-								{tags.map((tag, index) => (
-									<Chip
-										color="error"
-										key={index}
-										label={tag}
-										onDelete={() => handleTagRemove(tag)}
-										deleteIcon={<DeleteIcon />}
-									/>
-								))}
-							</Box>
-							<SoftTextField
-								style={{ marginBottom: ".6em" }}
-								placeholder="Comma separated"
-								value={currentTag}
-								onChange={handleTagChange}
-								onKeyDown={handleTagKeyDown}
-							/>
-						</FormControl>
-						<FormControl fullWidth>
-							<FormLabel
-								sx={{ fontSize: "1.25rem", fontWeight: "bold", mb: 1 }}
-							>
-								Comment about the Poem
-							</FormLabel>
-							<Typography variant="subtitle1" sx={{ marginBottom: "1rem" }}>
-								What did this make you think/feel? What memory do you associate
-								with this?
-							</Typography>
-							<SoftTextField
-								placeholder="Share your thoughts or feelings about this poem..."
-								value={comment}
-								onChange={(e) => setComment(e.target.value)}
-								multiline
-								minRows={4}
-								fullWidth
-							/>
-						</FormControl>
-						<FormControl
-							sx={{ display: "flex", flexDirection: "row", mb: 1, mt: 2 }}
-						>
-							<FormLabel sx={{ fontSize: "1.25rem", fontWeight: "bold" }}>
-								Make my poem visible to the community.
-							</FormLabel>
-							<Switch
-								checked={isPublic}
-								sx={{ ml: "auto", position: "relative", top: -3 }}
-								onChange={() => setIsPublic(!isPublic)}
-							/>
-						</FormControl>
-						<FormControl
-							sx={{ display: "flex", flexDirection: "row", mb: 1, mt: 2 }}
-						>
-							<FormLabel
-								sx={{ fontSize: "1.25rem", fontWeight: "bold", mb: 1 }}
-							>
-								My poem is an
-								<Tooltip
-									title="Original poems are marked with a star on your profile."
-									disableInteractive
+					<Grid size={{ xs: 12, md: 6 }} sx={FormStyles.formGridSecondColumn}>
+						<Box sx={FormStyles.secondColumnFieldsBox}>
+							<FormControl fullWidth>
+								<FormLabel sx={{ mb: "0.1em" }}>Tags</FormLabel>
+								<Box sx={FormStyles.tagBox}>
+									{tags.map((tag, index) => (
+										<Chip
+											color="error"
+											key={index}
+											label={tag}
+											onDelete={() => handleTagRemove(tag)}
+											deleteIcon={<DeleteIcon />}
+										/>
+									))}
+								</Box>
+								<SoftTextField
+									style={FormStyles.addTag}
+									placeholder="Comma separated"
+									value={currentTag}
+									onChange={handleTagChange}
+									onKeyDown={handleTagKeyDown}
+								/>
+							</FormControl>
+							<FormControl fullWidth>
+								<FormLabel sx={FormStyles.commentTitle}>
+									Comment about the Poem
+								</FormLabel>
+								<Typography
+									variant="subtitle1"
+									sx={FormStyles.commentHelperText}
 								>
-									<Button>original work.</Button>
-								</Tooltip>
-							</FormLabel>
-							<Switch
-								checked={isOriginal}
-								onChange={() => setIsOriginal(!isOriginal)}
-								sx={{ ml: "auto", position: "relative", top: -3 }}
-							/>
-						</FormControl>
+									What did this make you think/feel? What memory do you
+									associate with this?
+								</Typography>
+								<SoftTextField
+									placeholder="Share your thoughts or feelings about this poem..."
+									value={comment}
+									onChange={(e) => setComment(e.target.value)}
+									multiline
+									minRows={4}
+									fullWidth
+								/>
+							</FormControl>
+							<FormControl sx={FormStyles.publicBox}>
+								<FormLabel sx={FormStyles.publicText}>
+									Make my poem visible to the community.
+								</FormLabel>
+								<Switch
+									checked={isPublic}
+									sx={FormStyles.switch}
+									onChange={() => setIsPublic(!isPublic)}
+								/>
+							</FormControl>
+							<FormControl sx={FormStyles.originalWorkBox}>
+								<FormLabel sx={FormStyles.originalWorkText}>
+									My poem is an
+									<Tooltip
+										title="Original poems are marked with a star on your profile."
+										disableInteractive
+									>
+										<Button>original work.</Button>
+									</Tooltip>
+								</FormLabel>
+								<Switch
+									checked={isOriginal}
+									onChange={() => setIsOriginal(!isOriginal)}
+									sx={FormStyles.switch}
+								/>
+							</FormControl>
+						</Box>
+						<Box sx={FormStyles.buttonsContainer}>
+							<Button
+								onClick={(e) => handleSave(e, false)}
+								variant="contained"
+								color="primary"
+								size="large"
+								sx={FormStyles.button}
+							>
+								Save Draft
+							</Button>
+							<Button
+								onClick={(e) => handleSave(e, true)}
+								variant="contained"
+								color="primary"
+								size="large"
+								sx={FormStyles.button}
+							>
+								Publish
+							</Button>
+						</Box>
 					</Grid>
 				</Grid>
-				<Box
-					sx={{
-						display: "flex",
-						justifyContent: "center",
-						width: "100%",
-						mt: 2,
-					}}
-				>
-					<Button
-						onClick={(e) => handleSave(e, false)}
-						variant="contained"
-						color="primary"
-						size="large"
-					>
-						Save Draft
-					</Button>
-					<Button
-						onClick={(e) => handleSave(e, true)}
-						variant="contained"
-						color="primary"
-						size="large"
-						sx={{ ml: 2 }}
-					>
-						Publish
-					</Button>
-				</Box>
 			</Box>
 		</Paper>
 	);
