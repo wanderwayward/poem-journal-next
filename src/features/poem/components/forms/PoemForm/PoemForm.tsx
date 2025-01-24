@@ -22,6 +22,9 @@ import parseContentToStanzas from "@/features/editor/utils/parseContentToStanzas
 import { useUser } from "@/features/user/context/UserContext";
 import { useUserPoems } from "@/features/poem/context/UserPoemsContext";
 
+import PoemDetails from "../components/poemDetails";
+import PoemMetadata from "../components/poemMetadata";
+
 const PoemForm = () => {
 	const theme = useTheme();
 	const backgroundColor = alpha(theme.palette.neutral.light, 0.9);
@@ -126,41 +129,6 @@ const PoemForm = () => {
 			minHeight: "100vh",
 		},
 		errorContainer: { padding: "20px" },
-		formGridFirstColumn: { height: "100%" },
-		formGridSecondColumn: {
-			display: "flex",
-			flexDirection: "column",
-			height: "100%",
-		},
-		secondColumnFieldsBox: {
-			flexGrow: 1,
-			display: "flex",
-			flexDirection: "column",
-			gap: 2,
-			justifyContent: "start",
-		},
-		titleAndAuthorFields: {
-			marginBottom: ".6em",
-		},
-		authorBox: { display: "flex", justifyContent: "space-between", gap: 2 },
-		tagBox: { display: "flex", flexWrap: "wrap", gap: 1, marginBottom: 1 },
-		addTag: { marginBottom: ".6em" },
-		tagTitle: { marginBottom: ".1em" },
-		commentTitle: { fontSize: "1.25rem", fontWeight: "bold", mb: 1 },
-		commentHelperText: { marginBottom: "1rem" },
-		publicBox: { display: "flex", flexDirection: "row", mb: 1, mt: 2 },
-		publicText: { fontSize: "1.25rem", fontWeight: "bold" },
-		originalWorkBox: { display: "flex", flexDirection: "row", mb: 1, mt: 2 },
-		originalWorkText: { fontSize: "1.25rem", fontWeight: "bold" },
-		switch: { ml: "auto", position: "relative", top: -3 },
-		buttonsContainer: {
-			flexwrap: "wrap",
-			display: "flex", // Flex container for the buttons
-			flexDirection: "row", // Arrange buttons horizontally
-			alignItems: "center", // Center buttons vertically
-			justifyContent: "center", // Center buttons horizontally
-		},
-		button: { width: "45%", marginX: 1 },
 		noPoem: { padding: "20px" },
 	};
 
@@ -168,128 +136,29 @@ const PoemForm = () => {
 		<Paper sx={FormStyles.paper}>
 			<Box component="form" sx={FormStyles.mainBox}>
 				<Grid container spacing={5} sx={FormStyles.mainGrid}>
-					<Grid size={{ xs: 12, md: 6 }} sx={FormStyles.formGridFirstColumn}>
-						<FormControl fullWidth>
-							<FormLabel>Title</FormLabel>
-							<SoftTextField
-								style={FormStyles.titleAndAuthorFields}
-								placeholder="Untitled"
-								value={title}
-								onChange={(e: ChangeEvent<HTMLInputElement>) =>
-									setTitle(e.target.value)
-								}
-							/>
-						</FormControl>
-
-						<Box sx={FormStyles.authorBox}>
-							<FormControl fullWidth>
-								<FormLabel>Author</FormLabel>
-								<SoftTextField
-									style={FormStyles.titleAndAuthorFields}
-									placeholder={user?.name || "Original"}
-									value={author}
-									onChange={(e: ChangeEvent<HTMLInputElement>) =>
-										setAuthor(e.target.value)
-									}
-								/>
-							</FormControl>
-						</Box>
-
-						<TextEditor areTags={areTags} />
-					</Grid>
+					{/* first column */}
+					<PoemDetails
+						title={title}
+						setTitle={setTitle}
+						author={author}
+						setAuthor={setAuthor}
+					/>
 
 					{/* second column */}
-					<Grid size={{ xs: 12, md: 6 }} sx={FormStyles.formGridSecondColumn}>
-						<Box sx={FormStyles.secondColumnFieldsBox}>
-							<FormControl fullWidth>
-								<FormLabel sx={{ mb: "0.1em" }}>Tags</FormLabel>
-								<Box sx={FormStyles.tagBox}>
-									{tags.map((tag, index) => (
-										<Chip
-											color="error"
-											key={index}
-											label={tag}
-											onDelete={() => handleTagRemove(tag)}
-											deleteIcon={<DeleteIcon />}
-										/>
-									))}
-								</Box>
-								<SoftTextField
-									style={FormStyles.addTag}
-									placeholder="Comma separated"
-									value={currentTag}
-									onChange={handleTagChange}
-									onKeyDown={handleTagKeyDown}
-								/>
-							</FormControl>
-							<FormControl fullWidth>
-								<FormLabel sx={FormStyles.commentTitle}>
-									Comment about the Poem
-								</FormLabel>
-								<Typography
-									variant="subtitle1"
-									sx={FormStyles.commentHelperText}
-								>
-									What did this make you think/feel? What memory do you
-									associate with this?
-								</Typography>
-								<SoftTextField
-									placeholder="Share your thoughts or feelings about this poem..."
-									value={comment}
-									onChange={(e) => setComment(e.target.value)}
-									multiline
-									minRows={10}
-									fullWidth
-								/>
-							</FormControl>
-							<FormControl sx={FormStyles.publicBox}>
-								<FormLabel sx={FormStyles.publicText}>
-									Make my poem visible to the community.
-								</FormLabel>
-								<Switch
-									checked={isPublic}
-									sx={FormStyles.switch}
-									onChange={() => setIsPublic(!isPublic)}
-								/>
-							</FormControl>
-							<FormControl sx={FormStyles.originalWorkBox}>
-								<FormLabel sx={FormStyles.originalWorkText}>
-									My poem is an
-									<Tooltip
-										title="Original poems are marked with a star on your profile."
-										disableInteractive
-									>
-										<Button>original work.</Button>
-									</Tooltip>
-								</FormLabel>
-								<Switch
-									checked={isOriginal}
-									onChange={() => setIsOriginal(!isOriginal)}
-									sx={FormStyles.switch}
-								/>
-							</FormControl>
-						</Box>
-						<Box sx={FormStyles.buttonsContainer}>
-							<Button
-								onClick={(e) => handleSave(e, false)}
-								variant="contained"
-								color="primary"
-								size="large"
-								sx={FormStyles.button}
-							>
-								Save Draft
-							</Button>
-							<Button
-								onClick={(e) => handleSave(e, true)}
-								variant="contained"
-								color="primary"
-								size="large"
-								sx={FormStyles.button}
-							>
-								Publish
-							</Button>
-						</Box>
-					</Grid>
+					<PoemMetadata
+						tags={tags}
+						currentTag={currentTag}
+						handleTagChange={handleTagChange}
+						handleTagKeyDown={handleTagKeyDown}
+						handleTagRemove={handleTagRemove}
+						comment={comment}
+						setComment={setComment}
+						isPublic={isPublic}
+						setIsPublic={setIsPublic}
+						isOriginal={isOriginal}
+						setIsOriginal={setIsOriginal}
+						handleSave={handleSave}
+					/>
 				</Grid>
 			</Box>
 		</Paper>

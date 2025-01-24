@@ -16,11 +16,7 @@ import FormattingButton from "@/features/editor/components/controls/FormattingBu
 import { useEditorContext } from "@/features/editor/context/EditorContext";
 import { useTheme } from "@mui/material/styles";
 
-declare interface TextEditorProps {
-	areTags: boolean;
-}
-
-const TextEditor: FC<TextEditorProps> = ({ areTags }) => {
+const TextEditor = () => {
 	const { editor, renderElement, renderLeaf, onChange, onKeyDown } =
 		useEditor();
 	const { content, setContent } = useEditorContext();
