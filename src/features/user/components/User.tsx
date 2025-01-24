@@ -1,11 +1,12 @@
 "use client";
-import { Paper, Box, Divider } from "@mui/material";
+import { Paper, Grid2 as Grid, Divider, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUserPoems } from "../../poem/context/UserPoemsContext";
 import { useUser } from "../context/UserContext";
 import PoemsList from "./Poems-List/PoemsList";
 import UserTopHub from "./User-Top-Hub/UserTopHub";
+import StatusBar from "./StatusBar/StatusBar";
 import { UserType } from "@/features/user/userTypes";
 
 const UserProfile: FC = () => {
@@ -54,7 +55,7 @@ const UserProfile: FC = () => {
 					md: "95%",
 					lg: "90%",
 					xl: "97%",
-					xxl: "100%",
+					xxl: "60%",
 				},
 				borderRadius: ".1em",
 				padding: {
@@ -72,11 +73,15 @@ const UserProfile: FC = () => {
 				flexDirection: "column",
 				alignItems: "center",
 				textAlign: "left",
-				height: "calc(60vh - 64px)",
+				height: "calc(70vh - 64px)",
 			}}
 		>
 			<UserTopHub user={user as UserType} />
 			<Divider sx={{ width: "100%", my: 2 }} />
+			<StatusBar
+				showDrafts={showDrafts}
+				handleToggleDrafts={handleToggleDrafts}
+			/>
 
 			<PoemsList
 				showDrafts={showDrafts}

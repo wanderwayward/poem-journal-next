@@ -31,51 +31,6 @@ const PoemsList: FC<PoemsListProps> = ({
 }) => {
 	return (
 		<Grid container>
-			<Grid size={12} sx={{ display: "flex" }} mb={2}>
-				<Typography
-					onClick={handleToggleDrafts}
-					variant="h4"
-					sx={{
-						color: !showDrafts ? "secondary.dark" : "text.disabled",
-						textAlign: {
-							xs: "center",
-							sm: "left",
-						},
-						"&:hover": {
-							cursor: "pointer",
-							color: "error.main",
-							transition: "color 0.3s",
-						},
-					}}
-				>
-					Published
-				</Typography>
-				<Divider
-					variant="middle"
-					orientation="vertical"
-					sx={{ mx: 1 }}
-					flexItem
-				/>
-				<Typography
-					onClick={handleToggleDrafts}
-					variant="h4"
-					sx={{
-						color: showDrafts ? "secondary.dark" : "text.disabled",
-						textAlign: {
-							xs: "center",
-							sm: "left",
-						},
-						"&:hover": {
-							cursor: "pointer",
-							color: "error.main",
-							transition: "color 0.3s",
-						},
-					}}
-				>
-					Drafts
-				</Typography>
-			</Grid>
-
 			{loading ? (
 				<Box
 					sx={{
@@ -91,7 +46,7 @@ const PoemsList: FC<PoemsListProps> = ({
 			) : poems.length > 0 ? (
 				<Grid container spacing={2}>
 					{poems.map((poem) => (
-						<Grid size={{ xs: 12, sm: 6, lg: 4 }} key={poem._id}>
+						<Grid size={{ xs: 12, sm: 6, lg: 3 }} key={poem._id}>
 							<PoemTitleCard
 								poem={poem}
 								handleDelete={() => handleDelete(poem._id)}
