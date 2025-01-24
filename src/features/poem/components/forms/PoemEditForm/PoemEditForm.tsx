@@ -10,21 +10,13 @@ import {
 import { useParams, useRouter } from "next/navigation";
 import {
 	Box,
-	Button,
-	FormControl,
-	FormLabel,
 	Paper,
 	Grid2 as Grid,
 	Typography,
 	CircularProgress,
-	Chip,
-	Tooltip,
-	Switch,
 } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
-import DeleteIcon from "@mui/icons-material/Delete";
 
-import TextEditor from "@/features/editor/components/Editor";
 import { useEditorContext } from "@/features/editor/context/EditorContext";
 import parseContentToStanzas from "@/features/editor/utils/parseContentToStanzas";
 import parseStanzasToContent from "@/features/editor/utils/parseStanzasToContent";
@@ -32,14 +24,12 @@ import parseStanzasToContent from "@/features/editor/utils/parseStanzasToContent
 import { useUser } from "@/features/user/context/UserContext";
 import { useUserPoems } from "@/features/poem/context/UserPoemsContext";
 import { PoemType } from "@/features/poem/poemTypes"; //user types need to be moved out of the editor folder but that will be later
-import { SoftTextField } from "../../../../shared/components/CustomComponents/CustomComponents";
 
 import PoemDetails from "../components/poemDetails";
 import PoemMetadata from "../components/poemMetadata";
 
 const PoemEditForm = () => {
 	const theme = useTheme();
-	const backgroundColor = alpha(theme.palette.warning.main, 0.2);
 
 	const { content, setContent } = useEditorContext();
 	const router = useRouter();
@@ -157,7 +147,7 @@ const PoemEditForm = () => {
 	};
 
 	//---------------------------------STYLES---------------------------------//
-	const EditFormStyles = {
+	const styles = {
 		paper: {
 			height: { xs: "auto", md: "820px" },
 			padding: "16px",
@@ -179,7 +169,7 @@ const PoemEditForm = () => {
 
 	if (loading) {
 		return (
-			<Box sx={EditFormStyles.loadingContainer}>
+			<Box sx={styles.loadingContainer}>
 				<CircularProgress />
 			</Box>
 		);
@@ -187,16 +177,16 @@ const PoemEditForm = () => {
 
 	if (error) {
 		return (
-			<Box sx={EditFormStyles.errorContainer}>
+			<Box sx={styles.errorContainer}>
 				<Typography color="error">{error}</Typography>
 			</Box>
 		);
 	}
 
 	return poemData ? (
-		<Paper sx={EditFormStyles.paper}>
-			<Box component="form" sx={EditFormStyles.mainBox}>
-				<Grid container spacing={5} sx={EditFormStyles.mainGrid}>
+		<Paper sx={styles.paper}>
+			<Box component="form" sx={styles.mainBox}>
+				<Grid container spacing={5} sx={styles.mainGrid}>
 					{/* first column */}
 					<PoemDetails
 						title={title}
@@ -225,7 +215,7 @@ const PoemEditForm = () => {
 			</Box>
 		</Paper>
 	) : (
-		<Box sx={EditFormStyles.noPoem}>
+		<Box sx={styles.noPoem}>
 			<Typography>No poem found</Typography>
 		</Box>
 	);

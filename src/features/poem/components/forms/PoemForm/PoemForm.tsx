@@ -1,22 +1,9 @@
 "use client";
 import { useState, ChangeEvent, FormEvent, KeyboardEvent } from "react";
 import { useRouter } from "next/navigation";
-import {
-	Box,
-	Button,
-	FormControl,
-	FormLabel,
-	Grid2 as Grid,
-	Paper,
-	Typography,
-	Chip,
-	Tooltip,
-	Switch,
-} from "@mui/material";
+import { Box, Grid2 as Grid, Paper } from "@mui/material";
 import { useTheme, alpha } from "@mui/material/styles";
-import { SoftTextField } from "../../../../shared/components/CustomComponents/CustomComponents";
-import DeleteIcon from "@mui/icons-material/Delete";
-import TextEditor from "@/features/editor/components/Editor";
+
 import { useEditorContext } from "@/features/editor/context/EditorContext";
 import parseContentToStanzas from "@/features/editor/utils/parseContentToStanzas";
 import { useUser } from "@/features/user/context/UserContext";
@@ -27,7 +14,6 @@ import PoemMetadata from "../components/poemMetadata";
 
 const PoemForm = () => {
 	const theme = useTheme();
-	const backgroundColor = alpha(theme.palette.neutral.light, 0.9);
 
 	const { content } = useEditorContext();
 	const router = useRouter();
@@ -114,7 +100,7 @@ const PoemForm = () => {
 	};
 
 	//---------------------------------STYLES---------------------------------//
-	const FormStyles = {
+	const styles = {
 		paper: {
 			height: { xs: "auto", md: "820px" },
 			padding: "16px",
@@ -133,9 +119,9 @@ const PoemForm = () => {
 	};
 
 	return (
-		<Paper sx={FormStyles.paper}>
-			<Box component="form" sx={FormStyles.mainBox}>
-				<Grid container spacing={5} sx={FormStyles.mainGrid}>
+		<Paper sx={styles.paper}>
+			<Box component="form" sx={styles.mainBox}>
+				<Grid container spacing={5} sx={styles.mainGrid}>
 					{/* first column */}
 					<PoemDetails
 						title={title}

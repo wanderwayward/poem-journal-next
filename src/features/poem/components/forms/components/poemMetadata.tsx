@@ -44,7 +44,9 @@ const PoemMetadata = ({
 	setIsOriginal,
 	handleSave,
 }: PoemMetadataProps) => {
-	const EditFormStyles = {
+	// Styles//
+
+	const styles = {
 		formGridSecondColumn: {
 			display: "flex",
 			flexDirection: "column",
@@ -69,20 +71,22 @@ const PoemMetadata = ({
 		switch: { ml: "auto", position: "relative", top: -3 },
 		buttonsContainer: {
 			flexwrap: "wrap",
-			display: "flex", // Flex container for the buttons
-			flexDirection: "row", // Arrange buttons horizontally
-			alignItems: "center", // Center buttons vertically
-			justifyContent: "center", // Center buttons horizontally
+			display: "flex",
+			flexDirection: "row",
+			alignItems: "center",
+			justifyContent: "center",
 		},
 		button: { width: "45%", marginX: 1 },
 	};
 
+	// Styles//
+
 	return (
-		<Grid size={{ xs: 12, md: 6 }} sx={EditFormStyles.formGridSecondColumn}>
-			<Box sx={EditFormStyles.secondColumnFieldsBox}>
+		<Grid size={{ xs: 12, md: 6 }} sx={styles.formGridSecondColumn}>
+			<Box sx={styles.secondColumnFieldsBox}>
 				<FormControl fullWidth>
-					<FormLabel sx={EditFormStyles.tagTitle}>Tags</FormLabel>
-					<Box sx={EditFormStyles.tagBox}>
+					<FormLabel sx={styles.tagTitle}>Tags</FormLabel>
+					<Box sx={styles.tagBox}>
 						{tags.map((tag, index) => (
 							<Chip
 								color="error"
@@ -94,7 +98,7 @@ const PoemMetadata = ({
 						))}
 					</Box>
 					<SoftTextField
-						style={EditFormStyles.addTag}
+						style={styles.addTag}
 						placeholder="Comma separated"
 						value={currentTag}
 						onChange={handleTagChange}
@@ -102,10 +106,8 @@ const PoemMetadata = ({
 					/>
 				</FormControl>
 				<FormControl fullWidth>
-					<FormLabel sx={EditFormStyles.commentTitle}>
-						Comment about the Poem
-					</FormLabel>
-					<Typography variant="subtitle1" sx={EditFormStyles.commentHelperText}>
+					<FormLabel sx={styles.commentTitle}>Comment about the Poem</FormLabel>
+					<Typography variant="subtitle1" sx={styles.commentHelperText}>
 						What did this make you think/feel? What memory do you associate with
 						this?
 					</Typography>
@@ -118,18 +120,18 @@ const PoemMetadata = ({
 						fullWidth
 					/>
 				</FormControl>
-				<FormControl sx={EditFormStyles.publicBox}>
-					<FormLabel sx={EditFormStyles.publicText}>
+				<FormControl sx={styles.publicBox}>
+					<FormLabel sx={styles.publicText}>
 						Make my poem visible to the community.
 					</FormLabel>
 					<Switch
 						checked={isPublic}
-						sx={EditFormStyles.switch}
+						sx={styles.switch}
 						onChange={() => setIsPublic(!isPublic)}
 					/>
 				</FormControl>
-				<FormControl sx={EditFormStyles.originalWorkBox}>
-					<FormLabel sx={EditFormStyles.originalWorkText}>
+				<FormControl sx={styles.originalWorkBox}>
+					<FormLabel sx={styles.originalWorkText}>
 						My poem is an
 						<Tooltip
 							title="Original poems are marked with a star on your profile."
@@ -141,17 +143,17 @@ const PoemMetadata = ({
 					<Switch
 						checked={isOriginal}
 						onChange={() => setIsOriginal(!isOriginal)}
-						sx={EditFormStyles.switch}
+						sx={styles.switch}
 					/>
 				</FormControl>
 			</Box>
-			<Box sx={EditFormStyles.buttonsContainer}>
+			<Box sx={styles.buttonsContainer}>
 				<Button
 					onClick={(e) => handleSave(e, false)}
 					variant="contained"
 					color="primary"
 					size="large"
-					sx={EditFormStyles.button}
+					sx={styles.button}
 				>
 					Save Draft
 				</Button>
@@ -160,7 +162,7 @@ const PoemMetadata = ({
 					variant="contained"
 					color="primary"
 					size="large"
-					sx={EditFormStyles.button}
+					sx={styles.button}
 				>
 					Publish
 				</Button>
