@@ -34,8 +34,8 @@ a {
 
 /* Custom Scrollbar */
 .scroll-wrapper > .scroll-content::-webkit-scrollbar {
-	width: 8px;
-	height: 8px;
+	width: 3px;
+	height: 3px;
 }
 
 .scroll-wrapper > .scroll-content::-webkit-scrollbar-thumb {

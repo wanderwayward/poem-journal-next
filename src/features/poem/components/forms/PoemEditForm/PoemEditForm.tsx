@@ -166,7 +166,7 @@ const PoemEditForm = () => {
 		paper: {
 			height: { xs: "auto", md: "820px" },
 			padding: "16px",
-			bgcolor: alpha(theme.palette.neutral.main, 0.95),
+			bgcolor: alpha(theme.palette.background.paper, 0.95),
 		},
 		mainBox: { flex: 1, height: "100%" },
 		mainGrid: { height: "100%", alignItems: "stretch" },
@@ -311,7 +311,7 @@ const PoemEditForm = () => {
 									value={comment}
 									onChange={(e) => setComment(e.target.value)}
 									multiline
-									minRows={8}
+									minRows={10}
 									fullWidth
 								/>
 							</FormControl>

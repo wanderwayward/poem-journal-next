@@ -81,7 +81,9 @@ const TextEditor: FC<TextEditorProps> = ({ areTags }) => {
 					className="scroll-wrapper"
 					sx={{
 						bgcolor:
-							theme.palette.mode === "light" ? "primary.light" : "primary.dark",
+							theme.palette.mode === "light"
+								? "secondary.light"
+								: "primary.dark",
 						position: "relative",
 						padding: "0.1em",
 						borderRadius: "4px",

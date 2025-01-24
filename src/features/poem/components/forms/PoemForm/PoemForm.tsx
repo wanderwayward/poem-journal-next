@@ -115,7 +115,7 @@ const PoemForm = () => {
 		paper: {
 			height: { xs: "auto", md: "820px" },
 			padding: "16px",
-			bgcolor: alpha(theme.palette.neutral.main, 0.95),
+			bgcolor: alpha(theme.palette.background.paper, 0.95),
 		},
 		mainBox: { flex: 1, height: "100%" },
 		mainGrid: { height: "100%", alignItems: "stretch" },
@@ -139,7 +139,9 @@ const PoemForm = () => {
 			gap: 2,
 			justifyContent: "start",
 		},
-		titleAndAuthorFields: { marginBottom: ".6em" },
+		titleAndAuthorFields: {
+			marginBottom: ".6em",
+		},
 		authorBox: { display: "flex", justifyContent: "space-between", gap: 2 },
 		tagBox: { display: "flex", flexWrap: "wrap", gap: 1, marginBottom: 1 },
 		addTag: { marginBottom: ".6em" },
@@ -236,7 +238,7 @@ const PoemForm = () => {
 									value={comment}
 									onChange={(e) => setComment(e.target.value)}
 									multiline
-									minRows={4}
+									minRows={10}
 									fullWidth
 								/>
 							</FormControl>
