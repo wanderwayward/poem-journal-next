@@ -8,16 +8,15 @@ import PoemsList from "./Poems-List/PoemsList";
 import UserTopHub from "./User-Top-Hub/UserTopHub";
 import StatusBar from "./StatusBar/StatusBar";
 import { UserType } from "@/features/user/userTypes";
+import { useTheme, alpha } from "@mui/material/styles";
 
 const UserProfile: FC = () => {
+	const theme = useTheme();
 	const { poems, setPoems, loading } = useUserPoems();
 	const { user } = useUser();
 	const router = useRouter();
 
-	const [showDrafts, setShowDrafts] = useState(
-		typeof window !== "undefined" &&
-			new URLSearchParams(window.location.search).get("showDrafts") === "true"
-	);
+	const [showDrafts, setShowDrafts] = useState(false);
 
 	const handleEditClick = (id: string) => {
 		router.push(`/poem/${id}/edit`);
@@ -38,12 +37,19 @@ const UserProfile: FC = () => {
 		(poem) => poem.status === (showDrafts ? "Draft" : "Published")
 	);
 
-	const handleToggleDrafts = () => {
+	const handleToggleDrafts = async () => {
+		// const newPreference = !showDrafts ? "Drafts" : "Published";
 		setShowDrafts(!showDrafts);
-		const newQuery = new URLSearchParams({
-			showDrafts: (!showDrafts).toString(),
-		});
-		router.push(`/user?${newQuery.toString()}`);
+
+		// try {
+		//   await fetch('/api/user/updatePreference', {
+		// 	method: 'POST',
+		// 	headers: { 'Content-Type': 'application/json' },
+		// 	body: JSON.stringify({ preferredView: newPreference }),
+		//   });
+		// } catch (error) {
+		//   console.error("Failed to update preference:", error);
+		// }
 	};
 
 	return (
@@ -68,7 +74,7 @@ const UserProfile: FC = () => {
 					xxxl: "2.5em",
 				},
 				margin: { xs: ".5em", sm: "auto" },
-				backgroundColor: "neutral.main",
+				backgroundColor: alpha(theme.palette.background.paper, 0.95),
 				display: "flex",
 				flexDirection: "column",
 				alignItems: "center",

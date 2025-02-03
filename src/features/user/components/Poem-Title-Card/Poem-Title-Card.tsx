@@ -1,13 +1,10 @@
-import * as React from "react";
 import {
-	Box,
 	Card,
-	CardContent,
-	Typography,
 	IconButton,
-	useTheme,
-	Grid2 as Grid,
+	Typography,
 	Tooltip,
+	Grid2 as Grid,
+	useTheme,
 } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import Link from "next/link";
@@ -29,92 +26,87 @@ export default function PoemTitleCard({
 	return (
 		<Card
 			sx={{
-				width: {
-					xs: "100%",
-					sm: "97%",
-				},
-				height: {
-					xs: "auto",
-				},
-				display: "flex",
-				flexDirection: "column",
-				alignItems: "center",
-				paddingX: ".1em",
-				paddingY: ".2em",
+				width: "300px",
+				padding: "1em",
 				backgroundColor:
 					theme.palette.mode === "light" ? "secondary.main" : "error.dark",
+				borderRadius: "8px",
+				boxShadow: theme.shadows[3],
+				cursor: "pointer",
 			}}
 		>
-			<CardContent sx={{ width: "100%", padding: "0 !important" }}>
+			<Grid
+				container
+				spacing={2}
+				sx={{
+					height: "100%",
+				}}
+			>
+				{/* Left Section (Content) */}
 				<Grid
+					size={{ xs: 9 }}
 					container
-					alignItems="center"
-					sx={{ padding: "0 1em", width: "100%" }}
+					direction="column"
+					justifyContent="space-around"
 				>
-					<Grid>
-						<Link href={`/poem/${poem._id}`} passHref>
-							<Tooltip
-								title={poem.title}
-								placement="top-start"
-								slotProps={{
-									popper: {
-										modifiers: [
-											{
-												name: "offset",
-												options: {
-													offset: [0, -15],
-												},
-											},
-										],
-									},
+					<Link href={`/poem/${poem._id}`} style={{ textDecoration: "none" }}>
+						{/* Title */}
+						<Tooltip title={poem.title} placement="top-start">
+							<Typography
+								variant="h6"
+								sx={{
+									fontWeight: "bold",
+									color: "inherit",
+									overflow: "hidden",
+									textOverflow: "ellipsis",
+									display: "-webkit-box",
+									webkitLineClamp: 1,
+									webkitBoxOrient: "vertical",
 								}}
 							>
-								<Typography
-									variant="h6"
-									sx={{
-										textAlign: { xs: "left" },
-										overflow: "hidden",
-										textOverflow: "ellipsis",
-										whiteSpace: "nowrap",
-										display: "block",
-										cursor: "pointer", // Optional: to indicate the text is hoverable
-									}}
-								>
-									{poem.title}
-								</Typography>
-							</Tooltip>
-						</Link>
-					</Grid>
-					<Grid>
-						<IconButton onClick={handleEdit}>
-							<Edit />
-						</IconButton>
-					</Grid>
-				</Grid>
-				<Grid
-					container
-					alignItems="center"
-					sx={{ padding: "0 1em", width: "100%", marginTop: 1 }}
-				>
-					<Grid>
-						<Typography variant="body2" sx={{ textAlign: "left" }}>
+								{poem.title}
+							</Typography>
+						</Tooltip>
+
+						{/* Author and Status */}
+						<Typography variant="body2">
 							{poem.author === "Original"
 								? poem.username
 								: poem.author || "Unknown"}
 						</Typography>
-					</Grid>
-					<Grid>
-						<Typography variant="body2" sx={{ textAlign: "left" }}>
-							{poem.status}
-						</Typography>
-					</Grid>
-					<Grid>
-						<IconButton onClick={handleDelete}>
-							<Delete />
-						</IconButton>
-					</Grid>
+						<Typography variant="body2">{poem.status}</Typography>
+					</Link>
 				</Grid>
-			</CardContent>
+
+				{/* Right Section (Actions) */}
+				<Grid
+					size={{ xs: 3 }}
+					container
+					direction="column"
+					justifyContent="space-around"
+					alignItems="center"
+					sx={{ gap: "0.5em" }}
+				>
+					<IconButton
+						onClick={(e) => {
+							e.stopPropagation();
+							handleEdit();
+						}}
+						size="small"
+					>
+						<Edit fontSize="small" />
+					</IconButton>
+					<IconButton
+						onClick={(e) => {
+							e.stopPropagation();
+							handleDelete();
+						}}
+						size="small"
+					>
+						<Delete fontSize="small" />
+					</IconButton>
+				</Grid>
+			</Grid>
 		</Card>
 	);
 }
