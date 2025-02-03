@@ -2,7 +2,7 @@
 "use client";
 import { FC, useEffect, useRef } from "react";
 
-import { Box } from "@mui/material";
+import { Box, useTheme, useMediaQuery } from "@mui/material";
 
 import hasPlayed from "../animations/hasPlayed";
 import hasNotPlayed from "../animations/hasNotPlayed";
@@ -13,14 +13,21 @@ declare interface TreeAnimationProps {
 
 const TreeAnimation: FC<TreeAnimationProps> = ({ season }) => {
 	// temporary Hard-coded hasPlayed flag
-	const hasPlayedFlag = true;
+	const hasPlayedFlag = false;
 	const svgContainerRef = useRef<HTMLDivElement>(null);
+
+	// Use Material UI's built-in media query hook to check for mobile
+	const theme = useTheme();
+	const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Adjust the breakpoint as needed
 
 	useEffect(() => {
 		console.log("starting useEffect");
+
+		const svgPath = isMobile ? "/Master_Tree5.svg" : "/Master_Tree4.svg";
+
 		// Fetch the SVG file
 		if (svgContainerRef.current) {
-			fetch("/Master_Tree4.svg")
+			fetch(svgPath)
 				.then((response) => response.text())
 				.then((svgContent) => {
 					console.log("svg has been fetched");
@@ -37,37 +44,45 @@ const TreeAnimation: FC<TreeAnimationProps> = ({ season }) => {
 						}
 
 						// If hasPlayed is false
-						hasNotPlayed({ season, svgContainerRef });
+						hasNotPlayed({
+							season,
+							svgContainerRef,
+						});
 					}
 				})
 				.catch((error) => {
 					console.error("Error fetching SVG:", error);
 				});
 		}
-	}, [season]);
+	}, [season, isMobile]);
 
 	return (
 		<Box
 			ref={svgContainerRef}
 			sx={{
-				position: "absolute",
 				zIndex: -2,
+				position: "absolute",
 				width: "100vw",
 				height: "100vh",
-				overflow: "hidden", // Hide overflowing horizontal content
+				overflow: "hidden",
 
 				"& svg": {
 					position: "absolute",
-					width: "auto",
-					height: "100%", // SVG fills height of viewport
-					left: "50%",
-					transform: "translateX(-50%)", // Center horizontally
+					height: "100%", // SVG height fills the viewport
+					width: "auto", // Width adjusts naturally to maintain aspect ratio
+					left: "50%", // Center horizontally
+					transform: "translateX(-50%)", // Center horizontally for all screens
 				},
 
-				// Responsive zoom for split screens
+				// Adjust zoom for narrower split screens or devices
 				"@media (max-width: 900px)": {
 					"& svg": {
-						width: "150%", // Scale width to zoom in, adjust as needed
+						width: "150%", // Zoom in horizontally on split screens
+					},
+				},
+				"@media (max-width: 800px)": {
+					"& svg": {
+						width: "250%", // Further zoom in for very narrow views
 					},
 				},
 			}}
