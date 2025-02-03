@@ -4,7 +4,6 @@ import { FC, useEffect, useRef } from "react";
 
 import { Box } from "@mui/material";
 
-// Import the refactored functions
 import hasPlayed from "../animations/hasPlayed";
 import hasNotPlayed from "../animations/hasNotPlayed";
 
@@ -13,7 +12,7 @@ declare interface TreeAnimationProps {
 }
 
 const TreeAnimation: FC<TreeAnimationProps> = ({ season }) => {
-	// Hard-coded hasPlayed flag
+	// temporary Hard-coded hasPlayed flag
 	const hasPlayedFlag = true;
 	const svgContainerRef = useRef<HTMLDivElement>(null);
 
@@ -53,10 +52,26 @@ const TreeAnimation: FC<TreeAnimationProps> = ({ season }) => {
 			sx={{
 				position: "absolute",
 				zIndex: -2,
-				width: "100%", // Full width of the screen or parent container
-				height: "auto", // Maintain aspect ratio
+				width: "100vw",
+				height: "100vh",
+				overflow: "hidden", // Hide overflowing horizontal content
+
+				"& svg": {
+					position: "absolute",
+					width: "auto",
+					height: "100%", // SVG fills height of viewport
+					left: "50%",
+					transform: "translateX(-50%)", // Center horizontally
+				},
+
+				// Responsive zoom for split screens
+				"@media (max-width: 900px)": {
+					"& svg": {
+						width: "150%", // Scale width to zoom in, adjust as needed
+					},
+				},
 			}}
-		></Box>
+		/>
 	);
 };
 
