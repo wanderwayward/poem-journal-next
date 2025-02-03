@@ -1,11 +1,14 @@
 "use client";
-import { Box, Paper } from "@mui/material";
+import { Box, Paper, alpha, useTheme } from "@mui/material";
 import { FC } from "react";
 import Poem from "@/features/poem/components/Poem";
 import { useUserPoems } from "@/features/poem/context/UserPoemsContext";
 
 const Home: FC = () => {
 	const { poems } = useUserPoems();
+
+	const theme = useTheme();
+	const backgroundColor = alpha(theme.palette.primary.main, 0.9);
 
 	return (
 		<Box
@@ -22,7 +25,7 @@ const Home: FC = () => {
 			<Paper
 				elevation={3}
 				sx={{
-					backgroundColor: "primary.light",
+					backgroundColor: backgroundColor,
 					padding: "20px",
 					textAlign: "center",
 					maxWidth: "100%",
