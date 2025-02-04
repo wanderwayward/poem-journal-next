@@ -22,7 +22,7 @@ const Home: FC = () => {
 				marginTop: "60px", // Adjust margin for navbar height
 			}}
 		>
-			<Paper
+			{/* <Paper
 				elevation={3}
 				sx={{
 					backgroundColor: backgroundColor,
@@ -33,7 +33,7 @@ const Home: FC = () => {
 				}}
 			>
 				<Poem poemData={poems[0]} />
-			</Paper>
+			</Paper> */}
 		</Box>
 	);
 };

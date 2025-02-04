@@ -47,6 +47,7 @@ const TreeAnimation: FC<TreeAnimationProps> = ({ season }) => {
 						hasNotPlayed({
 							season,
 							svgContainerRef,
+							isMobile,
 						});
 					}
 				})

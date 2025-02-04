@@ -13,9 +13,14 @@ import winterWindAnimation from "../hooks/bootAnimation/winterWindAnimation";
 interface HasNotPlayedProps {
 	season: string;
 	svgContainerRef: React.RefObject<HTMLDivElement | null>;
+	isMobile: boolean;
 }
 
-const hasNotPlayed = ({ season, svgContainerRef }: HasNotPlayedProps) => {
+const hasNotPlayed = ({
+	season,
+	svgContainerRef,
+	isMobile,
+}: HasNotPlayedProps) => {
 	if (!svgContainerRef.current) return;
 
 	// Step 1: Hide all paths initially
@@ -52,6 +57,7 @@ const hasNotPlayed = ({ season, svgContainerRef }: HasNotPlayedProps) => {
 
 	TrunkBranchesAnimation({
 		svgContainerRef,
+		isMobile,
 		onComplete: () => {
 			// Step 3: Switch case for seasonal animations
 			switch (season) {
