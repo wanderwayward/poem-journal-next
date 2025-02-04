@@ -38,7 +38,7 @@ export default function RootLayout({
 					>
 						<Navbar />
 
-						<TreeAnimation season="Winter" />
+						<TreeAnimation season="Spring" />
 
 						{hasPlayedFlag && (
 							<Box

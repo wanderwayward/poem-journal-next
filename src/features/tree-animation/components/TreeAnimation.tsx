@@ -13,7 +13,7 @@ declare interface TreeAnimationProps {
 
 const TreeAnimation: FC<TreeAnimationProps> = ({ season }) => {
 	// temporary Hard-coded hasPlayed flag
-	const hasPlayedFlag = false;
+	const hasPlayedFlag = true;
 	const svgContainerRef = useRef<HTMLDivElement>(null);
 
 	// Use Material UI's built-in media query hook to check for mobile
@@ -23,7 +23,7 @@ const TreeAnimation: FC<TreeAnimationProps> = ({ season }) => {
 	useEffect(() => {
 		console.log("starting useEffect");
 
-		const svgPath = isMobile ? "/Master_Tree5.svg" : "/Master_Tree4.svg";
+		const svgPath = isMobile ? "/Vertical_Tree.svg" : "/Horizontal_Tree.svg";
 
 		// Fetch the SVG file
 		if (svgContainerRef.current) {
