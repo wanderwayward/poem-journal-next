@@ -14,8 +14,6 @@ interface PoemsListProps {
 	poems: PoemType[];
 	handleEdit: (id: string) => void;
 	handleDelete: (id: string) => void;
-	handleToggleDrafts: () => void;
-	showDrafts: boolean;
 	listLabel: string;
 	loading: boolean;
 }
@@ -26,8 +24,6 @@ const PoemsList: FC<PoemsListProps> = ({
 	handleDelete,
 	listLabel,
 	loading,
-	handleToggleDrafts,
-	showDrafts,
 }) => {
 	return (
 		<Grid container>

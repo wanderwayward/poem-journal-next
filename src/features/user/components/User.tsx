@@ -90,8 +90,6 @@ const UserProfile: FC = () => {
 			/>
 
 			<PoemsList
-				showDrafts={showDrafts}
-				handleToggleDrafts={handleToggleDrafts}
 				loading={loading}
 				poems={filteredPoems}
 				handleEdit={handleEditClick}

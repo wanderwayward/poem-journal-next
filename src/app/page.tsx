@@ -7,9 +7,6 @@ import { useUserPoems } from "@/features/poem/context/UserPoemsContext";
 const Home: FC = () => {
 	const { poems } = useUserPoems();
 
-	const theme = useTheme();
-	const backgroundColor = alpha(theme.palette.primary.main, 0.9);
-
 	return (
 		<Box
 			sx={{
@@ -22,18 +19,7 @@ const Home: FC = () => {
 				marginTop: "60px", // Adjust margin for navbar height
 			}}
 		>
-			<Paper
-				elevation={3}
-				sx={{
-					backgroundColor: backgroundColor,
-					padding: "20px",
-					textAlign: "center",
-					maxWidth: "100%",
-					margin: "0 auto",
-				}}
-			>
-				<Poem poemData={poems[0]} />
-			</Paper>
+			<Poem poemData={poems[0]} />
 		</Box>
 	);
 };

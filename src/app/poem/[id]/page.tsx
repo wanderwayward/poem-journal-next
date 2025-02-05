@@ -11,6 +11,8 @@ import {
 	Typography,
 	Chip,
 	Paper,
+	useTheme,
+	alpha,
 } from "@mui/material";
 import { useUser } from "@/features/user/context/UserContext";
 
@@ -62,6 +64,9 @@ const PoemPage = () => {
 		}
 	};
 
+	const theme = useTheme();
+	const backgroundColor = alpha(theme.palette.neutral.main, 0.9);
+
 	if (loading) {
 		return (
 			<Container
@@ -92,7 +97,7 @@ const PoemPage = () => {
 			<Paper
 				elevation={3}
 				sx={{
-					backgroundColor: "primary.light",
+					backgroundColor: backgroundColor,
 					padding: "20px",
 					textAlign: "center",
 					maxWidth: "100%",

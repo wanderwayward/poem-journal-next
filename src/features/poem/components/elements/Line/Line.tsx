@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography } from "@mui/material";
+import { Typography, useTheme } from "@mui/material";
 import { PoemLineType, PoemCustomText } from "@/features/poem/poemTypes";
 
 interface LineProps {
@@ -7,10 +7,12 @@ interface LineProps {
 }
 
 const Line: React.FC<LineProps> = ({ line }) => {
+	const theme = useTheme();
 	return (
 		<Typography
 			component="div"
 			sx={{
+				color: theme.palette.secondary.contrastText,
 				textAlign: line.alignment || "left",
 				whiteSpace: "pre-wrap",
 			}}

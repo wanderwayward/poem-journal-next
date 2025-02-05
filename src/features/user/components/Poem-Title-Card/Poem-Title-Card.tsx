@@ -26,8 +26,9 @@ export default function PoemTitleCard({
 	return (
 		<Card
 			sx={{
-				width: "300px",
-				padding: "1em",
+				width: { xs: "250px", sm: "280px", md: "300px" },
+				height: "100px",
+				padding: 2,
 				backgroundColor:
 					theme.palette.mode === "light" ? "secondary.main" : "error.dark",
 				borderRadius: "8px",
@@ -35,33 +36,25 @@ export default function PoemTitleCard({
 				cursor: "pointer",
 			}}
 		>
-			<Grid
-				container
-				spacing={2}
-				sx={{
-					height: "100%",
-				}}
-			>
-				{/* Left Section (Content) */}
-				<Grid
-					size={{ xs: 9 }}
-					container
-					direction="column"
-					justifyContent="space-around"
-				>
-					<Link href={`/poem/${poem._id}`} style={{ textDecoration: "none" }}>
-						{/* Title */}
+			<Grid container spacing={2} sx={{ height: "100%" }}>
+				{/* Left Section: Content */}
+				<Grid size={{ xs: 9 }} direction="column">
+					<Link
+						href={`/poem/${poem._id}`}
+						style={{ textDecoration: "none", color: "inherit" }}
+					>
+						{/* Title with Tooltip */}
 						<Tooltip title={poem.title} placement="top-start">
 							<Typography
-								variant="h6"
+								variant="body2"
 								sx={{
+									margin: 0,
+									paddingY: "2px",
 									fontWeight: "bold",
-									color: "inherit",
+									fontSize: "1rem",
 									overflow: "hidden",
+									whiteSpace: "nowrap",
 									textOverflow: "ellipsis",
-									display: "-webkit-box",
-									webkitLineClamp: 1,
-									webkitBoxOrient: "vertical",
 								}}
 							>
 								{poem.title}
@@ -69,23 +62,44 @@ export default function PoemTitleCard({
 						</Tooltip>
 
 						{/* Author and Status */}
-						<Typography variant="body2">
+						<Typography
+							variant="body2"
+							sx={{
+								margin: 0,
+								paddingTop: "2px",
+								paddingBottom: "1px",
+								whiteSpace: "nowrap",
+								overflow: "hidden",
+								textOverflow: "ellipsis",
+							}}
+						>
 							{poem.author === "Original"
 								? poem.username
 								: poem.author || "Unknown"}
 						</Typography>
-						<Typography variant="body2">{poem.status}</Typography>
+						<Typography
+							variant="body2"
+							sx={{
+								margin: 0,
+								paddingTop: "1px",
+								paddingBottom: "2px",
+								color: theme.palette.text.secondary,
+							}}
+						>
+							{poem.status}
+						</Typography>
 					</Link>
 				</Grid>
 
-				{/* Right Section (Actions) */}
+				{/* Right Section: Actions */}
 				<Grid
 					size={{ xs: 3 }}
-					container
-					direction="column"
-					justifyContent="space-around"
-					alignItems="center"
-					sx={{ gap: "0.5em" }}
+					sx={{
+						gap: 2,
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "self-end",
+					}}
 				>
 					<IconButton
 						onClick={(e) => {
@@ -93,6 +107,7 @@ export default function PoemTitleCard({
 							handleEdit();
 						}}
 						size="small"
+						sx={{ color: "white" }}
 					>
 						<Edit fontSize="small" />
 					</IconButton>
@@ -102,6 +117,7 @@ export default function PoemTitleCard({
 							handleDelete();
 						}}
 						size="small"
+						sx={{ color: theme.palette.error.dark }}
 					>
 						<Delete fontSize="small" />
 					</IconButton>
