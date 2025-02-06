@@ -4,11 +4,10 @@ import {
 	Typography,
 	Grid2 as Grid,
 	CircularProgress,
-	Divider,
 } from "@mui/material";
 import { FC } from "react";
 import PoemTitleCard from "../Poem-Title-Card/Poem-Title-Card";
-import { PoemType } from "@/features/poem/poemTypes"; //the poem types need to be moved out of the editor folder but that will be later
+import { PoemType } from "@/features/poem/poemTypes";
 
 interface PoemsListProps {
 	poems: PoemType[];
@@ -26,7 +25,7 @@ const PoemsList: FC<PoemsListProps> = ({
 	loading,
 }) => {
 	return (
-		<Grid container>
+		<Grid container spacing={2}>
 			{loading ? (
 				<Box
 					sx={{
@@ -40,17 +39,26 @@ const PoemsList: FC<PoemsListProps> = ({
 					<CircularProgress />
 				</Box>
 			) : poems.length > 0 ? (
-				<Grid container spacing={2}>
-					{poems.map((poem) => (
-						<Grid size={{ xs: 12, sm: 6, lg: 3 }} key={poem._id}>
-							<PoemTitleCard
-								poem={poem}
-								handleDelete={() => handleDelete(poem._id)}
-								handleEdit={() => handleEdit(poem._id)}
-							/>
-						</Grid>
-					))}
-				</Grid>
+				poems.map((poem) => (
+					<Grid
+						key={poem._id}
+						size={{
+							xs: 12, // 1 card per row on extra-small screens
+							sm: 12, // 1 card per row on small screens
+							md: 6, // 2 cards per row on medium screens
+							lg: 4, // 3 cards per row on large screens
+							xl: 4,
+							xxl: 3, // 4 cards per row on extra-extra-large screens
+						}}
+						sx={{ display: "flex", justifyContent: "center" }}
+					>
+						<PoemTitleCard
+							poem={poem}
+							handleDelete={() => handleDelete(poem._id)}
+							handleEdit={() => handleEdit(poem._id)}
+						/>
+					</Grid>
+				))
 			) : (
 				<Typography>No {listLabel.toLowerCase()} found.</Typography>
 			)}

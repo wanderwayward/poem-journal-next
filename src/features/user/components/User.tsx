@@ -56,12 +56,10 @@ const UserProfile: FC = () => {
 		<Paper
 			sx={{
 				width: {
-					xs: "100%",
-					sm: "97%",
+					xs: "98%",
 					md: "95%",
-					lg: "90%",
-					xl: "97%",
-					xxl: "60%",
+					lg: "80%",
+					xxl: "50%",
 				},
 				borderRadius: ".1em",
 				padding: {

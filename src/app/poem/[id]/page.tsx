@@ -65,7 +65,7 @@ const PoemPage = () => {
 	};
 
 	const theme = useTheme();
-	const backgroundColor = alpha(theme.palette.neutral.main, 0.9);
+	const backgroundColor = alpha(theme.palette.background.paper, 0.95);
 
 	if (loading) {
 		return (
