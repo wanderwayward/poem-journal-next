@@ -1,29 +1,19 @@
 "use client";
 import Link from "next/link";
 import { Fragment } from "react";
-import { Grid2 as Grid, Typography, Box } from "@mui/material";
+import { Grid2 as Grid, Typography, Box, useTheme, alpha } from "@mui/material";
 import { signOut } from "next-auth/react";
-import { useEffect, useState } from "react";
 import { useUser } from "@/features/user/context/UserContext";
 
 const Navbar = () => {
 	const { user } = useUser();
 
-	const [isScrolled, setIsScrolled] = useState(false);
-
-	useEffect(() => {
-		const handleScroll = () => {
-			const newIsScrolled = window.scrollY > 10;
-			if (newIsScrolled !== isScrolled) {
-				setIsScrolled(newIsScrolled);
-			}
-		};
-
-		window.addEventListener("scroll", handleScroll);
-		return () => {
-			window.removeEventListener("scroll", handleScroll);
-		};
-	}, [isScrolled]);
+	const theme = useTheme();
+	const baseBackgroundColor = alpha(theme.palette.neutral.main, 0.8);
+	const gradientOverlay = `linear-gradient(to bottom, ${alpha(
+		theme.palette.primary.main,
+		0.3
+	)}, ${alpha(theme.palette.secondary.main, 0.3)})`;
 
 	return (
 		<Grid
@@ -37,35 +27,46 @@ const Navbar = () => {
 				right: 0,
 				zIndex: 1100,
 				width: "100%",
-				backgroundColor: isScrolled ? "transparent" : "success.dark",
-				transition: "background-color 0.5s",
+				backgroundColor: baseBackgroundColor,
+				backgroundImage: gradientOverlay,
+				backgroundBlendMode: "overlay",
+				transition: "background-color 0.5s, background-image 0.5s",
 				padding: "8px 16px",
-				boxShadow: isScrolled ? "none" : "0px 4px 8px rgba(0, 0, 0, 0.1)",
+				boxShadow: "0px 1px 4px rgba(0, 0, 0, 0.2)",
 			}}
 		>
 			<Box flex={1} display="flex" justifyContent="flex-start">
 				<Link href="/poem/upload" passHref>
 					<Typography
+						variant="h5"
 						component="span"
-						sx={{ textDecoration: "none", color: "success.light" }}
+						sx={{
+							textDecoration: "none",
+							color: "info.main",
+							fontWeight: "bold",
+						}}
 					>
-						Upload
+						UPLOAD
 					</Typography>
 				</Link>
 			</Box>
-			{isScrolled ? null : (
-				<Box flex={2} display="flex" justifyContent="center">
-					<Link href="/" passHref>
-						<Typography
-							component="span"
-							sx={{ textDecoration: "none", color: "success.contrastText" }}
-							variant="h6"
-						>
-							Poem Journal
-						</Typography>
-					</Link>
-				</Box>
-			)}
+
+			<Box flex={2} display="flex" justifyContent="center">
+				<Link href="/" passHref>
+					<Typography
+						component="span"
+						sx={{
+							textDecoration: "none",
+							color: "neutral.contrastText",
+							fontWeight: "bold",
+						}}
+						variant="h4"
+					>
+						POEM JOURNAL
+					</Typography>
+				</Link>
+			</Box>
+
 			<Box
 				flex={1}
 				display="flex"
@@ -76,47 +77,48 @@ const Navbar = () => {
 					<Fragment>
 						<Link href="/user" passHref>
 							<Typography
+								variant="h5"
 								component="span"
 								sx={{
 									textDecoration: "none",
-									color: "success.contrastText",
-									fontSize: "inherit",
-									lineHeight: "1.5",
+									fontWeight: "bold",
+									color: "info.main",
 									marginRight: 1,
+									letterSpacing: 2,
 								}}
 							>
-								{user.name}
+								{user.name.toUpperCase()}
 							</Typography>
 						</Link>
 						<Typography
+							variant="h5"
 							component="span"
 							onClick={() => signOut()}
 							sx={{
 								cursor: "pointer",
+								fontWeight: "bold",
 								textDecoration: "none",
-								color: "warning.main",
-								fontSize: "inherit",
-								lineHeight: "1.5",
-								pt: 0.2,
+								color: "error.dark",
+								letterSpacing: 2,
 							}}
 						>
-							Sign Out
+							SIGN OUT
 						</Typography>
 					</Fragment>
 				) : (
 					<Link href="/auth" passHref>
 						<Typography
+							variant="h5"
 							component="span"
 							sx={{
 								cursor: "pointer",
 								textDecoration: "none",
-								color: "warning.main",
-								fontSize: "inherit",
+								color: "warning.dark",
 								lineHeight: "1.5",
 								pt: 0.2,
 							}}
 						>
-							Sign In
+							SIGN IN
 						</Typography>
 					</Link>
 				)}

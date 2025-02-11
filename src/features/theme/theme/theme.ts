@@ -1,5 +1,16 @@
 // theme.ts
 import { ThemeOptions } from "@mui/material/styles";
+import { Poiret_One, Lora } from "next/font/google";
+
+const poiretOne = Poiret_One({
+	weight: "400",
+	subsets: ["latin"],
+});
+
+const lora = Lora({
+	weight: "400",
+	subsets: ["latin"],
+});
 
 export type Season = "spring" | "summer" | "autumn" | "winter";
 
@@ -252,6 +263,16 @@ export const getDesignTokens = (
 				xxl: 1920, // Extra-Extra Large (Full HD / 4K)
 				xxxl: 2560, // Ultra Wide / 4K+
 			},
+		},
+		typography: {
+			fontFamily: `${poiretOne.style.fontFamily}, sans-serif`,
+
+			// body1: {
+			// 	fontFamily: `${lora.style.fontFamily}, serif`,
+			// },
+			// body2: {
+			// 	fontFamily: `${lora.style.fontFamily}, serif`,
+			// },
 		},
 	};
 };

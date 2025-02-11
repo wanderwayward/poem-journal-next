@@ -73,6 +73,11 @@ const UserProfile: FC = () => {
 				},
 				margin: { xs: ".5em", sm: "auto" },
 				backgroundColor: alpha(theme.palette.background.paper, 0.95),
+				backgroundImage: `linear-gradient(to bottom, ${alpha(
+					theme.palette.background.paper,
+					0.15
+				)}, ${alpha(theme.palette.secondary.light, 0.15)})`,
+				backgroundBlendMode: "overlay",
 				display: "flex",
 				flexDirection: "column",
 				alignItems: "center",

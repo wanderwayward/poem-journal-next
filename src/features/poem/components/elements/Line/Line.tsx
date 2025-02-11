@@ -12,7 +12,9 @@ const Line: React.FC<LineProps> = ({ line }) => {
 		<Typography
 			component="div"
 			sx={{
-				color: theme.palette.secondary.contrastText,
+				color: theme.palette.primary.contrastText,
+				lineHeight: 1.2,
+				fontSize: "1.1rem",
 				textAlign: line.alignment || "left",
 				whiteSpace: "pre-wrap",
 			}}

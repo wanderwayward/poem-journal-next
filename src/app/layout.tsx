@@ -1,14 +1,17 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Poiret_One } from "next/font/google";
 import "./globals.css";
-import { Box, Container, Grid2 as Grid } from "@mui/material";
+import { Box, Grid2 as Grid } from "@mui/material";
 import ClientProviders from "@/features/shared/components/ClientProviders/ClientProviders";
-import Navbar from "@/features/shared/components/Navigation/NavBar";
+import Navbar from "@/features/shared/components/Navigation/NavBar2";
 import TreeAnimation from "@/features/tree-animation/components/TreeAnimation";
 import AnimationContainer from "@/features/tree-animation/AnimationContainer";
 
-const inter = Inter({ subsets: ["latin"] });
+const poiretOne = Poiret_One({
+	weight: "400",
+	subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
 	title: "Poem Journal",
@@ -23,7 +26,7 @@ export default function RootLayout({
 	const hasPlayedFlag = true;
 	return (
 		<html lang="en">
-			<body className={inter.className}>
+			<body className={poiretOne.className}>
 				<ClientProviders>
 					<Box
 						sx={{
@@ -55,14 +58,13 @@ export default function RootLayout({
 								}}
 							/>
 						)}
-						{/* <AnimationContainer /> */}
 						<Box
 							sx={{
 								flexGrow: 1,
 								display: "flex",
 								justifyContent: "center",
 								alignItems: "center",
-								width: "100%", // Ensure it spans the full width
+								width: "100%",
 								paddingTop: "60px",
 							}}
 						>

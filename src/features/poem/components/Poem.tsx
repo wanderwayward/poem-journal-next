@@ -16,10 +16,15 @@ const Poem: React.FC<PoemProps> = ({ poemData }) => {
 			elevation={3}
 			sx={{
 				backgroundColor: backgroundColor,
+				backgroundImage: `linear-gradient(to bottom, ${alpha(
+					theme.palette.primary.main,
+					0.1
+				)}, ${alpha(theme.palette.primary.dark, 0.1)})`,
 				padding: "20px",
 				textAlign: "center",
 				maxWidth: "100%",
 				margin: "0 auto",
+				backgroundBlendMode: "multiply", // Optional: controls how color & gradient blend
 			}}
 		>
 			<Typography
@@ -33,28 +38,30 @@ const Poem: React.FC<PoemProps> = ({ poemData }) => {
 					display: "flex",
 					justifyContent: "start",
 					pl: ".2em",
+					fontWeight: "bold",
 				}}
 			>
 				{poemData.title}
 			</Typography>
-			<Typography
-				variant="body2"
-				color="contrastText"
-				sx={{
-					fontWeight: "bold",
-					width: "100%",
-					textAlign: "left",
-					pl: ".7em",
-				}}
-			>
-				{poemData.type === "Original" ? poemData.type : null} by{" "}
-				{poemData.author}
-			</Typography>
+
 			<Container sx={{ py: "1em", pl: ".7em" }} disableGutters>
 				{poemData.stanzas.map((stanza) => (
 					<Stanza key={stanza.id} stanza={stanza} />
 				))}
 			</Container>
+			<Typography
+				variant="body2"
+				color="contrastText"
+				sx={{
+					fontSize: ".8em",
+					fontWeight: "semiBold",
+					width: "100%",
+					textAlign: "right",
+				}}
+			>
+				{poemData.type === "Original" ? poemData.type : null} by{" "}
+				{poemData.author}
+			</Typography>
 		</Paper>
 	) : null;
 };
