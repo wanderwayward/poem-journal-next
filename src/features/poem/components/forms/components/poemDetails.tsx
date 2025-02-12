@@ -1,5 +1,11 @@
 import { ChangeEvent } from "react";
-import { Box, FormControl, FormLabel, Grid2 as Grid } from "@mui/material";
+import {
+	useTheme,
+	Box,
+	FormControl,
+	FormLabel,
+	Grid2 as Grid,
+} from "@mui/material";
 import { SoftTextField } from "@/features/shared/components/CustomComponents/CustomComponents";
 import TextEditor from "@/features/editor/components/Editor";
 
@@ -16,6 +22,8 @@ const PoemDetails = ({
 	author,
 	setAuthor,
 }: PoemDetailsProps) => {
+	const theme = useTheme();
+
 	const EditFormStyles = {
 		formGridFirstColumn: { height: "100%" },
 		formGridSecondColumn: {
@@ -33,6 +41,7 @@ const PoemDetails = ({
 			<FormControl fullWidth>
 				<FormLabel>Title</FormLabel>
 				<SoftTextField
+					theme={theme}
 					style={EditFormStyles.titleAndAuthorFields}
 					placeholder="Untitled"
 					value={title}
@@ -46,6 +55,7 @@ const PoemDetails = ({
 				<FormControl fullWidth>
 					<FormLabel>Author</FormLabel>
 					<SoftTextField
+						theme={theme}
 						style={EditFormStyles.titleAndAuthorFields}
 						placeholder="Author"
 						value={author}

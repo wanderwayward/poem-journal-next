@@ -8,6 +8,7 @@ import {
 	Button,
 	Switch,
 	Tooltip,
+	useTheme,
 } from "@mui/material";
 import { SoftTextField } from "@/features/shared/components/CustomComponents/CustomComponents";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -44,6 +45,8 @@ const PoemMetadata = ({
 	setIsOriginal,
 	handleSave,
 }: PoemMetadataProps) => {
+	const theme = useTheme();
+
 	// Styles//
 
 	const styles = {
@@ -98,6 +101,7 @@ const PoemMetadata = ({
 						))}
 					</Box>
 					<SoftTextField
+						theme={theme}
 						style={styles.addTag}
 						placeholder="Comma separated"
 						value={currentTag}
@@ -112,6 +116,7 @@ const PoemMetadata = ({
 						this?
 					</Typography>
 					<SoftTextField
+						theme={theme}
 						placeholder="Share your thoughts or feelings about this poem..."
 						value={comment}
 						onChange={(e) => setComment(e.target.value)}
