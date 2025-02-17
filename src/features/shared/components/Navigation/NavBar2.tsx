@@ -1,38 +1,22 @@
 "use client";
+import React, { useState } from "react";
 import Link from "next/link";
-import { useState, MouseEvent } from "react";
-import {
-	Grid2 as Grid,
-	Typography,
-	Box,
-	useTheme,
-	Avatar,
-	TextField,
-	IconButton,
-	Popover,
-} from "@mui/material";
-import { Search } from "@mui/icons-material";
+import { usePathname } from "next/navigation";
+import { Grid2 as Grid, Typography, Box, useTheme } from "@mui/material";
 import { useUser } from "@/features/user/context/UserContext";
+import SearchModal from "./subcomponents/Search/Search";
+import UserMenu from "./subcomponents/UserMenu/UserMenu";
+import { HoverableCircle } from "../CustomComponents/CustomComponents";
 
 const Navbar: React.FC = () => {
 	const { user } = useUser();
 	const theme = useTheme();
+	const pathname = usePathname();
 
-	// Popover state for Avatar
-	const [avatarAnchor, setAvatarAnchor] = useState<HTMLElement | null>(null);
-	const handleAvatarClick = (event: MouseEvent<HTMLDivElement>) => {
-		setAvatarAnchor(event.currentTarget);
-	};
-	const handleAvatarClose = () => setAvatarAnchor(null);
-	const isAvatarOpen = Boolean(avatarAnchor);
-
-	// Popover state for Search
-	const [searchAnchor, setSearchAnchor] = useState<HTMLElement | null>(null);
-	const handleSearchClick = (event: MouseEvent<HTMLButtonElement>) => {
-		setSearchAnchor(event.currentTarget);
-	};
-	const handleSearchClose = () => setSearchAnchor(null);
-	const isSearchOpen = Boolean(searchAnchor);
+	const [fill, setFill] = useState(theme.palette.error.dark);
+	const [textColor, setTextColor] = useState(
+		theme.palette.warning.contrastText
+	);
 
 	return user ? (
 		<Grid
@@ -73,88 +57,41 @@ const Navbar: React.FC = () => {
 					</Typography>
 				</Link>
 				<Box display="flex" flexDirection={"row"} alignItems={"center"}>
-					<Typography
-						variant="h2"
-						sx={{
-							fontWeight: "bold",
-							color: "warning.contrastText",
-							fontSize: "2.2rem",
-							display: "flex",
-							alignItems: "center",
+					<Box
+						display="flex"
+						alignItems="center"
+						gap={1}
+						onMouseEnter={() => {
+							setFill(theme.palette.warning.contrastText); // Change circle color
+							setTextColor(theme.palette.error.dark); // Change text color
 						}}
+						onMouseLeave={() => {
+							setFill(theme.palette.error.dark); // Reset circle color
+							setTextColor(theme.palette.warning.contrastText); // Reset text color
+						}}
+						sx={{ cursor: "pointer" }}
 					>
-						VERSES
-						<Box
-							component="span"
+						<HoverableCircle fill={fill} />
+						<Typography
+							variant="h2"
 							sx={{
+								fontWeight: "bold",
+								color: textColor,
+								fontSize: "2.2rem",
 								display: "flex",
 								alignItems: "center",
-								justifyContent: "center",
 							}}
 						>
-							<svg width="12" height="12" viewBox="0 0 24 24">
-								<circle cx="12" cy="12" r="6" fill={theme.palette.error.dark} />
-							</svg>
-						</Box>
-						KEPT
-					</Typography>
+							POEM VAULT
+						</Typography>
+						<HoverableCircle fill={fill} />
+					</Box>
 
 					{/* Avatar with Popover */}
-					<Avatar
-						alt={user.name}
-						src={user.image}
-						sx={{ ml: 2, cursor: "pointer" }}
-						onClick={handleAvatarClick}
-					/>
-					<Popover
-						open={isAvatarOpen}
-						anchorEl={avatarAnchor}
-						onClose={handleAvatarClose}
-						anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-						transformOrigin={{ vertical: "top", horizontal: "right" }}
-					>
-						<Box sx={{ p: 2, width: "500px" }}>
-							<Typography variant="subtitle1">Profile Menu</Typography>
-							<Typography variant="body2" color="text.secondary">
-								This is where profile options will go.
-							</Typography>
-						</Box>
-					</Popover>
+					<UserMenu user={user} theme={theme} />
 				</Box>
 			</Grid>
-
-			{/* Search Icon with Popover */}
-			<Grid size={{ xs: 12 }} sx={{ mt: 2 }}>
-				<Box
-					sx={{
-						display: "flex",
-
-						justifyItems: "flex-end",
-
-						justifyContent: "space-between",
-						width: "242px",
-					}}
-				>
-					<IconButton onClick={handleSearchClick}>
-						<Search sx={{ fontSize: "2rem" }} />
-					</IconButton>
-					<TextField />
-				</Box>
-				<Popover
-					open={isSearchOpen}
-					anchorEl={searchAnchor}
-					onClose={handleSearchClose}
-					anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-					transformOrigin={{ vertical: "top", horizontal: "left" }}
-				>
-					<Box sx={{ p: 2, width: "500px" }}>
-						<Typography variant="subtitle1">Search</Typography>
-						<Typography variant="body2" color="text.secondary">
-							Search functionality will go here.
-						</Typography>
-					</Box>
-				</Popover>
-			</Grid>
+			{pathname === "/" ? <SearchModal /> : null}
 		</Grid>
 	) : null;
 };

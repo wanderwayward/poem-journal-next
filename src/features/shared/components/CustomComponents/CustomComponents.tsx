@@ -1,10 +1,23 @@
 import { useState } from "react";
 import { TextField, TextFieldProps } from "@mui/material";
 import { Theme } from "@mui/material/styles";
+import { Search } from "@mui/icons-material";
 
 interface ThemedProps {
 	theme: Theme;
 }
+
+interface HoverableCircleProps {
+	fill: string;
+}
+
+type SearchFieldProps = TextFieldProps &
+	ThemedProps & {
+		displayText?: string;
+		expanded?: boolean;
+		defaultWidth?: string;
+		expandedWidth?: string;
+	};
 
 export const SoftTextField = ({
 	theme,
@@ -39,43 +52,67 @@ export const SoftTextField = ({
 
 export const SearchField = ({
 	theme,
+	displayText = "Search",
+	expanded = false,
+	defaultWidth = "300px",
+	expandedWidth = "516px",
 	...props
-}: TextFieldProps & ThemedProps) => {
+}: SearchFieldProps) => {
 	const [focused, setFocused] = useState(false);
+	const shouldExpand = focused || expanded;
 
 	return (
 		<TextField
 			{...props}
 			variant="outlined"
-			placeholder={!focused ? "Search" : ""}
+			placeholder={!focused ? displayText : ""}
 			onFocus={() => setFocused(true)}
 			onBlur={() => setFocused(false)}
+			slotProps={{
+				input: {
+					sx: {
+						height: "2.2rem",
+						width: shouldExpand ? expandedWidth : defaultWidth,
+						transition: "width 0.3s ease",
+						alignItems: "center",
+						paddingY: "4px",
+						borderRadius: "4px",
+						backgroundColor: "transparent",
+						fontSize: "1.4rem",
+						border: "none",
+					},
+					startAdornment: (
+						<Search
+							sx={{
+								fontSize: "2rem",
+								mr: 1,
+								ml: -1,
+								color: theme.palette.error.dark,
+							}}
+						/>
+					),
+				},
+			}}
 			sx={{
+				height: "2.2rem",
 				backgroundColor: focused ? "white" : "transparent",
-				border: "none",
 				borderRadius: "4px",
+				border: "none",
 				outline: "none",
-				paddingY: "2px",
 				minHeight: "unset",
-				transition:
-					"background-color 0.2s ease-in-out, border 0.2s ease-in-out",
-				"&:hover": {
-					border: "1px solid black",
-				},
-				"& .MuiInputBase-root": {
-					backgroundColor: "transparent",
-					borderRadius: 0,
-					paddingY: "2px",
-					fontSize: "1rem",
-				},
-				"& .MuiInput-underline:before, & .MuiInput-underline:after": {
-					display: "none",
-				},
-				"& .MuiInputBase-input": {
-					color: theme.palette.text.primary,
-					textAlign: "center",
+				transition: "background-color 0.2s ease-in-out",
+				"& .MuiOutlinedInput-notchedOutline": {
+					border: "none",
 				},
 			}}
 		/>
+	);
+};
+
+export const HoverableCircle = ({ fill }: HoverableCircleProps) => {
+	return (
+		<svg width="12" height="12" viewBox="0 0 24 24">
+			<circle cx="12" cy="12" r="6" style={{ fill }} />
+		</svg>
 	);
 };
