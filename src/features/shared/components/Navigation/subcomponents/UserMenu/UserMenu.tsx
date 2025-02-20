@@ -8,8 +8,10 @@ import {
 	ListItemText,
 	alpha,
 	Theme,
+	Button,
 } from "@mui/material";
 import { User } from "next-auth";
+import Menu from "./Menu/Menu";
 
 interface AvatarMenuProps {
 	user: User;
@@ -36,10 +38,6 @@ const UserMenu = ({ user, theme }: AvatarMenuProps) => {
 			}
 		}, 100);
 	};
-
-	const backgroundColor = isOpen
-		? alpha(theme.palette.background.paper, 0.9)
-		: "transparent";
 
 	return (
 		<Box
@@ -75,32 +73,7 @@ const UserMenu = ({ user, theme }: AvatarMenuProps) => {
 				/>
 			</Box>
 
-			{isOpen && (
-				<Paper
-					elevation={4}
-					sx={{
-						position: "absolute",
-						top: "100%",
-						right: 0,
-						width: "500px", // Matches SearchModal width
-						mt: 1,
-						p: 2,
-						backgroundColor: backgroundColor,
-					}}
-				>
-					<List>
-						<ListItemButton>
-							<ListItemText primary="Profile" />
-						</ListItemButton>
-						<ListItemButton>
-							<ListItemText primary="Settings" />
-						</ListItemButton>
-						<ListItemButton>
-							<ListItemText primary="Logout" />
-						</ListItemButton>
-					</List>
-				</Paper>
-			)}
+			{isOpen && <Menu setIsOpen={setIsOpen} isOpen={isOpen} theme={theme} />}
 		</Box>
 	);
 };

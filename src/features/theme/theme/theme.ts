@@ -1,5 +1,6 @@
 // theme.ts
 import { ThemeOptions } from "@mui/material/styles";
+import { fontFamily } from "@mui/system";
 import { Poiret_One, Lora } from "next/font/google";
 
 const poiretOne = Poiret_One({
@@ -266,13 +267,29 @@ export const getDesignTokens = (
 		},
 		typography: {
 			fontFamily: `${poiretOne.style.fontFamily}, sans-serif`,
-
-			// body1: {
-			// 	fontFamily: `${lora.style.fontFamily}, serif`,
-			// },
-			// body2: {
-			// 	fontFamily: `${lora.style.fontFamily}, serif`,
-			// },
+		},
+		components: {
+			MuiInputBase: {
+				styleOverrides: {
+					root: {
+						fontFamily: `${lora.style.fontFamily}, serif`,
+					},
+				},
+			},
+			MuiOutlinedInput: {
+				styleOverrides: {
+					root: {
+						fontFamily: `${lora.style.fontFamily}, serif`,
+					},
+				},
+			},
+			MuiInputLabel: {
+				styleOverrides: {
+					root: {
+						fontFamily: `${lora.style.fontFamily}, serif`,
+					},
+				},
+			},
 		},
 	};
 };

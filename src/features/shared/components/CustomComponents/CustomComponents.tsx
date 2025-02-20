@@ -27,6 +27,7 @@ export const SoftTextField = ({
 		{...props}
 		variant="outlined"
 		sx={{
+			fontFamily: "Lora, serif",
 			"& .MuiInputBase-root": {
 				backgroundColor:
 					theme.palette.mode === "light"

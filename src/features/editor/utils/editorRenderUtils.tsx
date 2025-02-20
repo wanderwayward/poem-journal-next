@@ -3,6 +3,17 @@ import { Typography } from "@mui/material";
 import EditorStanza from "@/features/editor/components/elements/Stanza";
 import EditorLine from "@/features/editor/components/elements/Line";
 import EditorParagraph from "@/features/editor/components/elements/Paragraph";
+import { Poiret_One, Lora } from "next/font/google";
+
+const poiretOne = Poiret_One({
+	weight: "400",
+	subsets: ["latin"],
+});
+
+const lora = Lora({
+	weight: "400",
+	subsets: ["latin"],
+});
 
 export const DefaultElement = (props: RenderElementProps) => {
 	switch (props.element.type) {
@@ -22,13 +33,14 @@ export const Leaf = ({ attributes, children, leaf }: RenderLeafProps) => {
 		<Typography
 			{...attributes}
 			sx={{
-				fontWeight: leaf.bold ? "bold" : "normal",
+				fontFamily: `${lora.style.fontFamily}, serif`,
+				fontWeight: leaf.bold ? 700 : 400,
 				fontStyle: leaf.italic ? "italic" : "normal",
 				textDecoration: leaf.underline ? "underline" : "none",
 				textAlign: leaf.alignment || "left",
-				display: "inline", // Display inline to avoid line breaks
+				display: "inline",
 			}}
-			component="span" // Ensure inline display
+			component="span"
 		>
 			{children}
 		</Typography>
