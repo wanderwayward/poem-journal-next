@@ -54,7 +54,7 @@ const Poem: React.FC<PoemProps> = ({ poemData }) => {
 				color="contrastText"
 				sx={{
 					fontSize: ".8em",
-					fontWeight: "semiBold",
+					fontWeight: "bold",
 					width: "100%",
 					textAlign: "right",
 				}}

@@ -57,7 +57,7 @@ const Navbar: React.FC = () => {
 					</Typography>
 				</Link>
 				<Box display="flex" flexDirection={"row"} alignItems={"center"}>
-					<Link href="user" passHref>
+					<Link href="/user" passHref>
 						<Box
 							display="flex"
 							alignItems="center"

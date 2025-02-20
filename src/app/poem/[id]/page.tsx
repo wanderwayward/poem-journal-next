@@ -153,7 +153,7 @@ const PoemPage = () => {
 							Edit
 						</Button>
 						<Button
-							variant="outlined"
+							variant="contained"
 							color="error"
 							onClick={handleDeleteClick}
 						>

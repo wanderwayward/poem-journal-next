@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { SoftTextField } from "@/features/shared/components/CustomComponents/CustomComponents";
 import TextEditor from "@/features/editor/components/Editor";
+import { fontWeight, letterSpacing } from "@mui/system";
 
 interface PoemDetailsProps {
 	title: string;
@@ -25,6 +26,7 @@ const PoemDetails = ({
 	const theme = useTheme();
 
 	const EditFormStyles = {
+		headings: { fontWeight: "bold", letterSpacing: 1.5 },
 		formGridFirstColumn: { height: "100%" },
 		formGridSecondColumn: {
 			display: "flex",
@@ -39,7 +41,7 @@ const PoemDetails = ({
 	return (
 		<Grid size={{ xs: 12, md: 6 }} sx={EditFormStyles.formGridFirstColumn}>
 			<FormControl fullWidth>
-				<FormLabel>Title</FormLabel>
+				<FormLabel sx={EditFormStyles.headings}>TITLE</FormLabel>
 				<SoftTextField
 					theme={theme}
 					style={EditFormStyles.titleAndAuthorFields}
@@ -53,7 +55,7 @@ const PoemDetails = ({
 
 			<Box sx={EditFormStyles.authorBox}>
 				<FormControl fullWidth>
-					<FormLabel>Author</FormLabel>
+					<FormLabel sx={EditFormStyles.headings}>AUTHOR</FormLabel>
 					<SoftTextField
 						theme={theme}
 						style={EditFormStyles.titleAndAuthorFields}
