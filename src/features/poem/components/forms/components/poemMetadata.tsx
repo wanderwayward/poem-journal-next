@@ -148,7 +148,7 @@ const PoemMetadata = ({
 						>
 							<Box component="span" sx={{ color: "primary.main" }}>
 								{" "}
-								ORIGINAL
+								ORIGINAL WORK
 							</Box>
 						</Tooltip>
 					</FormLabel>

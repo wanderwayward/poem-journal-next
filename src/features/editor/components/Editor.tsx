@@ -42,10 +42,11 @@ const TextEditor = () => {
 					sx={{
 						border: "none",
 						display: "flex",
-						justifyContent: "space-between",
+						textAlign: "center",
+						justifyContent: "space-around",
 						alignItems: "center",
 						height: "2.5em",
-						padding: "0.5em",
+						padding: "0.1em",
 					}}
 				>
 					<FormattingButton

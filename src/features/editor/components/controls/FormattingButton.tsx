@@ -20,11 +20,11 @@ const FormattingButton: React.FC<FormattingButtonProps> = ({
 	const renderLabel = (label: string) => {
 		switch (label) {
 			case "Align Left":
-				return <FormatAlignLeft />;
+				return <FormatAlignLeft sx={{ fontSize: "1rem" }} />;
 			case "Align Center":
-				return <FormatAlignCenter />;
+				return <FormatAlignCenter sx={{ fontSize: "1rem" }} />;
 			case "Align Right":
-				return <FormatAlignRight />;
+				return <FormatAlignRight sx={{ fontSize: "1rem" }} />;
 			default:
 				return label;
 		}
@@ -41,7 +41,7 @@ const FormattingButton: React.FC<FormattingButtonProps> = ({
 			}}
 			sx={{
 				maxHeight: "2em",
-				width: "0.5em",
+				mx: ".1em",
 				backgroundColor: theme.palette.error.main,
 			}}
 		>
