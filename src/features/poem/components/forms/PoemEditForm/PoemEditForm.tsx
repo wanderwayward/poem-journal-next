@@ -43,7 +43,7 @@ const PoemEditForm = () => {
 	const { user } = useUser();
 	const { updatePoems } = useUserPoems();
 	const initialAuthor = user?.name || "Original";
-
+	const [areTags, setAreTags] = useState(false);
 	const [title, setTitle] = useState("");
 	const [author, setAuthor] = useState(initialAuthor);
 	const [tags, setTags] = useState<string[]>([]);
@@ -63,10 +63,9 @@ const PoemEditForm = () => {
 				setTitle(poem.title);
 				setAuthor(poem.author);
 				setTags(poem.tags);
+				poem.tags && setAreTags(true);
 				setComment(poem.comment);
 				setIsPublic(poem.public);
-				setIsOriginal(poem.type === "original");
-
 				// Convert stanzas to Slate format
 				const formattedContent = parseStanzasToContent(poem.stanzas);
 				setContent(formattedContent);
@@ -100,7 +99,6 @@ const PoemEditForm = () => {
 			userId: user?.id,
 			username: user?.name,
 			comment,
-			type: isOriginal ? "Original" : "Non-original",
 			public: isPublic,
 		};
 
@@ -139,11 +137,13 @@ const PoemEditForm = () => {
 			e.preventDefault();
 			setTags([...tags, currentTag.trim()]);
 			setCurrentTag("");
+			setAreTags(true);
 		}
 	};
 
 	const handleTagRemove = (tagToRemove: string) => {
 		setTags(tags.filter((tag) => tag !== tagToRemove));
+		setAreTags(false);
 	};
 
 	//---------------------------------STYLES---------------------------------//
@@ -199,6 +199,7 @@ const PoemEditForm = () => {
 
 					<PoemMetadata
 						tags={tags}
+						areTags={areTags}
 						currentTag={currentTag}
 						handleTagChange={handleTagChange}
 						handleTagKeyDown={handleTagKeyDown}
@@ -207,8 +208,6 @@ const PoemEditForm = () => {
 						setComment={setComment}
 						isPublic={isPublic}
 						setIsPublic={setIsPublic}
-						isOriginal={isOriginal}
-						setIsOriginal={setIsOriginal}
 						handleSave={handleSave}
 					/>
 				</Grid>

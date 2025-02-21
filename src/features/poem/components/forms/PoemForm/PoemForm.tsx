@@ -27,7 +27,6 @@ const PoemForm = () => {
 	const [tags, setTags] = useState<string[]>([]);
 	const [currentTag, setCurrentTag] = useState("");
 	const [isPublic, setIsPublic] = useState(false);
-	const [isOriginal, setIsOriginal] = useState(false);
 	const [comment, setComment] = useState("");
 	const { updatePoems } = useUserPoems();
 
@@ -45,7 +44,6 @@ const PoemForm = () => {
 			userId: user?.id,
 			username: user?.name,
 			comment,
-			type: isOriginal ? "Original" : "Non-original",
 			public: isPublic,
 		};
 
@@ -133,6 +131,7 @@ const PoemForm = () => {
 					{/* second column */}
 					<PoemMetadata
 						tags={tags}
+						areTags={areTags}
 						currentTag={currentTag}
 						handleTagChange={handleTagChange}
 						handleTagKeyDown={handleTagKeyDown}
@@ -141,8 +140,6 @@ const PoemForm = () => {
 						setComment={setComment}
 						isPublic={isPublic}
 						setIsPublic={setIsPublic}
-						isOriginal={isOriginal}
-						setIsOriginal={setIsOriginal}
 						handleSave={handleSave}
 					/>
 				</Grid>

@@ -27,14 +27,8 @@ const PoemDetails = ({
 
 	const EditFormStyles = {
 		headings: { fontWeight: "bold", letterSpacing: 1.5 },
-		formGridFirstColumn: { height: "100%" },
-		formGridSecondColumn: {
-			display: "flex",
-			flexDirection: "column",
-			height: "100%",
-		},
-
-		titleAndAuthorFields: { marginBottom: ".6em" },
+		formGridFirstColumn: { height: "100%", width: "25rem" },
+		titleAndAuthorFields: { marginBottom: ".6em", width: "25rem" },
 		authorBox: { display: "flex", justifyContent: "space-between", gap: 2 },
 	};
 

@@ -16,6 +16,7 @@ import { fontWeight, letterSpacing } from "@mui/system";
 
 interface PoemMetadataProps {
 	tags: string[];
+	areTags: boolean;
 	currentTag: string;
 	handleTagRemove: (tag: string) => void;
 	handleTagChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -24,8 +25,6 @@ interface PoemMetadataProps {
 	setComment: (comment: string) => void;
 	isPublic: boolean;
 	setIsPublic: (isPublic: boolean) => void;
-	isOriginal: boolean;
-	setIsOriginal: (isOriginal: boolean) => void;
 	handleSave: (
 		e: React.MouseEvent<HTMLButtonElement>,
 		publish: boolean
@@ -34,6 +33,7 @@ interface PoemMetadataProps {
 
 const PoemMetadata = ({
 	tags,
+	areTags,
 	currentTag,
 	handleTagChange,
 	handleTagKeyDown,
@@ -42,8 +42,7 @@ const PoemMetadata = ({
 	setComment,
 	isPublic,
 	setIsPublic,
-	isOriginal,
-	setIsOriginal,
+
 	handleSave,
 }: PoemMetadataProps) => {
 	const theme = useTheme();
@@ -60,26 +59,22 @@ const PoemMetadata = ({
 			flexGrow: 1,
 			display: "flex",
 			flexDirection: "column",
-			gap: 2,
+			// gap: 2,
 			justifyContent: "start",
 		},
-		tagBox: { display: "flex", flexWrap: "wrap", gap: 1, marginBottom: 1 },
+		tagBox: { display: "flex", flexWrap: "wrap", mb: areTags ? 1 : 0, gap: 1 },
 		addTag: { marginBottom: ".6em" },
-		tagTitle: { marginBottom: ".1em", fontWeight: "bold", letterSpacing: 1.5 },
+		tagTitle: {
+			marginBottom: areTags ? ".1em" : 0,
+			fontWeight: "bold",
+			letterSpacing: 1.5,
+		},
 		commentTitle: {
-			fontSize: "1.25rem",
 			fontWeight: "bold",
-			mb: 1,
 			letterSpacing: 1.5,
 		},
-		publicBox: { display: "flex", flexDirection: "row", mb: 1, mt: 2 },
+		publicBox: { display: "flex", flexDirection: "row", mt: 2, pl: 1 },
 		publicText: { fontSize: "1.25rem", fontWeight: "bold", letterSpacing: 1.5 },
-		originalWorkBox: { display: "flex", flexDirection: "row", mb: 1, mt: 2 },
-		originalWorkText: {
-			fontSize: "1.25rem",
-			fontWeight: "bold",
-			letterSpacing: 1.5,
-		},
 		switch: { ml: "auto", position: "relative", top: -3 },
 		buttonsContainer: {
 			flexwrap: "wrap",
@@ -126,7 +121,7 @@ const PoemMetadata = ({
 						value={comment}
 						onChange={(e) => setComment(e.target.value)}
 						multiline
-						minRows={10}
+						minRows={15}
 						fullWidth
 					/>
 				</FormControl>
@@ -136,26 +131,6 @@ const PoemMetadata = ({
 						checked={isPublic}
 						sx={styles.switch}
 						onChange={() => setIsPublic(!isPublic)}
-					/>
-				</FormControl>
-
-				<FormControl sx={styles.originalWorkBox}>
-					<FormLabel sx={styles.originalWorkText}>
-						MY POEM IS AN
-						<Tooltip
-							title="Original poems are marked with a star on your profile."
-							disableInteractive
-						>
-							<Box component="span" sx={{ color: "primary.main" }}>
-								{" "}
-								ORIGINAL WORK
-							</Box>
-						</Tooltip>
-					</FormLabel>
-					<Switch
-						checked={isOriginal}
-						onChange={() => setIsOriginal(!isOriginal)}
-						sx={styles.switch}
 					/>
 				</FormControl>
 			</Box>

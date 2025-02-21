@@ -77,6 +77,7 @@ const TextEditor = () => {
 				<Box
 					className="scroll-wrapper"
 					sx={{
+						width: "25rem",
 						bgcolor:
 							theme.palette.mode === "light"
 								? "secondary.light"
@@ -104,9 +105,9 @@ const TextEditor = () => {
 					<Box
 						className="scroll-content"
 						sx={{
-							overflowY: "auto", // Allow scrollable content
+							overflowY: "auto",
 							height: "35em",
-							width: "auto",
+							width: "100%",
 							paddingLeft: "0.4em",
 							paddingRight: "0.4em",
 							borderRadius: "4px",
