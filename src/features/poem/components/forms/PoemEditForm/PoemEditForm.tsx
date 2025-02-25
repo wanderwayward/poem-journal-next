@@ -50,7 +50,6 @@ const PoemEditForm = () => {
 	const [currentTag, setCurrentTag] = useState("");
 	const [comment, setComment] = useState("");
 	const [isPublic, setIsPublic] = useState(false);
-	const [isOriginal, setIsOriginal] = useState(false);
 
 	const fetchPoem = useCallback(async () => {
 		setLoading(true);

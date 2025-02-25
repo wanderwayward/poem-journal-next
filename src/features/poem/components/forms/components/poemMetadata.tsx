@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import { SoftTextField } from "@/features/shared/components/CustomComponents/CustomComponents";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { fontWeight, letterSpacing } from "@mui/system";
 
 interface PoemMetadataProps {
 	tags: string[];

@@ -17,13 +17,14 @@ const Line: React.FC<LineProps> = ({ line }) => {
 				fontSize: "1.1rem",
 				textAlign: line.alignment || "left",
 				whiteSpace: "pre-wrap",
+				// fontFamily: "Lora",
 			}}
 		>
 			{line.children.map((textNode: PoemCustomText, index: number) => (
 				<span
 					key={index}
 					style={{
-						fontWeight: textNode.bold ? "bold" : "normal",
+						fontWeight: textNode.bold ? "600" : "100",
 						fontStyle: textNode.italic ? "italic" : "normal",
 						textDecoration: textNode.underline ? "underline" : "none",
 						whiteSpace: "pre-wrap",

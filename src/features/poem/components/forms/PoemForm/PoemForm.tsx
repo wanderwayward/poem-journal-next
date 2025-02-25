@@ -20,7 +20,6 @@ const PoemForm = () => {
 
 	const { user } = useUser();
 	const initialAuthor = user?.name || "Original";
-
 	const [title, setTitle] = useState("");
 	const [author, setAuthor] = useState(initialAuthor);
 	const [areTags, setAreTags] = useState(false);

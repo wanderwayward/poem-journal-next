@@ -9,7 +9,6 @@ const poiretOne = Poiret_One({
 });
 
 const lora = Lora({
-	weight: "400",
 	subsets: ["latin"],
 });
 
