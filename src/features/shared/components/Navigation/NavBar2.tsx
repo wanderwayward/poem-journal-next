@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { Grid2 as Grid, Typography, Box, useTheme } from "@mui/material";
 import { useUser } from "@/features/user/context/UserContext";
 import SearchModal from "./subcomponents/Search/Search";
@@ -11,7 +10,6 @@ import { HoverableCircle } from "../CustomComponents/CustomComponents";
 const Navbar: React.FC = () => {
 	const { user } = useUser();
 	const theme = useTheme();
-	const pathname = usePathname();
 
 	const [fill, setFill] = useState(theme.palette.error.dark);
 	const [textColor, setTextColor] = useState(
@@ -94,7 +92,7 @@ const Navbar: React.FC = () => {
 					<UserMenu user={user} theme={theme} />
 				</Box>
 			</Grid>
-			{pathname === "/" ? <SearchModal /> : null}
+			<SearchModal />
 		</Grid>
 	) : null;
 };

@@ -59,8 +59,7 @@ const Poem: React.FC<PoemProps> = ({ poemData }) => {
 					textAlign: "right",
 				}}
 			>
-				{poemData.type === "Original" ? poemData.type : null} by{" "}
-				{poemData.author}
+				by {poemData.author}
 			</Typography>
 		</Paper>
 	) : null;

@@ -1,8 +1,7 @@
+
 ```
 poem-journal-next
 ├─ .eslintrc.json
-├─ .git
-├─ .gitignore
 ├─ a.html
 ├─ global.d.ts
 ├─ next.config.mjs
@@ -10,9 +9,8 @@ poem-journal-next
 ├─ parsedTestPoem.ts
 ├─ public
 │  ├─ background.jpg
-│  ├─ Master_Tree2.svg
-│  ├─ next.svg
-│  └─ vercel.svg
+│  ├─ Horizontal_Tree.svg
+│  └─ Vertical_Tree.svg
 ├─ README.md
 ├─ src
 │  ├─ app
@@ -39,7 +37,6 @@ poem-journal-next
 │  │  ├─ globals.css
 │  │  ├─ layout.tsx
 │  │  ├─ layoutMetadata.ts
-│  │  ├─ page.module.css
 │  │  ├─ page.tsx
 │  │  ├─ poem
 │  │  │  ├─ upload
@@ -60,8 +57,6 @@ poem-journal-next
 │     ├─ auth
 │     │  ├─ Auth.tsx
 │     │  └─ components
-│     │     ├─ Error
-│     │     │  └─ Error.tsx
 │     │     ├─ SignIn
 │     │     │  └─ SignIn.tsx
 │     │     └─ SignUp
@@ -94,6 +89,9 @@ poem-journal-next
 │     │  │  │  └─ Stanza
 │     │  │  │     └─ Stanza.tsx
 │     │  │  ├─ forms
+│     │  │  │  ├─ components
+│     │  │  │  │  ├─ poemDetails.tsx
+│     │  │  │  │  └─ poemMetadata.tsx
 │     │  │  │  ├─ PoemEditForm
 │     │  │  │  │  └─ PoemEditForm.tsx
 │     │  │  │  └─ PoemForm
@@ -109,7 +107,20 @@ poem-journal-next
 │     │  │  ├─ CustomComponents
 │     │  │  │  └─ CustomComponents.tsx
 │     │  │  ├─ Navigation
-│     │  │  │  └─ NavBar.tsx
+│     │  │  │  ├─ NavBar.tsx
+│     │  │  │  ├─ NavBar2.tsx
+│     │  │  │  └─ subcomponents
+│     │  │  │     ├─ Search
+│     │  │  │     │  ├─ Search.tsx
+│     │  │  │     │  ├─ SearchBar
+│     │  │  │     │  │  └─ SearchBar.tsx
+│     │  │  │     │  └─ SearchResults
+│     │  │  │     │     └─ SearchResults.tsx
+│     │  │  │     ├─ UserMenu
+│     │  │  │     │  ├─ Menu
+│     │  │  │     │  │  └─ Menu.tsx
+│     │  │  │     │  └─ UserMenu.tsx
+│     │  │  │     └─ UserNavigation
 │     │  │  └─ ProtectedRoute
 │     │  │     └─ ProtectedRoute.tsx
 │     │  └─ utils
@@ -117,30 +128,36 @@ poem-journal-next
 │     │  ├─ components
 │     │  ├─ context
 │     │  │  └─ ThemeContext.tsx
-│     │  └─ theme
-│     │     └─ theme.ts
+│     │  ├─ theme
+│     │  │  └─ theme.ts
+│     │  └─ theme.d.ts
 │     ├─ tree-animation
 │     │  ├─ AnimationContainer.tsx
+│     │  ├─ animations
+│     │  │  ├─ hasNotPlayed.ts
+│     │  │  └─ hasPlayed.ts
 │     │  ├─ components
 │     │  │  ├─ ClientProviders.tsx
 │     │  │  ├─ NavBar
-│     │  │  ├─ SpecialBox.tsx
 │     │  │  └─ TreeAnimation.tsx
 │     │  ├─ constants
 │     │  │  └─ groupSelectors.ts
 │     │  ├─ contexts
 │     │  │  └─ SeasonContext.tsx
 │     │  └─ hooks
-│     │     ├─ birdsMovementAnimation.ts
 │     │     ├─ bootAnimation
 │     │     │  ├─ birdsAnimation.ts
 │     │     │  ├─ floatingLeavesAnimation.ts
 │     │     │  ├─ flowersAnimation.ts
 │     │     │  ├─ leavesAnimation.ts
 │     │     │  ├─ snowPlopsAnimation.ts
-│     │     │  └─ trunkBranchesAnimation.ts
-│     │     ├─ loopAnimation
-│     │     └─ winterWindAnimation.ts
+│     │     │  ├─ trunkBranchesAnimation.ts
+│     │     │  └─ winterWindAnimation.ts
+│     │     └─ loopAnimation
+│     │        ├─ birdsMovementAnimation.ts
+│     │        ├─ flowerTwirlPopRandomAnimation.ts
+│     │        ├─ loopingAutumnLeavesAnimation.ts
+│     │        └─ persistentWinterWindAnimation.ts
 │     └─ user
 │        ├─ components
 │        │  ├─ Poem-Title-Card
@@ -148,6 +165,8 @@ poem-journal-next
 │        │  ├─ Poem-XL-Card
 │        │  ├─ Poems-List
 │        │  │  └─ PoemsList.tsx
+│        │  ├─ StatusBar
+│        │  │  └─ StatusBar.tsx
 │        │  ├─ User-Top-Hub
 │        │  │  └─ UserTopHub.tsx
 │        │  └─ User.tsx

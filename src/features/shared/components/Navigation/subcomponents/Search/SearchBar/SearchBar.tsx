@@ -3,7 +3,8 @@ import { useTheme, Box, Typography } from "@mui/material";
 import { SearchField } from "@/features/shared/components/CustomComponents/CustomComponents";
 
 interface SearchBarProps {
-	isFocused?: boolean;
+	isFocused: boolean;
+	handleSearch: (e: string) => void;
 }
 
 const placeholders = [
@@ -14,10 +15,11 @@ const placeholders = [
 	"Uncover hidden gems...",
 ];
 
-const SearchBar = ({ isFocused = false }: SearchBarProps) => {
+const SearchBar = ({ isFocused = false, handleSearch }: SearchBarProps) => {
 	const [displayText, setDisplayText] = useState("");
 	const [placeholderIndex, setPlaceholderIndex] = useState(0);
 	const [isDeleting, setIsDeleting] = useState(false);
+	const [query, setQuery] = useState("");
 	const theme = useTheme();
 
 	useEffect(() => {
@@ -46,12 +48,17 @@ const SearchBar = ({ isFocused = false }: SearchBarProps) => {
 						setPlaceholderIndex((prev) => (prev + 1) % placeholders.length);
 					}
 				}
-			}, 100); // Speed of animation
+			}, 50);
 		};
 
 		typeText();
 		return () => clearInterval(interval);
 	}, [displayText, isDeleting, placeholderIndex]);
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setQuery(e.target.value);
+		handleSearch(e.target.value); // Call the search function on each change
+	};
 
 	return (
 		<Box
@@ -68,6 +75,7 @@ const SearchBar = ({ isFocused = false }: SearchBarProps) => {
 				theme={theme}
 				expanded={isFocused}
 				autoComplete="off"
+				onChange={handleChange} // Call handleChange on each keystroke
 			/>
 			{isFocused && (
 				<Typography

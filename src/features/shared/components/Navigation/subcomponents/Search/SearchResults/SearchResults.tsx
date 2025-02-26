@@ -6,12 +6,14 @@ import {
 	ListItemText,
 	Typography,
 } from "@mui/material";
+import { PoemType } from "@/features/poem/poemTypes";
 
 interface SearchResultsProps {
 	isSearchOpen: boolean;
+	searchResults: PoemType[];
 }
 
-const SearchResults = ({ isSearchOpen }: SearchResultsProps) => {
+const SearchResults = ({ isSearchOpen, searchResults }: SearchResultsProps) => {
 	if (!isSearchOpen) return null;
 
 	return (
@@ -22,21 +24,11 @@ const SearchResults = ({ isSearchOpen }: SearchResultsProps) => {
 			}}
 		>
 			<List>
-				<ListItemButton>
-					<ListItemText primary="Result 1" />
-				</ListItemButton>
-				<ListItemButton>
-					<ListItemText primary="Result 2" />
-				</ListItemButton>
-				<ListItemButton>
-					<ListItemText primary="Result 3" />
-				</ListItemButton>
-				<ListItemButton>
-					<ListItemText primary="Result 3" />
-				</ListItemButton>
-				<ListItemButton>
-					<ListItemText primary="Result 3" />
-				</ListItemButton>
+				{searchResults.map((result) => (
+					<ListItemButton key={result._id || result.title + result.author}>
+						<ListItemText primary={`${result.title} by ${result.author}`} />
+					</ListItemButton>
+				))}
 			</List>
 			<Box>
 				<Typography

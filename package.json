@@ -18,6 +18,7 @@
     "@types/mongodb": "^4.0.7",
     "@types/next-auth": "^3.15.0",
     "gsap": "^3.12.5",
+    "lodash": "^4.17.21",
     "mongodb": "^6.7.0",
     "next": "15.1.0",
     "next-auth": "^4.24.7",
@@ -33,6 +34,7 @@
     "uuid": "^11.0.3"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.15",
     "@types/node": "^22.10.2",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.2",
