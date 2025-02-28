@@ -30,7 +30,7 @@ const PoemForm = () => {
 	const { updatePoems } = useUserPoems();
 
 	const handleSave = async (event: FormEvent, publish: boolean) => {
-		event.preventDefault(); // Prevent default form submission
+		event.preventDefault();
 
 		const parsedContent = parseContentToStanzas(content);
 
@@ -44,6 +44,11 @@ const PoemForm = () => {
 			username: user?.name,
 			comment,
 			public: isPublic,
+			stanzaCount: parsedContent.length,
+			lineCount: parsedContent.reduce(
+				(total, stanza) => total + stanza.children.length,
+				0
+			),
 		};
 
 		console.log("Saving poem:", poem);

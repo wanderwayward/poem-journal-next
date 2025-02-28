@@ -22,6 +22,7 @@ const SearchBar = ({ isFocused = false, handleSearch }: SearchBarProps) => {
 	const [query, setQuery] = useState("");
 	const theme = useTheme();
 
+	// search display text animation
 	useEffect(() => {
 		let interval: NodeJS.Timeout;
 		const typeText = () => {
@@ -57,7 +58,7 @@ const SearchBar = ({ isFocused = false, handleSearch }: SearchBarProps) => {
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setQuery(e.target.value);
-		handleSearch(e.target.value); // Call the search function on each change
+		handleSearch(e.target.value);
 	};
 
 	return (
@@ -75,7 +76,7 @@ const SearchBar = ({ isFocused = false, handleSearch }: SearchBarProps) => {
 				theme={theme}
 				expanded={isFocused}
 				autoComplete="off"
-				onChange={handleChange} // Call handleChange on each keystroke
+				onChange={handleChange}
 			/>
 			{isFocused && (
 				<Typography

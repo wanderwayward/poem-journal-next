@@ -29,4 +29,6 @@ export interface PoemType {
 	comment: string;
 	public: boolean; // Indicates if the poem is public
 	status: "Draft" | "Published"; // User-specific status
+	lineCount: number; // New: total count of non-empty lines
+	stanzaCount: number; // New: total count of stanzas
 }
