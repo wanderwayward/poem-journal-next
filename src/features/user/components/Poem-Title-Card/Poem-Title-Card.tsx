@@ -12,8 +12,8 @@ import { PoemType } from "@/features/poem/poemTypes";
 
 interface PoemTitleCardProps {
 	poem: PoemType;
-	handleDelete: () => void;
-	handleEdit: () => void;
+	handleDelete?: () => void;
+	handleEdit?: () => void;
 }
 
 const PoemTitleCard: React.FC<PoemTitleCardProps> = ({
@@ -27,7 +27,7 @@ const PoemTitleCard: React.FC<PoemTitleCardProps> = ({
 	const styles = {
 		card: {
 			width: { xs: "250px", sm: "280px", md: "300px" },
-			height: "100px",
+			height: "80px",
 			padding: 2,
 			backgroundColor:
 				theme.palette.mode === "light" ? "secondary.main" : "error.dark",
@@ -54,12 +54,7 @@ const PoemTitleCard: React.FC<PoemTitleCardProps> = ({
 			overflow: "hidden",
 			textOverflow: "ellipsis",
 		},
-		statusTypography: {
-			margin: 0,
-			paddingTop: "1px",
-			paddingBottom: "2px",
-			color: theme.palette.text.secondary,
-		},
+
 		actionsGrid: {
 			gap: 2,
 			display: "flex",
@@ -92,35 +87,34 @@ const PoemTitleCard: React.FC<PoemTitleCardProps> = ({
 								? poem.username
 								: poem.author || "Unknown"}
 						</Typography>
-						<Typography variant="body2" sx={styles.statusTypography}>
-							{poem.status}
-						</Typography>
 					</Link>
 				</Grid>
 
 				{/* Right Section: Actions */}
-				<Grid size={{ xs: 3 }} sx={styles.actionsGrid}>
-					<IconButton
-						onClick={(e) => {
-							e.stopPropagation();
-							handleEdit();
-						}}
-						size="small"
-						sx={styles.iconButton}
-					>
-						<Edit fontSize="small" />
-					</IconButton>
-					<IconButton
-						onClick={(e) => {
-							e.stopPropagation();
-							handleDelete();
-						}}
-						size="small"
-						sx={styles.iconButton}
-					>
-						<Delete fontSize="small" />
-					</IconButton>
-				</Grid>
+				{handleDelete && handleEdit && (
+					<Grid size={{ xs: 3 }} sx={styles.actionsGrid}>
+						<IconButton
+							onClick={(e) => {
+								e.stopPropagation();
+								handleEdit();
+							}}
+							size="small"
+							sx={styles.iconButton}
+						>
+							<Edit fontSize="small" />
+						</IconButton>
+						<IconButton
+							onClick={(e) => {
+								e.stopPropagation();
+								handleDelete();
+							}}
+							size="small"
+							sx={styles.iconButton}
+						>
+							<Delete fontSize="small" />
+						</IconButton>
+					</Grid>
+				)}
 			</Grid>
 		</Card>
 	);

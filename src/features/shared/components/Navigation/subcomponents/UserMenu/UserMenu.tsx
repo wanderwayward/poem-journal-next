@@ -1,15 +1,5 @@
 import React, { useRef, useState } from "react";
-import {
-	Paper,
-	Box,
-	Avatar,
-	List,
-	ListItemButton,
-	ListItemText,
-	alpha,
-	Theme,
-	Button,
-} from "@mui/material";
+import { Box, Avatar, Theme } from "@mui/material";
 import { User } from "next-auth";
 import Menu from "./Menu/Menu";
 

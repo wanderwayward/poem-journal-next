@@ -7,6 +7,7 @@ import {
 	Typography,
 } from "@mui/material";
 import { PoemType } from "@/features/poem/poemTypes";
+import PoemTitleCard from "@/features/user/components/Poem-Title-Card/Poem-Title-Card";
 
 interface SearchResultsProps {
 	isSearchOpen: boolean;
@@ -23,13 +24,10 @@ const SearchResults = ({ isSearchOpen, searchResults }: SearchResultsProps) => {
 				p: 1, // Padding for spacing
 			}}
 		>
-			<List>
-				{searchResults.map((result) => (
-					<ListItemButton key={result._id || result.title + result.author}>
-						<ListItemText primary={`${result.title} by ${result.author}`} />
-					</ListItemButton>
-				))}
-			</List>
+			{searchResults.map((result) => (
+				<PoemTitleCard key={result._id} poem={result} />
+			))}
+
 			<Box>
 				<Typography
 					variant="body2"

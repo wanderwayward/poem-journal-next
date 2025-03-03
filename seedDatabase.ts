@@ -1,7 +1,7 @@
-// import dotenv from "dotenv";
-// dotenv.config({ path: "./.env.local" }); // Explicitly load .env.local
-
+import dotenv from "dotenv";
+dotenv.config(); // Load .env variables
 import fs from "fs-extra";
+import { ObjectId } from "mongodb";
 import clientPromise from "@/app/_utils/mongodb";
 
 console.log("MongoDB URI (from env):", process.env.MONGODB_URI); // Debug check
@@ -24,13 +24,26 @@ const uploadPoems = async () => {
 
 		// Read JSON file
 		console.log("📂 Reading ConvertedPoems.json...");
-		const poems = await fs.readJson(FILE_PATH);
+		let poems = await fs.readJson(FILE_PATH);
 
-		// Insert all poems in one go
+		// ✅ Add `_id` as a MongoDB ObjectId to each poem before inserting
+		poems = poems.map((poem: any) => ({
+			_id: new ObjectId(), // Generate a fresh MongoDB `_id`
+			...poem,
+		}));
+
+		// Insert all poems
 		console.log(`📤 Inserting ${poems.length} poems into MongoDB...`);
-		await collection.insertMany(poems);
+		const result = await collection.insertMany(poems);
 
-		console.log("✅ Successfully uploaded poems!");
+		console.log(`✅ Successfully uploaded ${result.insertedCount} poems!`);
+
+		// ✅ Log a few inserted `_id`s to confirm
+		const samplePoems = await collection.find().limit(5).toArray();
+		console.log(
+			"🔍 Sample Inserted Poems:",
+			samplePoems.map((p) => ({ _id: p._id, title: p.title }))
+		);
 	} catch (error) {
 		console.error("❌ Error uploading poems:", error);
 		process.exit(1);
