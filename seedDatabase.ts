@@ -1,5 +1,5 @@
-import dotenv from "dotenv";
-dotenv.config(); // Load .env variables
+// import dotenv from "dotenv";
+// dotenv.config(); // Load .env variables
 import fs from "fs-extra";
 import { ObjectId } from "mongodb";
 import clientPromise from "@/app/_utils/mongodb";
