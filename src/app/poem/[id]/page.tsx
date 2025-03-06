@@ -15,6 +15,7 @@ import {
 	alpha,
 } from "@mui/material";
 import { useUser } from "@/features/user/context/UserContext";
+import PoemColumns from "@/features/poem/components/views/poemColumns";
 
 const PoemPage = () => {
 	const params = useParams();
@@ -93,7 +94,7 @@ const PoemPage = () => {
 	}
 
 	return poemData ? (
-		<Container maxWidth="sm">
+		<Container maxWidth={poemData.lineCount > 20 ? "lg" : "sm"}>
 			<Paper
 				elevation={3}
 				sx={{
@@ -104,7 +105,10 @@ const PoemPage = () => {
 					margin: "0 auto",
 				}}
 			>
-				<Poem poemData={poemData} />
+				{poemData.lineCount > 20 && <PoemColumns poemData={poemData} />}
+				{poemData.lineCount <= 20 && <Poem poemData={poemData} />}
+
+				{/* <Poem poemData={poemData} /> */}
 				{poemData.tags && poemData.tags.length > 0 && (
 					<Box
 						sx={{

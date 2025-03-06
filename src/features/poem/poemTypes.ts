@@ -24,11 +24,11 @@ export interface PoemType {
 	author: string;
 	tags: string[];
 	stanzas: PoemStanzaType[];
-	userId: string; // The original creator's ID for original poems
-	username: string; // The original creator's name for original poems
+	userId: string;
+	username: string;
 	comment: string;
-	public: boolean; // Indicates if the poem is public
-	status: "Draft" | "Published"; // User-specific status
-	lineCount: number; // New: total count of non-empty lines
-	stanzaCount: number; // New: total count of stanzas
+	public: boolean;
+	status: "Draft" | "Published";
+	lineCount: number;
+	stanzaCount: number;
 }
