@@ -25,25 +25,33 @@ const PoemColumns: React.FC<PoemProps> = ({ poemData }) => {
 		let currentPage: PoemStanzaType[] = [];
 		let currentLineCount = 0;
 
+		// Special handling for first page
+		let firstPage = true;
+		let maxLines = 18; // First page limit is lower due to title and author
+
 		for (const stanza of stanzas) {
 			const stanzaLineCount = stanza.children.length;
 
-			// If adding this stanza pushes past 18 lines...
-			if (currentLineCount + stanzaLineCount > 18) {
-				// If the current page has at least 16 lines, finalize it
-				if (currentLineCount >= 16) {
+			// If adding this stanza would exceed the max limit for this page...
+			if (currentLineCount + stanzaLineCount > maxLines) {
+				// If the current page has at least the min allowed lines, finalize it
+				if (currentLineCount >= (firstPage ? 13 : 15)) {
 					pages.push(currentPage);
 					currentPage = [];
 					currentLineCount = 0;
+
+					// After first page, use normal max of 20 lines
+					firstPage = false;
+					maxLines = 20;
 				}
 
-				// Handle oversized stanza (if it doesn't fit cleanly)
+				// Handle oversized stanza that doesn't fit cleanly
 				let remainingLines = stanza.children;
 				let splitPart = 1;
 
 				while (remainingLines.length > 0) {
-					// Take the next chunk of lines (but ensure we don’t go under 13)
-					const availableSpace = 18 - currentLineCount;
+					// Take the next chunk of lines (adjust for first-page rules)
+					const availableSpace = maxLines - currentLineCount;
 					const chunkSize = Math.min(remainingLines.length, availableSpace);
 					const splitChunk = remainingLines.slice(0, chunkSize);
 					remainingLines = remainingLines.slice(chunkSize);
@@ -59,13 +67,17 @@ const PoemColumns: React.FC<PoemProps> = ({ poemData }) => {
 					currentLineCount += chunkSize;
 
 					// If we've filled this page, start a new one
-					if (currentLineCount >= 16) {
+					if (currentLineCount >= (firstPage ? 13 : 15)) {
 						pages.push(currentPage);
 						currentPage = [];
 						currentLineCount = 0;
+
+						// After first page, max lines become 20
+						firstPage = false;
+						maxLines = 20;
 					}
 
-					splitPart++; // Increment split part for tracking
+					splitPart++; // Track split parts
 				}
 			} else {
 				// If it fits, just add the stanza normally
@@ -74,27 +86,14 @@ const PoemColumns: React.FC<PoemProps> = ({ poemData }) => {
 			}
 		}
 
-		// Adjust last page if it’s too small (below 15 lines)
-		if (pages.length > 1 && currentPage.length > 0 && currentLineCount < 13) {
-			const prevPage = pages[pages.length - 1];
-
-			// Move lines from the previous page to balance out
-			while (prevPage.length > 1 && currentLineCount < 13) {
-				const lastStanza = prevPage.pop();
-				if (lastStanza) {
-					currentPage.unshift(lastStanza);
-					currentLineCount += lastStanza.children.length;
-				}
-			}
-		}
-
-		// Push the last page if there are any remaining stanzas
+		// Push the last page, regardless of size (it can be smaller than 15)
 		if (currentPage.length > 0) {
 			pages.push(currentPage);
 		}
 
 		return pages;
 	};
+
 	const [splitPages, setSplitPages] = useState(() =>
 		splitPoemIntoPages(poemData)
 	);
@@ -102,6 +101,8 @@ const PoemColumns: React.FC<PoemProps> = ({ poemData }) => {
 	useEffect(() => {
 		setSplitPages(splitPoemIntoPages(poemData));
 	}, [poemData]);
+
+	const [currentPages, setCurrentPages] = useState([0, 1]);
 
 	return poemData ? (
 		<Box sx={{ display: "flex", flexDirection: "row", gap: "1em" }}>
@@ -117,43 +118,47 @@ const PoemColumns: React.FC<PoemProps> = ({ poemData }) => {
 					textAlign: "center",
 					maxWidth: "100%",
 					margin: "0 auto",
-					backgroundBlendMode: "multiply", //  controls how color & gradient blend. Multiply looks nice, but there's also screen, overlay, darken, lighten, color-dodge, color-burn, hard-light, soft-light, difference, exclusion, hue, saturation, color, and luminosity.  I've tried most of them and multiply looks the best.
+					backgroundBlendMode: "multiply",
 				}}
 			>
-				<Typography
-					variant="h4"
-					sx={{
-						color: theme.palette.primary.contrastText,
-						wordWrap: "break-word",
-						overflowWrap: "break-word",
-						width: "100%",
-						textAlign: "left",
-						display: "flex",
-						justifyContent: "start",
-						pl: ".2em",
-						fontWeight: "bold",
-					}}
-				>
-					{poemData.title}
-				</Typography>
+				<Box>
+					<Typography
+						variant="h4"
+						sx={{
+							color: theme.palette.primary.contrastText,
+							wordWrap: "break-word",
+							overflowWrap: "break-word",
+							width: "100%",
+							textAlign: "left",
+							display: "flex",
+							justifyContent: "start",
+							pl: ".2em",
+							fontWeight: "bold",
+						}}
+					>
+						{poemData.title}
+					</Typography>
+					<Typography
+						variant="body2"
+						color="contrastText"
+						sx={{
+							pl: "2em",
+							lineHeight: "1em",
+							fontSize: ".8em",
+							fontWeight: "bold",
+							width: "100%",
+							textAlign: "left",
+						}}
+					>
+						by {poemData.author}
+					</Typography>
+				</Box>
 
 				<Container sx={{ py: "1em", pl: ".7em" }} disableGutters>
 					{splitPages[0].map((stanza) => (
 						<Stanza key={stanza.id} stanza={stanza} />
 					))}
 				</Container>
-				<Typography
-					variant="body2"
-					color="contrastText"
-					sx={{
-						fontSize: ".8em",
-						fontWeight: "bold",
-						width: "100%",
-						textAlign: "right",
-					}}
-				>
-					by {poemData.author}
-				</Typography>
 			</Paper>
 			<Paper
 				elevation={3}
