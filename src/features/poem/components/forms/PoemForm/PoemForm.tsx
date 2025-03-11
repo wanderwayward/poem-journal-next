@@ -49,6 +49,7 @@ const PoemForm = () => {
 				(total, stanza) => total + stanza.children.length,
 				0
 			),
+			pageCount: 0, //initialising as zero, actual value will be calculated in the backend and updated before sending to mongodb
 		};
 
 		console.log("Saving poem:", poem);

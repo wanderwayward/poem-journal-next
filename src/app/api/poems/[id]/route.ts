@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/app/_utils/mongodb";
 import { ObjectId } from "mongodb";
+import { splitPoemIntoPages } from "@/features/poem/utils/splitPoemIntoPages";
 
 export async function GET(req: Request) {
 	try {
@@ -69,6 +70,7 @@ export async function PUT(req: Request) {
 				{ status: 403 }
 			);
 		}
+		body.pageCount = splitPoemIntoPages(body.stanzas, true);
 
 		const result = await poemsCollection.updateOne(
 			{ _id: new ObjectId(id) },

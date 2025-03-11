@@ -31,4 +31,5 @@ export interface PoemType {
 	status: "Draft" | "Published";
 	lineCount: number;
 	stanzaCount: number;
+	pageCount: number;
 }
