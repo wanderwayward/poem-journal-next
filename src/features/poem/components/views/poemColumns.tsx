@@ -102,8 +102,6 @@ const PoemColumns: React.FC<PoemProps> = ({ poemData }) => {
 		setSplitPages(splitPoemIntoPages(poemData));
 	}, [poemData]);
 
-	const [currentPages, setCurrentPages] = useState([0, 1]);
-
 	return poemData ? (
 		<Box sx={{ display: "flex", flexDirection: "row", gap: "1em" }}>
 			<Paper

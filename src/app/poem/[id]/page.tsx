@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import { useUser } from "@/features/user/context/UserContext";
 import PoemColumns from "@/features/poem/components/views/poemColumns";
+import PagedPoemNavigation from "@/features/poem/components/elements/NavigationButtons/PagedPoemNavigation";
 
 const PoemPage = () => {
 	const params = useParams();
@@ -105,10 +106,18 @@ const PoemPage = () => {
 					margin: "0 auto",
 				}}
 			>
-				{poemData.lineCount > 20 && <PoemColumns poemData={poemData} />}
-				{poemData.lineCount <= 20 && <Poem poemData={poemData} />}
+				{poemData.lineCount > 20 ? (
+					poemData.pageCount > 2 ? (
+						<PagedPoemNavigation>
+							<PoemColumns poemData={poemData} />
+						</PagedPoemNavigation>
+					) : (
+						<PoemColumns poemData={poemData} />
+					)
+				) : (
+					<Poem poemData={poemData} />
+				)}
 
-				{/* <Poem poemData={poemData} /> */}
 				{poemData.tags && poemData.tags.length > 0 && (
 					<Box
 						sx={{
