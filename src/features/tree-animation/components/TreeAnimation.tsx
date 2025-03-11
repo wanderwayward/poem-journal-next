@@ -21,8 +21,6 @@ const TreeAnimation: FC<TreeAnimationProps> = ({ season }) => {
 	const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Adjust the breakpoint as needed
 
 	useEffect(() => {
-		console.log("starting useEffect");
-
 		const svgPath = isMobile ? "/Vertical_Tree.svg" : "/Horizontal_Tree.svg";
 
 		// Fetch the SVG file
@@ -30,15 +28,11 @@ const TreeAnimation: FC<TreeAnimationProps> = ({ season }) => {
 			fetch(svgPath)
 				.then((response) => response.text())
 				.then((svgContent) => {
-					console.log("svg has been fetched");
 					// Set the SVG content
 					if (svgContainerRef.current) {
 						svgContainerRef.current.innerHTML = svgContent;
 
-						console.log("about to check hasPlayed", hasPlayedFlag);
-
 						if (hasPlayedFlag) {
-							console.log("inside hasPlayed");
 							hasPlayed({ season, svgContainerRef });
 							return; // Ensure no further processing happens when hasPlayed is true
 						}

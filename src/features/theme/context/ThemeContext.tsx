@@ -48,13 +48,9 @@ export const ThemeContextProvider: React.FC<{ children: React.ReactNode }> = ({
 		prefersDarkMode ? "dark" : "light"
 	);
 
-	console.log("mode", mode);
-
 	// 6) Initialize season based on current date
 	const initialSeason = getSeasonFromDate(new Date());
 	const [season, setSeason] = useState<Season>(initialSeason);
-
-	console.log("season", season);
 
 	// 7) Create a theme based on mode + season
 	const theme = useMemo(
