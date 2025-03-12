@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/app/_utils/mongodb";
 import { splitPoemIntoPages } from "@/features/poem/utils/splitPoemIntoPages";
+import { calculateAverageLineLength } from "@/features/poem/utils/calculateLineLength";
 
 export async function GET() {
 	try {
@@ -42,9 +43,13 @@ export async function POST(req: Request) {
 		const { status, ...poemData } = body;
 
 		const stanzas = poemData.stanzas;
-		const pageCount = splitPoemIntoPages(stanzas, true);
+		const averageLineLength = calculateAverageLineLength(stanzas);
+		const longLines = averageLineLength > 40;
+		const pageCount = splitPoemIntoPages(stanzas, true, longLines);
 
 		poemData.pageCount = pageCount;
+		poemData.averageLineLength = averageLineLength;
+		poemData.longLines = longLines;
 
 		const result = await poemsCollection.insertOne(poemData);
 		const poemId = result.insertedId;

@@ -101,6 +101,7 @@ const PoemPage = () => {
 				sx={{
 					backgroundColor: backgroundColor,
 					padding: "20px",
+					paddingX: "0px",
 					textAlign: "center",
 					maxWidth: "100%",
 					margin: "0 auto",

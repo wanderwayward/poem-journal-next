@@ -32,4 +32,6 @@ export interface PoemType {
 	lineCount: number;
 	stanzaCount: number;
 	pageCount: number;
+	averageLineLength: number;
+	longLines: boolean;
 }

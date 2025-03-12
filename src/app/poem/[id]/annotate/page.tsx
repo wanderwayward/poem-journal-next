@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Poem from "@/features/poem/components/Poem";
-import { PoemType } from "@/features/editor/editorTypes";
+import { PoemType } from "@/features/poem/poemTypes";
 import {
 	Container,
 	CircularProgress,

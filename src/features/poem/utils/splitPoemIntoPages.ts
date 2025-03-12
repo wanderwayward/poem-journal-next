@@ -1,45 +1,49 @@
-import { PoemStanzaType, PoemType } from "../poemTypes";
+import { PoemStanzaType } from "../poemTypes";
 
 export const splitPoemIntoPages = (
 	stanzas: PoemStanzaType[],
-	returnPageCountOnly = false
+	returnPageCountOnly = false,
+	longLines = false
 ): PoemStanzaType[][] | number => {
 	const pages: PoemStanzaType[][] = [];
 	let currentPage: PoemStanzaType[] = [];
 	let currentLineCount = 0;
 
-	// Special handling for first page
+	// Adjust limits based on line length type
+	let firstPageMax = longLines ? 10 : 16;
+	let normalPageMax = longLines ? 12 : 18;
+	let minLines = { first: longLines ? 7 : 11, normal: longLines ? 9 : 13 };
+
 	let firstPage = true;
-	let maxLines = 18; // First page limit is lower due to title and author
+	let maxLines = firstPageMax;
 
 	for (const stanza of stanzas) {
 		const stanzaLineCount = stanza.children.length;
 
-		// If adding this stanza would exceed the max limit for this page...
 		if (currentLineCount + stanzaLineCount > maxLines) {
-			// If the current page has at least the min allowed lines, finalize it
-			if (currentLineCount >= (firstPage ? 13 : 15)) {
+			if (currentLineCount >= (firstPage ? minLines.first : minLines.normal)) {
 				pages.push(currentPage);
 				currentPage = [];
 				currentLineCount = 0;
-
-				// After first page, use normal max of 20 lines
 				firstPage = false;
-				maxLines = 20;
+				maxLines = normalPageMax;
 			}
 
-			// Handle oversized stanza that doesn't fit cleanly
+			if (stanzaLineCount <= maxLines) {
+				currentPage.push(stanza);
+				currentLineCount += stanzaLineCount;
+				continue;
+			}
+
 			let remainingLines = stanza.children;
 			let splitPart = 1;
 
 			while (remainingLines.length > 0) {
-				// Take the next chunk of lines (adjust for first-page rules)
 				const availableSpace = maxLines - currentLineCount;
 				const chunkSize = Math.min(remainingLines.length, availableSpace);
 				const splitChunk = remainingLines.slice(0, chunkSize);
 				remainingLines = remainingLines.slice(chunkSize);
 
-				// Create a split stanza entry
 				const splitStanza: PoemStanzaType & { splitPart?: number } = {
 					...stanza,
 					children: splitChunk,
@@ -49,31 +53,27 @@ export const splitPoemIntoPages = (
 				currentPage.push(splitStanza);
 				currentLineCount += chunkSize;
 
-				// If we've filled this page, start a new one
-				if (currentLineCount >= (firstPage ? 13 : 15)) {
+				if (
+					currentLineCount >= (firstPage ? minLines.first : minLines.normal)
+				) {
 					pages.push(currentPage);
 					currentPage = [];
 					currentLineCount = 0;
-
-					// After first page, max lines become 20
 					firstPage = false;
-					maxLines = 20;
+					maxLines = normalPageMax;
 				}
 
-				splitPart++; // Track split parts
+				splitPart++;
 			}
 		} else {
-			// If it fits, just add the stanza normally
 			currentPage.push(stanza);
 			currentLineCount += stanzaLineCount;
 		}
 	}
 
-	// Push the last page, regardless of size (it can be smaller than 15)
 	if (currentPage.length > 0) {
 		pages.push(currentPage);
 	}
 
-	// Return only the number of pages if the flag is set
 	return returnPageCountOnly ? pages.length : pages;
 };

@@ -50,6 +50,8 @@ const PoemForm = () => {
 				0
 			),
 			pageCount: 0, //initialising as zero, actual value will be calculated in the backend and updated before sending to mongodb
+			averageLineLength: 0, //initialising as zero, actual value will be calculated in the backend and updated before sending to mongodb
+			longLines: false, //initialising as false, actual value will be calculated in the backend and updated before sending to mongodb
 		};
 
 		console.log("Saving poem:", poem);

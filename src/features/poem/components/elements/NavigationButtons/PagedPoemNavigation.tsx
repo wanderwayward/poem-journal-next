@@ -1,4 +1,4 @@
-import { ArrowBack, ArrowForward } from "@mui/icons-material";
+import { NavigateBefore, NavigateNext } from "@mui/icons-material";
 import { Box } from "@mui/material";
 
 interface PagedPoemNavigationProps {
@@ -13,12 +13,12 @@ const PagedPoemNavigation: React.FC<PagedPoemNavigationProps> = ({
 			sx={{
 				display: "flex",
 				flexDirection: "row",
-				justifyContent: "space-between",
+				alignItems: "center",
 			}}
 		>
-			<ArrowBack />
+			<NavigateBefore sx={{ fontSize: "2rem" }} />
 			{children}
-			<ArrowForward />
+			<NavigateNext sx={{ fontSize: "2rem" }} />
 		</Box>
 	);
 };
