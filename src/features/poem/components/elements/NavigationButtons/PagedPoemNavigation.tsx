@@ -1,12 +1,15 @@
 import { NavigateBefore, NavigateNext } from "@mui/icons-material";
-import { Box } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
+import { MouseEventHandler } from "react";
 
 interface PagedPoemNavigationProps {
 	children: React.ReactNode;
+	handlePageChange: (direction: "left" | "right") => void;
 }
 
 const PagedPoemNavigation: React.FC<PagedPoemNavigationProps> = ({
 	children,
+	handlePageChange,
 }) => {
 	return (
 		<Box
@@ -16,9 +19,23 @@ const PagedPoemNavigation: React.FC<PagedPoemNavigationProps> = ({
 				alignItems: "center",
 			}}
 		>
-			<NavigateBefore sx={{ fontSize: "2rem" }} />
+			<IconButton
+				sx={{ fontSize: "2rem" }}
+				onClick={() => handlePageChange("left")}
+				aria-label="previous page"
+			>
+				<NavigateBefore />
+			</IconButton>
+
 			{children}
-			<NavigateNext sx={{ fontSize: "2rem" }} />
+
+			<IconButton
+				sx={{ fontSize: "2rem" }}
+				onClick={() => handlePageChange("right")}
+				aria-label="next page"
+			>
+				<NavigateNext />
+			</IconButton>
 		</Box>
 	);
 };

@@ -4,11 +4,11 @@ import fs from "fs-extra";
 import { ObjectId } from "mongodb";
 import clientPromise from "@/app/_utils/mongodb";
 
-console.log("MongoDB URI (from env):", process.env.MONGODB_URI); // Debug check
+console.log("MongoDB URI (from env):", process.env.MONGODB_URI);
 
 const DATABASE_NAME = "poetrystream";
 const COLLECTION_NAME = "poems";
-const FILE_PATH = "./ConvertedPoems.json"; // Ensure this is the correct path
+const FILE_PATH = "./ConvertedPoems.json"; // file pasted from poetry-cleanup subject to change.
 
 const uploadPoems = async () => {
 	try {
