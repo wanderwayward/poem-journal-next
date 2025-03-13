@@ -165,7 +165,11 @@ const PoemPage = () => {
 			<Paper sx={styles.paper}>
 				{poemData.lineCount > 20 ? (
 					poemData.pageCount > 2 ? (
-						<PagedPoemNavigation handlePageChange={handlePageChange}>
+						<PagedPoemNavigation
+							handlePageChange={handlePageChange}
+							currentPage={currentPage}
+							pages={pages}
+						>
 							<PoemColumns
 								pages={pages}
 								leftPage={leftPage}
