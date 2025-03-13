@@ -17,7 +17,12 @@ const Line: React.FC<LineProps> = ({ line }) => {
 				fontSize: "1.1rem",
 				textAlign: line.alignment || "left",
 				whiteSpace: "pre-wrap",
-				// fontFamily: "Lora",
+				// fontFamily: "merriweather",
+				// fontFamily: "lora",
+				fontFamily: "josefinSans",
+				// fontFamily: "raleway",
+				// fontFamily: "dmSans",
+				// fontFamily: "quattrocento",
 			}}
 		>
 			{line.children.map((textNode: PoemCustomText, index: number) => (

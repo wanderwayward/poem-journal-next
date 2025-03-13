@@ -25,7 +25,7 @@ const Navbar: React.FC = () => {
 				right: 0,
 				zIndex: 1100,
 				width: "100%",
-				padding: "8px 16px",
+				padding: "4px 8px",
 				maxHeight: "64px",
 			}}
 		>

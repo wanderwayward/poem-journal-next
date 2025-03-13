@@ -1,14 +1,48 @@
 // theme.ts
 import { ThemeOptions } from "@mui/material/styles";
 import { fontFamily } from "@mui/system";
-import { Poiret_One, Lora } from "next/font/google";
+import {
+	Poiret_One,
+	Lora,
+	Merriweather,
+	Raleway,
+	Josefin_Sans,
+	DM_Sans,
+	Quattrocento,
+} from "next/font/google";
 
 const poiretOne = Poiret_One({
-	weight: "400",
+	weight: ["400"], // Only has one weight
 	subsets: ["latin"],
 });
 
 const lora = Lora({
+	weight: ["400", "500", "600", "700"], // Includes all available weights
+	subsets: ["latin"],
+});
+
+const merriweather = Merriweather({
+	weight: ["300", "400", "700", "900"],
+	subsets: ["latin"], // Required to fix the preload error
+});
+
+const raleway = Raleway({
+	weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], // All weights
+	subsets: ["latin"],
+});
+
+const josefinSans = Josefin_Sans({
+	weight: ["100", "200", "300", "400", "500", "600", "700"], // All weights
+	subsets: ["latin"],
+});
+
+const dmSans = DM_Sans({
+	weight: ["400", "500", "700"], // All weights
+	subsets: ["latin"],
+});
+
+const quattrocento = Quattrocento({
+	weight: ["400", "700"], // All available weights
 	subsets: ["latin"],
 });
 
@@ -82,7 +116,6 @@ export const getDesignTokens = (
 		},
 		divider: "rgba(38,70,83,0.12)",
 	};
-
 	const springDark = {
 		primary: {
 			light: "#A1A69E",
@@ -137,7 +170,6 @@ export const getDesignTokens = (
 		},
 		divider: "rgba(233,236,245,0.12)",
 	};
-
 	// ------------------------------
 	// 2) Summer Palettes (placeholder)
 	// ------------------------------
@@ -158,7 +190,6 @@ export const getDesignTokens = (
 		// ... error, warning, info, success, etc.
 		// Just placeholders, can copy from spring or define your own
 	};
-
 	const summerDark = {
 		// Copy or customize as needed
 		primary: {
@@ -175,7 +206,6 @@ export const getDesignTokens = (
 		},
 		// ... placeholders
 	};
-
 	// ------------------------------
 	// 3) Autumn Palettes (placeholder)
 	// ------------------------------
@@ -188,7 +218,6 @@ export const getDesignTokens = (
 		},
 		// ... placeholders for secondary, error, etc.
 	};
-
 	const autumnDark = {
 		primary: {
 			light: "#d0856b",
@@ -198,7 +227,6 @@ export const getDesignTokens = (
 		},
 		// ... placeholders
 	};
-
 	// ------------------------------
 	// 4) Winter Palettes (placeholder)
 	// ------------------------------
@@ -211,7 +239,6 @@ export const getDesignTokens = (
 		},
 		// ... placeholders
 	};
-
 	const winterDark = {
 		primary: {
 			light: "#6591a2",
@@ -265,7 +292,7 @@ export const getDesignTokens = (
 			},
 		},
 		typography: {
-			fontFamily: `${poiretOne.style.fontFamily}, sans-serif`,
+			fontFamily: `${poiretOne.style.fontFamily}, sans-serif ${lora.style.fontFamily}, serif ${merriweather.style.fontFamily}, serif ${raleway.style.fontFamily}, sans-serif ${josefinSans.style.fontFamily}, sans-serif ${dmSans.style.fontFamily}, sans-serif ${quattrocento.style.fontFamily}, serif`,
 		},
 		components: {
 			MuiInputBase: {

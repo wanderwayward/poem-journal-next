@@ -175,6 +175,7 @@ const PoemPage = () => {
 								leftPage={leftPage}
 								rightPage={rightPage}
 								poemData={poemData}
+								currentPage={currentPage}
 							/>
 						</PagedPoemNavigation>
 					) : (
@@ -183,6 +184,7 @@ const PoemPage = () => {
 							leftPage={leftPage}
 							rightPage={rightPage}
 							poemData={poemData}
+							currentPage={currentPage}
 						/>
 					)
 				) : (
