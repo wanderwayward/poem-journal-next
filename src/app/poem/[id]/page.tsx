@@ -30,17 +30,13 @@ const PoemPage = () => {
 	const [error, setError] = useState<string | null>(null);
 	const [pages, setPages] = useState<PoemStanzaType[][]>([]);
 	const [currentPage, setCurrentPage] = useState<number>(0);
-	const leftPage = pages[currentPage];
-	const rightPage = pages[currentPage + 1];
 
 	const handlePageChange = (direction: "left" | "right") => {
 		setCurrentPage(
-			(
-				prev // This is a function that takes the previous state as an argument and returns the new state
-			) =>
-				direction === "left" // If the direction is left
-					? Math.max(0, prev - 1) // Since we are going left we need to subtract 1 from the previous page number, but we don't want to go past the first page, so we use Math.max to compare the previous page number to 0.
-					: Math.min(pages.length - 2, prev + 1) // If the direction is right, we add 1 to the previous page number, but we don't want to go past the last page so we use Math.min to compare the previous page number to the last page number.
+			(prev) =>
+				direction === "left"
+					? Math.max(0, prev - 1) // Prevents going before page 0
+					: Math.min(pages.length - 2, prev + 1) // Prevents going past last full spread
 		);
 	};
 
@@ -172,8 +168,6 @@ const PoemPage = () => {
 						>
 							<PoemColumns
 								pages={pages}
-								leftPage={leftPage}
-								rightPage={rightPage}
 								poemData={poemData}
 								currentPage={currentPage}
 							/>
@@ -181,8 +175,6 @@ const PoemPage = () => {
 					) : (
 						<PoemColumns
 							pages={pages}
-							leftPage={leftPage}
-							rightPage={rightPage}
 							poemData={poemData}
 							currentPage={currentPage}
 						/>

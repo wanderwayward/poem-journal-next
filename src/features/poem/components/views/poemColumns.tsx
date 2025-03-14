@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import {
 	Box,
 	Container,
@@ -8,25 +7,15 @@ import {
 	alpha,
 } from "@mui/material";
 import Stanza from "../elements/Stanza/Stanza";
-import { PoemType } from "@/features/poem/poemTypes";
-import { PoemStanzaType } from "@/features/poem/poemTypes";
-import { margin } from "@mui/system";
+import { PoemType, PoemStanzaType } from "@/features/poem/poemTypes";
 
 interface PoemProps {
 	poemData: PoemType;
 	pages: PoemStanzaType[][];
-	leftPage: PoemStanzaType[];
-	rightPage: PoemStanzaType[];
 	currentPage: number;
 }
 
-const PoemColumns: React.FC<PoemProps> = ({
-	pages,
-	poemData,
-	leftPage,
-	rightPage,
-	currentPage,
-}) => {
+const PoemColumns: React.FC<PoemProps> = ({ pages, poemData, currentPage }) => {
 	const { title, author } = poemData;
 	const theme = useTheme();
 	const backgroundColor = alpha(theme.palette.secondary.dark, 0.97);
@@ -88,10 +77,13 @@ const PoemColumns: React.FC<PoemProps> = ({
 		},
 	};
 
+	const leftPage = pages[currentPage] || [];
+	const rightPage = pages[currentPage + 1] || [];
+
 	return poemData ? (
 		<Box sx={styles.container}>
 			<Paper elevation={3} sx={styles.paper}>
-				{leftPage == pages[0] ? (
+				{currentPage === 0 ? (
 					<Box>
 						<Typography variant="h4" sx={styles.title}>
 							{title}
