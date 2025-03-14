@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import Stanza from "../elements/Stanza/Stanza";
 import { PoemType, PoemStanzaType } from "@/features/poem/poemTypes";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface PoemProps {
 	poemData: PoemType;
@@ -37,6 +38,8 @@ const PoemColumns: React.FC<PoemProps> = ({ pages, poemData, currentPage }) => {
 			width: "440px",
 			backgroundBlendMode: "multiply",
 			margin: "0 auto",
+			transform: "translateY(5px) scale(0.98)", // ✅ Makes the next/prev pages slightly lower and smaller
+			opacity: 0.8, // ✅ Slight transparency for stacked effect
 		},
 		title: {
 			color: theme.palette.primary.contrastText,
@@ -79,40 +82,86 @@ const PoemColumns: React.FC<PoemProps> = ({ pages, poemData, currentPage }) => {
 
 	const leftPage = pages[currentPage] || [];
 	const rightPage = pages[currentPage + 1] || [];
+	const prevPage = pages[currentPage - 1] || null; // ✅ Keep track of previous
+	const nextPage = pages[currentPage + 2] || null; // ✅ Keep track of next
+
+	const pageVariants = {
+		initial: (direction: number) => ({
+			x: direction > 0 ? "50%" : "-50%", // ✅ Page starts slightly offset but still visible
+			opacity: 0.9, // ✅ Slight fade-in, but NOT from offscreen
+		}),
+		animate: {
+			x: "0%",
+			opacity: 1,
+			transition: { duration: 0.4, ease: "easeInOut" },
+		},
+		exit: (direction: number) => ({
+			x: direction > 0 ? "-50%" : "50%", // ✅ Page moves slightly away but doesn’t disappear offscreen
+			opacity: 0.9,
+			transition: { duration: 0.4, ease: "easeInOut" },
+		}),
+	};
 
 	return poemData ? (
 		<Box sx={styles.container}>
-			<Paper elevation={3} sx={styles.paper}>
-				{currentPage === 0 ? (
-					<Box>
-						<Typography variant="h4" sx={styles.title}>
-							{title}
-						</Typography>
-						<Typography variant="body2" color="contrastText" sx={styles.author}>
-							by {author}
-						</Typography>
-					</Box>
-				) : null}
+			<AnimatePresence mode="popLayout" custom={currentPage}>
+				<motion.div
+					key={`left-${currentPage}`}
+					custom={1}
+					initial="initial"
+					animate="animate"
+					exit="exit"
+					variants={pageVariants}
+				>
+					<Paper elevation={3} sx={styles.paper}>
+						{currentPage === 0 ? (
+							<Box>
+								<Typography variant="h4" sx={styles.title}>
+									{title}
+								</Typography>
+								<Typography
+									variant="body2"
+									color="contrastText"
+									sx={styles.author}
+								>
+									by {author}
+								</Typography>
+							</Box>
+						) : null}
 
-				<Container sx={styles.stanzaContainer} disableGutters>
-					{leftPage?.map((stanza) => (
-						<Stanza key={stanza.id} stanza={stanza} />
-					))}
-				</Container>
-				<Box sx={styles.pageIndicatorLeft}>
-					{currentPage + 1}/{pages.length}
-				</Box>
-			</Paper>
-			<Paper elevation={3} sx={styles.paper}>
-				<Container sx={styles.stanzaContainer} disableGutters>
-					{rightPage?.map((stanza) => (
-						<Stanza key={stanza.id} stanza={stanza} />
-					))}
-				</Container>
-				<Box sx={styles.pageIndicatorRight}>
-					{currentPage + 2}/{pages.length}
-				</Box>
-			</Paper>
+						<Container sx={styles.stanzaContainer} disableGutters>
+							{leftPage?.map((stanza) => (
+								<Stanza key={stanza.id} stanza={stanza} />
+							))}
+						</Container>
+						<Box sx={styles.pageIndicatorLeft}>
+							{currentPage + 1}/{pages.length}
+						</Box>
+					</Paper>
+				</motion.div>
+			</AnimatePresence>
+
+			<AnimatePresence mode="popLayout" custom={currentPage}>
+				<motion.div
+					key={`right-${currentPage}`}
+					custom={-1} // Leftward movement
+					initial="initial"
+					animate="animate"
+					exit="exit"
+					variants={pageVariants}
+				>
+					<Paper elevation={3} sx={styles.paper}>
+						<Container sx={styles.stanzaContainer} disableGutters>
+							{rightPage?.map((stanza) => (
+								<Stanza key={stanza.id} stanza={stanza} />
+							))}
+						</Container>
+						<Box sx={styles.pageIndicatorRight}>
+							{currentPage + 2}/{pages.length}
+						</Box>
+					</Paper>
+				</motion.div>
+			</AnimatePresence>
 		</Box>
 	) : null;
 };

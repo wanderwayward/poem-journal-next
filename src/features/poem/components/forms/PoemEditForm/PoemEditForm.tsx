@@ -50,8 +50,6 @@ const PoemEditForm = () => {
 	const [currentTag, setCurrentTag] = useState("");
 	const [comment, setComment] = useState("");
 	const [isPublic, setIsPublic] = useState(false);
-	const [lineCount, setLineCount] = useState(0);
-	const [stanzaCount, setStanzaCount] = useState(0);
 
 	const fetchPoem = useCallback(async () => {
 		setLoading(true);
@@ -67,8 +65,6 @@ const PoemEditForm = () => {
 				poem.tags && setAreTags(true);
 				setComment(poem.comment);
 				setIsPublic(poem.public);
-				setStanzaCount(poem.stanzaCount);
-				setLineCount(poem.lineCount);
 				// Convert stanzas to Slate format
 				const formattedContent = parseStanzasToContent(poem.stanzas);
 				setContent(formattedContent);

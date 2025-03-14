@@ -4,7 +4,7 @@ import { ReactEditor } from "slate-react";
 export type CustomElement = {
 	type: "stanza" | "line" | "paragraph";
 	children: Descendant[];
-	id: string;
+	id?: string;
 	alignment?: "left" | "center" | "right";
 };
 
