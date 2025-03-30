@@ -1,5 +1,5 @@
 import { NavigateBefore, NavigateNext } from "@mui/icons-material";
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, SxProps, Theme } from "@mui/material";
 import { PoemStanzaType } from "@/features/poem/poemTypes";
 
 interface PagedPoemNavigationProps {
@@ -7,40 +7,41 @@ interface PagedPoemNavigationProps {
 	handlePageChange: (direction: "left" | "right") => void;
 	currentPage: number;
 	pages: PoemStanzaType[][];
+	styles: {
+		navContainer: SxProps<Theme>;
+		buttonLeft: SxProps<Theme>;
+		buttonRight: SxProps<Theme>;
+		iconLeft: SxProps<Theme>;
+		iconRight: SxProps<Theme>;
+	};
 }
-
 const PagedPoemNavigation: React.FC<PagedPoemNavigationProps> = ({
 	children,
 	handlePageChange,
 	currentPage,
 	pages,
+	styles,
 }) => {
 	return (
-		<Box
-			sx={{
-				display: "flex",
-				flexDirection: "row",
-				alignItems: "center",
-			}}
-		>
+		<Box sx={styles.navContainer}>
 			<IconButton
-				sx={{ fontSize: "2rem" }}
+				sx={styles.buttonLeft}
 				onClick={() => handlePageChange("left")}
 				aria-label="previous page"
 				disabled={currentPage === 0}
 			>
-				<NavigateBefore />
+				<NavigateBefore sx={styles.iconLeft} />
 			</IconButton>
 
 			{children}
 
 			<IconButton
-				sx={{ fontSize: "2rem" }}
+				sx={styles.buttonRight}
 				onClick={() => handlePageChange("right")}
 				aria-label="next page"
 				disabled={currentPage === pages.length - 2}
 			>
-				<NavigateNext />
+				<NavigateNext sx={styles.iconRight} />
 			</IconButton>
 		</Box>
 	);

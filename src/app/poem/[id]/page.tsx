@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useCallback, use } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Poem from "@/features/poem/components/Poem";
 import { PoemType, PoemStanzaType } from "@/features/poem/poemTypes";
@@ -7,6 +7,7 @@ import {
 	Container,
 	CircularProgress,
 	Button,
+	IconButton,
 	Box,
 	Typography,
 	Chip,
@@ -16,6 +17,7 @@ import {
 } from "@mui/material";
 import { useUser } from "@/features/user/context/UserContext";
 import PoemColumns from "@/features/poem/components/views/poemColumns";
+import PoemColumnsNavigable from "@/features/poem/components/views/poemColumnsNavigable";
 import PagedPoemNavigation from "@/features/poem/components/elements/NavigationButtons/PagedPoemNavigation";
 import { splitPoemIntoPages } from "@/features/poem/utils/splitPoemIntoPages";
 
@@ -30,8 +32,11 @@ const PoemPage = () => {
 	const [error, setError] = useState<string | null>(null);
 	const [pages, setPages] = useState<PoemStanzaType[][]>([]);
 	const [currentPage, setCurrentPage] = useState<number>(0);
+	// New state to track navigation direction:
+	const [navDirection, setNavDirection] = useState<"left" | "right">("right");
 
 	const handlePageChange = (direction: "left" | "right") => {
+		setNavDirection(direction);
 		setCurrentPage(
 			(prev) =>
 				direction === "left"
@@ -91,60 +96,34 @@ const PoemPage = () => {
 	const theme = useTheme();
 	const backgroundColor = alpha(theme.palette.background.paper, 0.95);
 
-	if (loading) {
-		return (
-			<Container
-				maxWidth="md"
-				sx={{
-					padding: "20px",
-					display: "flex",
-					justifyContent: "center",
-					alignItems: "center",
-					minHeight: "100vh",
-				}}
-			>
-				<CircularProgress color="error" size="lg" />
-			</Container>
-		);
-	}
-
-	if (error) {
-		return (
-			<Container maxWidth="md" sx={{ padding: "20px" }}>
-				<Typography color="error">{error}</Typography>
-			</Container>
-		);
-	}
-
 	const styles = {
-		container: (lineCount: number) => ({
-			maxWidth: lineCount > 20 ? "lg" : "sm",
+		container: (pageCount: number) => ({
+			width: pageCount > 2 ? "1500px" : pageCount > 1 ? "920px" : "auto",
 		}),
 		paper: {
 			elevation: 3,
 			backgroundColor: backgroundColor,
 			padding: "20px",
-			paddingX: "0px",
 			textAlign: "center",
 			maxWidth: "100%",
 			margin: "0 auto",
 		},
-		tagsContainer: {
-			display: "flex",
-			justifyContent: "start",
-			width: "100%",
-		},
+
 		tagsBox: {
 			textAlign: "left",
 			padding: "20px",
+			display: "flex",
+			width: "100%",
+			flexDirection: "row",
 		},
 		tagsList: {
-			marginTop: "5px",
 			display: "flex",
 			flexWrap: "wrap",
 			gap: "5px",
+			ml: "10px",
 		},
 		buttonsContainer: {
+			//edit and delete
 			marginTop: "20px",
 			display: "flex",
 			justifyContent: "center",
@@ -154,10 +133,37 @@ const PoemPage = () => {
 			maxWidth: "md",
 			padding: "20px",
 		},
+		buttonLeft: {},
+		buttonRight: {},
+		iconLeft: {
+			zIndex: 200,
+			position: "absolute",
+			right: 5,
+		},
+		iconRight: {
+			zIndex: 200,
+			position: "absolute",
+			left: 5,
+			"&mui-background": {
+				backgroundColor: theme.palette.background.paper,
+				opacity: 0.8,
+				transition: "background-color 0.3s ease",
+			},
+			"&:hover": {
+				color: theme.palette.primary.main,
+			},
+		},
+		navContainer: {
+			display: "flex",
+			flexDirection: "row",
+			alignItems: "center",
+			justifyContent: "space-between",
+			position: "relative",
+		},
 	};
 
 	return poemData ? (
-		<Container sx={styles.container(poemData.lineCount)}>
+		<Container sx={styles.container(poemData.pageCount)}>
 			<Paper sx={styles.paper}>
 				{poemData.lineCount > 20 ? (
 					poemData.pageCount > 2 ? (
@@ -165,11 +171,14 @@ const PoemPage = () => {
 							handlePageChange={handlePageChange}
 							currentPage={currentPage}
 							pages={pages}
+							styles={styles}
 						>
-							<PoemColumns
+							<PoemColumnsNavigable
 								pages={pages}
 								poemData={poemData}
 								currentPage={currentPage}
+								navDirection={navDirection}
+								handlePageChange={handlePageChange}
 							/>
 						</PagedPoemNavigation>
 					) : (
@@ -184,19 +193,17 @@ const PoemPage = () => {
 				)}
 
 				{poemData.tags && poemData.tags.length > 0 && (
-					<Box sx={styles.tagsContainer}>
-						<Box sx={styles.tagsBox}>
-							<Typography variant="subtitle1">Tags:</Typography>
-							<Box sx={styles.tagsList}>
-								{poemData.tags.map((tag) => (
-									<Chip key={tag} label={tag} color="warning" />
-								))}
-							</Box>
+					<Box sx={styles.tagsBox}>
+						<Typography variant="subtitle1">Tags:</Typography>
+						<Box sx={styles.tagsList}>
+							{poemData.tags.map((tag) => (
+								<Chip key={tag} label={tag} color="warning" />
+							))}
 						</Box>
 					</Box>
 				)}
 
-				{user && (
+				{/* {user && (
 					<Box sx={styles.buttonsContainer}>
 						<Button
 							variant="contained"
@@ -213,7 +220,7 @@ const PoemPage = () => {
 							Delete
 						</Button>
 					</Box>
-				)}
+				)} */}
 			</Paper>
 		</Container>
 	) : (

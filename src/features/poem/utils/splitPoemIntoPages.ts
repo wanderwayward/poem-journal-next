@@ -10,9 +10,9 @@ export const splitPoemIntoPages = (
 	let currentLineCount = 0;
 
 	// Adjust limits based on line length type
-	let firstPageMax = longLines ? 10 : 16;
-	let normalPageMax = longLines ? 12 : 18;
-	let minLines = { first: longLines ? 8 : 11, normal: longLines ? 9 : 13 };
+	let firstPageMax = longLines ? 10 : 17;
+	let normalPageMax = longLines ? 12 : 22;
+	let minLines = { first: longLines ? 8 : 13, normal: longLines ? 9 : 14 };
 
 	let firstPage = true;
 	let maxLines = firstPageMax;
