@@ -26,43 +26,53 @@ const PoemTitleCard: React.FC<PoemTitleCardProps> = ({
 	// Extracted styles object
 	const styles = {
 		card: {
-			width: { xs: "250px", sm: "280px", md: "300px" },
+			width: { xs: "250px", sm: "280px", md: "300px", lg: "350px" },
 			height: "80px",
+			my: 1,
+			mx: "1rem",
 			padding: 2,
 			backgroundColor:
 				theme.palette.mode === "light" ? "secondary.main" : "error.dark",
+			"&:hover": {
+				backgroundColor:
+					theme.palette.mode === "light" ? "secondary.light" : "error.main",
+			},
 			borderRadius: "4px",
 			boxShadow: theme.shadows[3],
 			cursor: "pointer",
 		},
-		gridContainer: { height: "100%" },
+		gridContainer: { height: "100%", position: "relative" },
 		link: { textDecoration: "none", color: "inherit" },
 		titleTypography: {
 			margin: 0,
-			paddingY: "2px",
 			fontWeight: "bold",
-			fontSize: "1rem",
+			fontSize: "1.2rem",
 			overflow: "hidden",
 			whiteSpace: "nowrap",
 			textOverflow: "ellipsis",
 		},
 		authorTypography: {
 			margin: 0,
-			paddingTop: "2px",
-			paddingBottom: "1px",
+			paddingTop: "1px",
 			whiteSpace: "nowrap",
 			overflow: "hidden",
 			textOverflow: "ellipsis",
 		},
 
 		actionsGrid: {
-			gap: 2,
-			display: "flex",
-			flexDirection: "column",
-			alignItems: "self-end",
+			justifyContent: "center",
+			position: "absolute",
+			right: 10,
+			top: -8,
 		},
-		iconButton: {
+		editIconButton: {
 			color: theme.palette.error.dark,
+		},
+		deleteIconButton: {
+			color: theme.palette.error.dark,
+			"&:hover": {
+				color: theme.palette.error.main,
+			},
 		},
 	};
 
@@ -72,7 +82,7 @@ const PoemTitleCard: React.FC<PoemTitleCardProps> = ({
 		<Card sx={styles.card}>
 			<Grid container spacing={2} sx={styles.gridContainer}>
 				{/* Left Section: Content */}
-				<Grid size={{ xs: 9 }} direction="column">
+				<Grid size={{ xs: 11 }} direction="column">
 					<Link href={`/poem/${poem._id}`} style={styles.link}>
 						{/* Title with Tooltip */}
 						<Tooltip title={poem.title} placement="top-start">
@@ -92,16 +102,16 @@ const PoemTitleCard: React.FC<PoemTitleCardProps> = ({
 
 				{/* Right Section: Actions */}
 				{handleDelete && handleEdit && (
-					<Grid size={{ xs: 3 }} sx={styles.actionsGrid}>
+					<Grid size={{ xs: 1 }} sx={styles.actionsGrid}>
 						<IconButton
 							onClick={(e) => {
 								e.stopPropagation();
 								handleEdit();
 							}}
 							size="small"
-							sx={styles.iconButton}
+							sx={styles.editIconButton}
 						>
-							<Edit fontSize="small" />
+							<Edit fontSize="medium" />
 						</IconButton>
 						<IconButton
 							onClick={(e) => {
@@ -109,9 +119,9 @@ const PoemTitleCard: React.FC<PoemTitleCardProps> = ({
 								handleDelete();
 							}}
 							size="small"
-							sx={styles.iconButton}
+							sx={styles.deleteIconButton}
 						>
-							<Delete fontSize="small" />
+							<Delete fontSize="medium" />
 						</IconButton>
 					</Grid>
 				)}

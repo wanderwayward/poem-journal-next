@@ -10,17 +10,16 @@ import { Favorite, Share } from "@mui/icons-material";
 import Link from "next/link";
 import { PoemType } from "@/features/poem/poemTypes";
 
-interface PoemTitleCardProps {
+interface SearchResultProps {
 	poem: PoemType;
 }
 
-const PoemTitleCard: React.FC<PoemTitleCardProps> = ({ poem }) => {
+const SearchResult: React.FC<SearchResultProps> = ({ poem }) => {
 	const theme = useTheme();
 
 	// Extracted styles object
 	const styles = {
 		card: {
-			width: "fullwidth",
 			height: "80px",
 			my: 1,
 			mx: "1rem",
@@ -123,4 +122,4 @@ const PoemTitleCard: React.FC<PoemTitleCardProps> = ({ poem }) => {
 	);
 };
 
-export default PoemTitleCard;
+export default SearchResult;

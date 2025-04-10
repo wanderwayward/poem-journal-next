@@ -46,9 +46,7 @@ const PoemsList: FC<PoemsListProps> = ({
 							xs: 12, // 1 card per row on extra-small screens
 							sm: 12, // 1 card per row on small screens
 							md: 6, // 2 cards per row on medium screens
-							lg: 4, // 3 cards per row on large screens
-							xl: 4,
-							xxl: 3, // 4 cards per row on extra-extra-large screens
+							lg: 3, // 3 cards per row on large screens
 						}}
 						sx={{ display: "flex", justifyContent: "center" }}
 					>
