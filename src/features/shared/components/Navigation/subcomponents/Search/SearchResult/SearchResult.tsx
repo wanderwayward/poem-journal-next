@@ -7,7 +7,6 @@ import {
 	useTheme,
 } from "@mui/material";
 import { Favorite, Share } from "@mui/icons-material";
-import { IoIosShareAlt } from "react-icons/io";
 import Link from "next/link";
 import { PoemType } from "@/features/poem/poemTypes";
 
