@@ -6,7 +6,7 @@ import {
 	CircularProgress,
 } from "@mui/material";
 import { FC } from "react";
-import PoemTitleCard from "../Poem-Title-Card/Poem-Title-Card";
+import PoemTitleCard from "../PoemTitleCard/PoemTitleCard";
 import { PoemType } from "@/features/poem/poemTypes";
 
 interface PoemsListProps {
