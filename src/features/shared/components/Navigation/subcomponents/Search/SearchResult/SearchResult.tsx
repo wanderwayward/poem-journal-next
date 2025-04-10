@@ -6,63 +6,72 @@ import {
 	Grid2 as Grid,
 	useTheme,
 } from "@mui/material";
-import { Edit, Delete } from "@mui/icons-material";
+import { Favorite, Share } from "@mui/icons-material";
+import { IoIosShareAlt } from "react-icons/io";
 import Link from "next/link";
 import { PoemType } from "@/features/poem/poemTypes";
 
 interface PoemTitleCardProps {
 	poem: PoemType;
-	handleDelete: () => void;
-	handleEdit: () => void;
 }
 
-const PoemTitleCard: React.FC<PoemTitleCardProps> = ({
-	poem,
-	handleDelete,
-	handleEdit,
-}) => {
+const PoemTitleCard: React.FC<PoemTitleCardProps> = ({ poem }) => {
 	const theme = useTheme();
 
 	// Extracted styles object
 	const styles = {
 		card: {
-			width: { xs: "250px", sm: "280px", md: "300px" },
+			width: "fullwidth",
 			height: "80px",
+			my: 1,
+			mx: "1rem",
 			padding: 2,
 			backgroundColor:
-				theme.palette.mode === "light" ? "secondary.main" : "error.dark",
+				theme.palette.mode === "light" ? "primary.main" : "error.dark",
+			"&:hover": {
+				backgroundColor:
+					theme.palette.mode === "light" ? "primary.light" : "error.main",
+			},
 			borderRadius: "4px",
 			boxShadow: theme.shadows[3],
 			cursor: "pointer",
 		},
-		gridContainer: { height: "100%" },
+		gridContainer: { height: "100%", position: "relative" },
 		link: { textDecoration: "none", color: "inherit" },
 		titleTypography: {
 			margin: 0,
-			paddingY: "2px",
 			fontWeight: "bold",
-			fontSize: "1rem",
+			fontSize: "1.5rem",
 			overflow: "hidden",
 			whiteSpace: "nowrap",
 			textOverflow: "ellipsis",
 		},
 		authorTypography: {
 			margin: 0,
-			paddingTop: "2px",
-			paddingBottom: "1px",
+			paddingTop: "1px",
 			whiteSpace: "nowrap",
 			overflow: "hidden",
 			textOverflow: "ellipsis",
+			color: theme.palette.primary.contrastText,
 		},
 
 		actionsGrid: {
-			gap: 2,
-			display: "flex",
-			flexDirection: "column",
-			alignItems: "self-end",
+			justifyContent: "center",
+			position: "absolute",
+			right: 0,
+			top: -5,
 		},
-		iconButton: {
-			color: theme.palette.error.dark,
+		shareIconButton: {
+			color: theme.palette.primary.contrastText,
+			"&:hover": {
+				color: theme.palette.info.main,
+			},
+		},
+		favoriteIconButton: {
+			color: theme.palette.error.main,
+			"&:hover": {
+				color: theme.palette.error.dark,
+			},
 		},
 	};
 
@@ -72,7 +81,7 @@ const PoemTitleCard: React.FC<PoemTitleCardProps> = ({
 		<Card sx={styles.card}>
 			<Grid container spacing={2} sx={styles.gridContainer}>
 				{/* Left Section: Content */}
-				<Grid size={{ xs: 9 }} direction="column">
+				<Grid size={{ xs: 11 }} direction="column">
 					<Link href={`/poem/${poem._id}`} style={styles.link}>
 						{/* Title with Tooltip */}
 						<Tooltip title={poem.title} placement="top-start">
@@ -90,31 +99,26 @@ const PoemTitleCard: React.FC<PoemTitleCardProps> = ({
 					</Link>
 				</Grid>
 
-				{/* Right Section: Actions */}
-				{handleDelete && handleEdit && (
-					<Grid size={{ xs: 3 }} sx={styles.actionsGrid}>
-						<IconButton
-							onClick={(e) => {
-								e.stopPropagation();
-								handleEdit();
-							}}
-							size="small"
-							sx={styles.iconButton}
-						>
-							<Edit fontSize="small" />
-						</IconButton>
-						<IconButton
-							onClick={(e) => {
-								e.stopPropagation();
-								handleDelete();
-							}}
-							size="small"
-							sx={styles.iconButton}
-						>
-							<Delete fontSize="small" />
-						</IconButton>
-					</Grid>
-				)}
+				<Grid size={{ xs: 1 }} sx={styles.actionsGrid} direction="column">
+					<IconButton
+						onClick={(e) => {
+							e.stopPropagation();
+						}}
+						size="small"
+						sx={styles.favoriteIconButton}
+					>
+						<Favorite fontSize="medium" />
+					</IconButton>
+					<IconButton
+						onClick={(e) => {
+							e.stopPropagation();
+						}}
+						size="small"
+						sx={styles.shareIconButton}
+					>
+						<Share fontSize="medium" />
+					</IconButton>
+				</Grid>
 			</Grid>
 		</Card>
 	);

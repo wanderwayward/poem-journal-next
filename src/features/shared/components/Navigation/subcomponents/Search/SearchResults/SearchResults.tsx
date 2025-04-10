@@ -1,13 +1,6 @@
-import {
-	Box,
-	Paper,
-	List,
-	ListItemButton,
-	ListItemText,
-	Typography,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { PoemType } from "@/features/poem/poemTypes";
-import PoemTitleCard from "@/features/user/components/Poem-Title-Card/Poem-Title-Card";
+import SearchResult from "../SearchResult/SearchResult";
 
 interface SearchResultsProps {
 	isSearchOpen: boolean;
@@ -25,7 +18,7 @@ const SearchResults = ({ isSearchOpen, searchResults }: SearchResultsProps) => {
 			}}
 		>
 			{searchResults.map((result) => (
-				<PoemTitleCard key={result._id} poem={result} />
+				<SearchResult key={result._id} poem={result} />
 			))}
 
 			<Box>
