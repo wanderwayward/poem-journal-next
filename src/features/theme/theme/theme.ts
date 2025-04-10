@@ -285,7 +285,7 @@ export const getDesignTokens = (
 				xs: 0, // Extra small
 				sm: 480, // Small
 				md: 768, // Medium
-				lg: 1024, // Large
+				lg: 1080, //Large
 				xl: 1440, // Extra Large (27" 1440p monitors)
 				xxl: 1920, // Extra-Extra Large (Full HD / 4K)
 				xxxl: 2560, // Ultra Wide / 4K+

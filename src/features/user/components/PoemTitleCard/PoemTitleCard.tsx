@@ -26,10 +26,15 @@ const PoemTitleCard: React.FC<PoemTitleCardProps> = ({
 	// Extracted styles object
 	const styles = {
 		card: {
-			width: { xs: "250px", sm: "280px", md: "300px", lg: "350px" },
+			width: {
+				xs: "100%",
+				sm: "280px",
+				md: "300px",
+				lg: "350px",
+				xl: "400px",
+				xxl: "450px",
+			},
 			height: "80px",
-			my: 1,
-			mx: "1rem",
 			padding: 2,
 			backgroundColor:
 				theme.palette.mode === "light" ? "secondary.main" : "error.dark",
@@ -66,7 +71,10 @@ const PoemTitleCard: React.FC<PoemTitleCardProps> = ({
 			top: -8,
 		},
 		editIconButton: {
-			color: theme.palette.error.dark,
+			color: theme.palette.primary.contrastText,
+			"&:hover": {
+				color: theme.palette.info.main,
+			},
 		},
 		deleteIconButton: {
 			color: theme.palette.error.dark,
