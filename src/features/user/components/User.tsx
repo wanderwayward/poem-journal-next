@@ -80,7 +80,7 @@ const UserProfile: FC = () => {
 				backgroundBlendMode: "overlay",
 				display: "flex",
 				flexDirection: "column",
-				alignItems: "center",
+				alignItems: "flex-start",
 				textAlign: "left",
 				height: "calc(70vh - 64px)",
 			}}

@@ -51,7 +51,7 @@ const PoemTitleCard: React.FC<PoemTitleCardProps> = ({
 		titleTypography: {
 			margin: 0,
 			fontWeight: "bold",
-			fontSize: "1.2rem",
+			fontSize: "1.5rem",
 			overflow: "hidden",
 			whiteSpace: "nowrap",
 			textOverflow: "ellipsis",
@@ -94,7 +94,7 @@ const PoemTitleCard: React.FC<PoemTitleCardProps> = ({
 					<Link href={`/poem/${poem._id}`} style={styles.link}>
 						{/* Title with Tooltip */}
 						<Tooltip title={poem.title} placement="top-start">
-							<Typography variant="body2" sx={styles.titleTypography}>
+							<Typography variant="h3" sx={styles.titleTypography}>
 								{poem.title}
 							</Typography>
 						</Tooltip>
@@ -111,26 +111,30 @@ const PoemTitleCard: React.FC<PoemTitleCardProps> = ({
 				{/* Right Section: Actions */}
 				{handleDelete && handleEdit && (
 					<Grid size={{ xs: 1 }} sx={styles.actionsGrid}>
-						<IconButton
-							onClick={(e) => {
-								e.stopPropagation();
-								handleEdit();
-							}}
-							size="small"
-							sx={styles.editIconButton}
-						>
-							<Edit fontSize="medium" />
-						</IconButton>
-						<IconButton
-							onClick={(e) => {
-								e.stopPropagation();
-								handleDelete();
-							}}
-							size="small"
-							sx={styles.deleteIconButton}
-						>
-							<Delete fontSize="medium" />
-						</IconButton>
+						<Tooltip title={"edit"} placement="top">
+							<IconButton
+								onClick={(e) => {
+									e.stopPropagation();
+									handleEdit();
+								}}
+								size="small"
+								sx={styles.editIconButton}
+							>
+								<Edit fontSize="medium" />
+							</IconButton>
+						</Tooltip>
+						<Tooltip title={"delete"} placement="bottom">
+							<IconButton
+								onClick={(e) => {
+									e.stopPropagation();
+									handleDelete();
+								}}
+								size="small"
+								sx={styles.deleteIconButton}
+							>
+								<Delete fontSize="medium" />
+							</IconButton>
+						</Tooltip>
 					</Grid>
 				)}
 			</Grid>

@@ -12,15 +12,15 @@ const StatusBar = ({ showDrafts, handleToggleDrafts }: StatusBarProps) => {
 				onClick={handleToggleDrafts}
 				variant="h4"
 				sx={{
-					color: !showDrafts ? "secondary.dark" : "text.disabled",
+					color: !showDrafts ? "error.dark" : "text.disabled",
 					textAlign: {
 						xs: "center",
 						sm: "left",
 					},
+					fontWeight: !showDrafts ? "bold" : "normal",
 					"&:hover": {
 						cursor: "pointer",
 						color: "error.main",
-						transition: "color 0.3s",
 					},
 				}}
 			>
@@ -36,15 +36,15 @@ const StatusBar = ({ showDrafts, handleToggleDrafts }: StatusBarProps) => {
 				onClick={handleToggleDrafts}
 				variant="h4"
 				sx={{
-					color: showDrafts ? "secondary.dark" : "text.disabled",
+					color: showDrafts ? "error.dark" : "text.disabled",
 					textAlign: {
 						xs: "center",
 						sm: "left",
 					},
+					fontWeight: showDrafts ? "bold" : "normal",
 					"&:hover": {
 						cursor: "pointer",
 						color: "error.main",
-						transition: "color 0.3s",
 					},
 				}}
 			>
