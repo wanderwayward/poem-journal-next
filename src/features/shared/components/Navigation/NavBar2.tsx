@@ -5,7 +5,6 @@ import { Grid2 as Grid, Typography, Box, useTheme } from "@mui/material";
 import { useUser } from "@/features/user/context/UserContext";
 import SearchModal from "./subcomponents/Search/Search";
 import UserMenu from "./subcomponents/UserMenu/UserMenu";
-import { HoverableCircle } from "../CustomComponents/CustomComponents";
 
 const Navbar: React.FC = () => {
 	const { user } = useUser();
@@ -54,43 +53,9 @@ const Navbar: React.FC = () => {
 						VERSE
 					</Typography>
 				</Link>
-				<Box display="flex" flexDirection={"row"} alignItems={"center"}>
-					<Link href="/user" passHref>
-						<Box
-							display="flex"
-							alignItems="center"
-							gap={1}
-							onMouseEnter={() => {
-								setFill(theme.palette.warning.contrastText); // Change circle color
-								setTextColor(theme.palette.error.dark); // Change text color
-							}}
-							onMouseLeave={() => {
-								setFill(theme.palette.error.dark); // Reset circle color
-								setTextColor(theme.palette.warning.contrastText); // Reset text color
-							}}
-							sx={{ cursor: "pointer" }}
-						>
-							<HoverableCircle fill={fill} />
-							<Typography
-								variant="h2"
-								sx={{
-									fontWeight: "bold",
-									color: textColor,
-									fontSize: "2.2rem",
-									display: "flex",
-									alignItems: "center",
-								}}
-							>
-								POEM VAULT
-							</Typography>
 
-							<HoverableCircle fill={fill} />
-						</Box>
-					</Link>
-
-					{/* Avatar with Popover */}
-					<UserMenu user={user} theme={theme} />
-				</Box>
+				{/* Avatar with Popover */}
+				<UserMenu user={user} theme={theme} />
 			</Grid>
 			<SearchModal />
 		</Grid>
