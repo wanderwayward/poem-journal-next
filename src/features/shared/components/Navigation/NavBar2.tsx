@@ -80,8 +80,13 @@ const Navbar: React.FC = () => {
 						right: 0,
 						display: "flex",
 						alignItems: "center",
+						flexDirection: "column",
 
-						...(isOpen && { backgroundColor: theme.palette.background.paper }),
+						...(isOpen && {
+							backgroundColor: theme.palette.background.paper,
+							pl: 2,
+							pb: 2,
+						}),
 					}}
 				>
 					<UserMenu

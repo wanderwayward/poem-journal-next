@@ -8,6 +8,7 @@ import {
 	Grid2 as Grid,
 } from "@mui/material";
 import Link from "next/link";
+import { FaDiceD20 } from "react-icons/fa6";
 
 interface MenuProps {
 	isOpen: boolean;
@@ -20,21 +21,29 @@ const Menu = ({ theme, isOpen }: MenuProps) => {
 		? alpha(theme.palette.background.paper, 0.9)
 		: "transparent";
 	return (
-		<Grid
-			container
-			justifyContent="space-between"
-			direction="row"
-			size={{ xs: 12 }}
-		>
-			<Grid container justifyContent="center" size={{ xs: 11 }} sx={{ pr: 1 }}>
+		<>
+			<Grid
+				size={{ xs: 12 }}
+				sx={{
+					display: "flex",
+					justifyContent: "center",
+					flexDirection: "row",
+					pt: 2,
+					width: "100%",
+				}}
+			>
 				<Link href="/poem/upload" passHref>
 					<Button
-						fullWidth
 						sx={{
 							backgroundColor: "primary.main",
+							"&:hover": {
+								backgroundColor: alpha(theme.palette.primary.main, 0.8),
+							},
 							textDecoration: "none",
 							color: "neutral.contrastText",
 							fontWeight: "bold",
+							fontSize: "1.4rem",
+							px: 4,
 						}}
 					>
 						upload a poem
@@ -42,61 +51,57 @@ const Menu = ({ theme, isOpen }: MenuProps) => {
 				</Link>
 			</Grid>
 			<Grid
-				container
-				justifyContent="space-evenly"
-				direction="column"
-				size={{ xs: 1 }}
+				size={{ xs: 12 }}
+				sx={{
+					display: "flex",
+					justifyContent: "space-around",
+					flexDirection: "row",
+					pt: 2,
+					gap: 2,
+				}}
 			>
-				<Grid>A</Grid>
-				<Grid>A</Grid>
-				<Grid>A</Grid>
+				<Link href="/poem/upload" passHref>
+					<Typography
+						sx={{
+							textDecoration: "none",
+							color: "neutral.contrastText",
+							"&:hover": {
+								color: alpha(theme.palette.primary.main, 0.8),
+							},
+							fontWeight: "bold",
+							px: 2,
+							fontSize: "1.25rem",
+						}}
+					>
+						Random Poem
+					</Typography>
+					{/* <FaDiceD20
+						style={{
+							color: theme.palette.warning.contrastText,
+							fontSize: "1.6rem",
+							marginLeft: "0.5rem",
+						}}
+					/> */}
+				</Link>
+				<Link href="/poem/upload" passHref>
+					<Typography
+						sx={{
+							textDecoration: "none",
+							color: "neutral.contrastText",
+							"&:hover": {
+								color: theme.palette.warning.main,
+							},
+							fontWeight: "bold",
+							px: 2,
+							fontSize: "1.25rem",
+						}}
+					>
+						Sign Out
+					</Typography>
+				</Link>
 			</Grid>
-		</Grid>
+		</>
 	);
 };
 
 export default Menu;
-{
-	/* <List>
-<Box sx={{ display: "flex", justifyContent: "space-between" }}>
-    <Button
-        variant="outlined"
-        color="error"
-        onClick={() => setIsOpen(false)}
-    >
-        Upload a Poem
-    </Button>
-    <Button
-        variant="contained"
-        color="primary"
-        onClick={() => setIsOpen(false)}
-    >
-        Save
-    </Button>
-</Box>
-<ListItemButton>
-    <ListItemText primary="Settings" />
-</ListItemButton>
-<ListItemButton>
-    <ListItemText primary="Logout" />
-</ListItemButton>
-</List>
-<Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-<Button
-    variant="outlined"
-    color="error"
-    sx={{ mt: 2 }}
-    onClick={() => setIsOpen(false)}
->
-    Close
-</Button>
-<Button
-    variant="contained"
-    color="primary"
-    sx={{ mt: 2, ml: 2 }}
-    onClick={() => setIsOpen(false)}
->
-    Save
-</Button>
-</Box> */
-}

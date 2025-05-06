@@ -25,15 +25,10 @@ const UserMenu = ({ user, theme, setIsOpen, isOpen }: AvatarMenuProps) => {
 	};
 
 	return (
-		<Box
-			sx={{
-				display: "flex",
-				flexDirection: "column",
-				alignItems: "center",
-			}}
-		>
+		<>
 			{/* Logo and title */}
 			<Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+				{/* Title */}
 				<Link href="/user" passHref>
 					<Box
 						gap={1}
@@ -45,7 +40,12 @@ const UserMenu = ({ user, theme, setIsOpen, isOpen }: AvatarMenuProps) => {
 							setFill(theme.palette.error.dark); // Reset circle color
 							setTextColor(theme.palette.warning.contrastText); // Reset text color
 						}}
-						sx={{ cursor: "pointer", display: "flex", alignItems: "center" }}
+						sx={{
+							cursor: "pointer",
+							display: "flex",
+							alignItems: "center",
+							pr: 1,
+						}}
 					>
 						<HoverableCircle fill={fill} />
 						<Typography
@@ -64,6 +64,7 @@ const UserMenu = ({ user, theme, setIsOpen, isOpen }: AvatarMenuProps) => {
 						<HoverableCircle fill={fill} />
 					</Box>
 				</Link>
+				{/* Avatar */}
 				<Box
 					sx={{
 						display: "flex",
@@ -94,10 +95,11 @@ const UserMenu = ({ user, theme, setIsOpen, isOpen }: AvatarMenuProps) => {
 					</Box>
 				</Box>
 			</Box>
-			<Box>
+			{/* Menu */}
+			<Box sx={{ width: "100%", mr: 2 }}>
 				{isOpen && <Menu setIsOpen={setIsOpen} isOpen={isOpen} theme={theme} />}
 			</Box>
-		</Box>
+		</>
 	);
 };
 
