@@ -15,61 +15,43 @@ interface MenuProps {
 	theme: Theme;
 }
 
-const Menu = ({ setIsOpen, theme, isOpen }: MenuProps) => {
+const Menu = ({ theme, isOpen }: MenuProps) => {
 	const backgroundColor = isOpen
 		? alpha(theme.palette.background.paper, 0.9)
 		: "transparent";
 	return (
-		<Paper
-			elevation={4}
-			sx={{
-				position: "absolute",
-				top: "100%",
-				right: 0,
-				width: "300px", // Matches SearchModal width
-				mt: 1,
-				p: 2,
-				backgroundColor: backgroundColor,
-			}}
+		<Grid
+			container
+			justifyContent="space-between"
+			direction="row"
+			size={{ xs: 12 }}
 		>
+			<Grid container justifyContent="center" size={{ xs: 11 }} sx={{ pr: 1 }}>
+				<Link href="/poem/upload" passHref>
+					<Button
+						fullWidth
+						sx={{
+							backgroundColor: "primary.main",
+							textDecoration: "none",
+							color: "neutral.contrastText",
+							fontWeight: "bold",
+						}}
+					>
+						upload a poem
+					</Button>
+				</Link>
+			</Grid>
 			<Grid
 				container
-				justifyContent="space-between"
-				direction="row"
-				size={{ xs: 12 }}
+				justifyContent="space-evenly"
+				direction="column"
+				size={{ xs: 1 }}
 			>
-				<Grid
-					container
-					justifyContent="center"
-					size={{ xs: 11 }}
-					sx={{ pr: 1 }}
-				>
-					<Link href="/poem/upload" passHref>
-						<Button
-							fullWidth
-							sx={{
-								backgroundColor: "primary.main",
-								textDecoration: "none",
-								color: "neutral.contrastText",
-								fontWeight: "bold",
-							}}
-						>
-							upload a poem
-						</Button>
-					</Link>
-				</Grid>
-				<Grid
-					container
-					justifyContent="space-evenly"
-					direction="column"
-					size={{ xs: 1 }}
-				>
-					<Grid>A</Grid>
-					<Grid>A</Grid>
-					<Grid>A</Grid>
-				</Grid>
+				<Grid>A</Grid>
+				<Grid>A</Grid>
+				<Grid>A</Grid>
 			</Grid>
-		</Paper>
+		</Grid>
 	);
 };
 

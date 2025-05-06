@@ -58,7 +58,9 @@ const SearchModal = () => {
 			onFocus={handleFocus}
 			onBlur={handleBlur}
 			sx={{
-				position: "relative",
+				position: "fixed",
+
+				zIndex: 1300,
 				width: "532px",
 				backgroundColor: backgroundColor,
 				transition: "height 0.3s ease", // Smooth height transition

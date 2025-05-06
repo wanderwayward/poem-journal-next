@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { Grid2 as Grid, Typography, Box, useTheme } from "@mui/material";
+import { Grid2 as Grid, Typography, Box, useTheme, Paper } from "@mui/material";
 import { useUser } from "@/features/user/context/UserContext";
 import SearchModal from "./subcomponents/Search/Search";
 import UserMenu from "./subcomponents/UserMenu/UserMenu";
@@ -9,11 +9,26 @@ import UserMenu from "./subcomponents/UserMenu/UserMenu";
 const Navbar: React.FC = () => {
 	const { user } = useUser();
 	const theme = useTheme();
+	const containerRef = useRef<HTMLDivElement>(null);
+	const [isOpen, setIsOpen] = useState(false);
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (
+				containerRef.current &&
+				!containerRef.current.contains(event.target as Node)
+			) {
+				setIsOpen(false);
+			}
+		};
 
-	const [fill, setFill] = useState(theme.palette.error.dark);
-	const [textColor, setTextColor] = useState(
-		theme.palette.warning.contrastText
-	);
+		if (isOpen) {
+			document.addEventListener("mousedown", handleClickOutside);
+		}
+
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, [isOpen]);
 
 	return user ? (
 		<Grid
@@ -53,9 +68,26 @@ const Navbar: React.FC = () => {
 						VERSE
 					</Typography>
 				</Link>
+				{/* <SearchModal /> */}
 
-				{/* Avatar with Popover */}
-				<UserMenu user={user} theme={theme} />
+				<Box
+					ref={containerRef}
+					component={isOpen ? Paper : "div"}
+					elevation={isOpen ? 4 : 0}
+					sx={{
+						display: "flex",
+						alignItems: "center",
+
+						...(isOpen && { backgroundColor: theme.palette.background.paper }),
+					}}
+				>
+					<UserMenu
+						user={user}
+						theme={theme}
+						setIsOpen={setIsOpen}
+						isOpen={isOpen}
+					/>
+				</Box>
 			</Grid>
 			<SearchModal />
 		</Grid>
