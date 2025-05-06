@@ -14,7 +14,8 @@ const SearchResults = ({ isSearchOpen, searchResults }: SearchResultsProps) => {
 		<Box
 			sx={{
 				width: "100%", // Ensures it takes up the full width of the parent Paper
-				p: 1, // Padding for spacing
+				p: "1px",
+				m: 0,
 			}}
 		>
 			{searchResults.map((result) => (
@@ -25,7 +26,7 @@ const SearchResults = ({ isSearchOpen, searchResults }: SearchResultsProps) => {
 				<Typography
 					variant="body2"
 					color="text.secondary"
-					sx={{ textAlign: "right" }}
+					sx={{ textAlign: "right", p: 1 }}
 				>
 					more results...
 				</Typography>

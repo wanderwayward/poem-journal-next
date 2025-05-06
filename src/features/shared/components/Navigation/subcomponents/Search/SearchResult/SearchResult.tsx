@@ -21,9 +21,9 @@ const SearchResult: React.FC<SearchResultProps> = ({ poem }) => {
 	const styles = {
 		card: {
 			height: "80px",
-			my: 1,
-			mx: "1rem",
-			padding: 2,
+			my: "0.2rem",
+			mx: "0.5rem",
+			padding: 1,
 			backgroundColor:
 				theme.palette.mode === "light" ? "primary.main" : "error.dark",
 			"&:hover": {
