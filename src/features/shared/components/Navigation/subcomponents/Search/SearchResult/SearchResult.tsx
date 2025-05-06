@@ -9,6 +9,7 @@ import {
 import { Favorite, Share } from "@mui/icons-material";
 import Link from "next/link";
 import { PoemType } from "@/features/poem/poemTypes";
+import { title } from "process";
 
 interface SearchResultProps {
 	poem: PoemType;
@@ -36,6 +37,11 @@ const SearchResult: React.FC<SearchResultProps> = ({ poem }) => {
 		},
 		gridContainer: { height: "100%", position: "relative" },
 		link: { textDecoration: "none", color: "inherit" },
+		titleAndAuthorGrid: {
+			position: "absolute",
+			left: 4,
+			top: 2,
+		},
 		titleTypography: {
 			margin: 0,
 			fontWeight: "bold",
@@ -57,7 +63,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ poem }) => {
 			justifyContent: "center",
 			position: "absolute",
 			right: 0,
-			top: -5,
+			top: -1,
 		},
 		shareIconButton: {
 			color: theme.palette.primary.contrastText,
@@ -79,7 +85,11 @@ const SearchResult: React.FC<SearchResultProps> = ({ poem }) => {
 		<Card sx={styles.card}>
 			<Grid container spacing={2} sx={styles.gridContainer}>
 				{/* Left Section: Content */}
-				<Grid size={{ xs: 11 }} direction="column">
+				<Grid
+					size={{ xs: 11 }}
+					direction="column"
+					sx={styles.titleAndAuthorGrid}
+				>
 					<Link href={`/poem/${poem._id}`} style={styles.link}>
 						{/* Title with Tooltip */}
 						<Tooltip title={poem.title} placement="top-start">
