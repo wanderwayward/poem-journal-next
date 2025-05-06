@@ -75,6 +75,9 @@ const Navbar: React.FC = () => {
 					component={isOpen ? Paper : "div"}
 					elevation={isOpen ? 4 : 0}
 					sx={{
+						position: "fixed",
+						top: 0,
+						right: 0,
 						display: "flex",
 						alignItems: "center",
 

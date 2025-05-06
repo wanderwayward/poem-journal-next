@@ -26,7 +26,11 @@ const UserMenu = ({ user, theme, setIsOpen, isOpen }: AvatarMenuProps) => {
 
 	return (
 		<Box
-			sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+			sx={{
+				display: "flex",
+				flexDirection: "column",
+				alignItems: "center",
+			}}
 		>
 			{/* Logo and title */}
 			<Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
