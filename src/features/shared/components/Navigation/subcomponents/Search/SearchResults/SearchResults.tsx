@@ -26,9 +26,9 @@ const SearchResults = ({ isSearchOpen, searchResults }: SearchResultsProps) => {
 				<Typography
 					variant="body2"
 					color="text.secondary"
-					sx={{ textAlign: "right", p: 1 }}
+					sx={{ textAlign: "right", cursor: "pointer", pr: "0.5rem" }}
 				>
-					more results...
+					more results
 				</Typography>
 			</Box>
 		</Box>

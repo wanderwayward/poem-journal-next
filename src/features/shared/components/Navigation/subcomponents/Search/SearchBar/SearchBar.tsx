@@ -82,7 +82,7 @@ const SearchBar = ({ isFocused = false, handleSearch }: SearchBarProps) => {
 				<Typography
 					variant="body2"
 					color="text.secondary"
-					sx={{ textAlign: "right", p: 0, m: 0 }}
+					sx={{ textAlign: "right", cursor: "pointer", pr: "0.1rem" }}
 				>
 					advanced search
 				</Typography>
